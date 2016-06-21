@@ -1,0 +1,75 @@
+@import 'common/utils';
+
+.jb-notification-colored(@color){
+    .jb-notification-content{
+        border-left-color: @color;
+        color: tint(@color, 80%);
+    }
+
+    .fa{
+        color: @color;
+    }
+}
+
+.jb-notifier{
+    margin-bottom: .3em;
+    pointer-events: none;
+    position: absolute;
+    z-index: 100;
+
+    bottom: 0;
+    left: 0;
+    right: 0;
+}
+
+.jb-notification{
+    .transition(opacity 1s, max-height .4s);
+
+    margin: 0 auto;
+    max-height: 2.9em;
+    min-width: 600px;
+    opacity: 0;
+    overflow: hidden;
+    width: 50%;
+
+    &-fadein{
+        opacity: 1;
+    }
+    &-slideup{
+        max-height: 0;
+    }
+
+    &-content{
+        .border-radius(0 .3em .3em 0);
+        .box-shadow(0 0 .2em fade(#000, 80%));
+
+        background: fade(#000, 80%);
+        border-left: .3em solid;
+        color: #CCC;
+        margin: .2em;
+        line-height: 2.5em;
+    }
+
+    .fa{
+        font-size: 1.2em;
+        text-align: center;
+        vertical-align: middle;
+        width: 2em;
+    }
+
+    &.jb-primary{
+        .jb-notification-colored(@com-color-primary);
+    }
+    &.jb-success{
+        .jb-notification-colored(@com-color-success);
+    }
+    &.jb-danger{
+        .jb-notification-colored(@com-color-danger);
+    }
+    &.jb-warning{
+        .jb-notification-colored(@com-color-warning);
+    }
+    &.jb-info{
+        .jb-notification-colored(@com-color-info);
+    }
+}

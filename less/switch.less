@@ -1,0 +1,102 @@
+@import 'common/utils';
+@import 'common/component';
+
+.jb-switch{
+    @l-box-shadow: 0 .07em .2em #CCC inset;
+
+    .com-font-setup();
+    .border-radius(@com-border-radius);
+    .box-shadow(@l-box-shadow);
+
+    background: #FCFCFC;
+    border: 1px solid @com-border-color;
+    color: #555;
+    cursor: pointer;
+    display: inline-block;
+    padding: 0;
+    overflow: hidden;
+    text-align: center;
+
+    &-cover{
+        width: 4em;
+    }
+
+    &:hover{
+        border-color: @com-border-color-hover;
+
+        .jb-switch-middle{
+            background: #FFF;
+            border-color: @com-border-color-hover;
+        }
+    }
+    &:focus{
+        .box-shadow(@l-box-shadow, @com-box-shadow-focus);
+        border-color: @com-border-color-focus;
+
+        .jb-switch-middle{
+            border-color: @com-border-color-focus;
+        }
+    }
+    &:active{
+        .jb-switch-middle{
+            .box-shadow(0 .1em .4em #BBB inset, 0 0 .2em #CCC);
+            background: #EEE;
+        }
+    }
+    &:disabled{
+        .box-shadow(none);
+
+        border-color: @com-border-color;
+        cursor: default;
+        opacity: .5;
+
+        .jb-switch-middle{
+            .box-shadow(none);
+
+            background: #F6F6F6;
+            border-color: @com-border-color;
+        }
+    }
+
+    &-container{
+        .transition(margin-left .2s);
+
+        white-space: nowrap;
+    }
+    &-checked .jb-switch-container{
+        margin-left: -1.8em;
+    }
+
+    &-left,
+    &-right{
+        display: inline-block;
+        padding: .5em 0;
+        text-align: center;
+        width: 2em;
+    }
+    &-left{
+        color: #966;
+    }
+    &-right{
+        color: #396;
+    }
+    &-middle-container{
+        display: inline-block;
+        width: 1.8em;
+    }
+    &-middle{
+        .border-radius(@com-border-radius);
+        .box-shadow(0 1px 0 #FFF inset, 0 0 .2em .1em #DDD);
+        .text-shadow(0 1px 0 #FFF);
+
+        background: #F6F6F6;
+        border: solid @com-border-color;
+        border-width: 0 1px;
+        color: #CCC;
+        padding: .5em 0;
+    }
+
+    &::-moz-focus-inner{
+        border: 0;
+    }
+}

@@ -1,0 +1,41 @@
+@import 'common/utils';
+@import 'common/component';
+
+.jb-tip{
+    &.jb-popup-top{
+        padding-bottom: @com-space;
+    }
+    &.jb-popup-bottom{
+        padding-top: @com-space;
+    }
+    &.jb-popup-left{
+        padding-right: @com-space;
+    }
+    &.jb-popup-right{
+        padding-left: @com-space;
+    }
+
+    z-index: 3;
+}
+.jb-tip-content{
+    .border-radius(@com-border-radius);
+    .box-shadow(0 0 3px fade(#333, 80%));
+
+    background: fade(#333, 80%);
+    color: #F2F2F2;
+    font-size: .9em;
+    padding: .4em .6em;
+}
+
+/*.jb-tip-pointer{
+    width: 0;
+    height: 0;
+    border-style: solid;
+    border-color: transparent;
+}
+.jb-popup-top .jb-tip-pointer{
+    border-width: .32em .6em .18em;
+    border-top-color: fade(#333, 70%);
+    margin: 0 auto;
+}*/
+

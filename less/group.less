@@ -1,0 +1,111 @@
+@import 'common/utils';
+@import 'common/component';
+
+.jb-group{
+    display: inline-block;
+
+    //First depth
+    > * {
+        .border-radius(0);
+        margin-right: -@onepx;
+
+        &:first-child{
+            .border-bottom-left-radius(@com-border-radius);
+            .border-top-left-radius(@com-border-radius);
+        }
+        &:last-child{
+            .border-bottom-right-radius(@com-border-radius);
+            .border-top-right-radius(@com-border-radius);
+            margin-right: 0;
+        }
+    }
+    .jb-group{
+        //Second depth
+        margin-right:0;
+
+        > * {
+            .border-radius(0);
+            margin-right: -@onepx;
+        }
+        &:first-child > :first-child{
+            .border-bottom-left-radius(@com-border-radius);
+            .border-top-left-radius(@com-border-radius);
+        }
+        &:last-child > :last-child{
+            .border-bottom-right-radius(@com-border-radius);
+            .border-top-right-radius(@com-border-radius);
+            margin-right: 0;
+        }
+
+        //Third depth
+        .jb-group{
+            margin-right:0;
+
+            > * {
+                .border-radius(0);
+                margin-right: -@onepx;
+            }
+        }
+        &:first-child > .jb-group:first-child > :first-child{
+            .border-bottom-left-radius(@com-border-radius);
+            .border-top-left-radius(@com-border-radius);
+        }
+        &:last-child > .jb-group:first-child > :last-child{
+            .border-bottom-right-radius(@com-border-radius);
+            .border-top-right-radius(@com-border-radius);
+            margin-right: 0;
+        }
+    }
+
+    //Focusable components
+    .jb-button,
+    .jb-input,
+    .jb-check,
+    .jb-radio,
+    .jb-switch{
+        &:hover{
+            position: relative;
+        }
+        &:focus{
+            position: relative;
+            z-index: 1;
+        }
+    }
+}
+
+.jb-v-group{
+    display: inline-block;
+
+    .jb-group{
+        display: block;
+        margin-bottom: -@onepx;
+
+        > * {
+            .border-radius(0);
+        }
+
+        &:first-child{
+            > * {
+                &:first-child{
+                    .border-top-left-radius(@com-border-radius);
+                }
+                &:last-child{
+                    .border-top-right-radius(@com-border-radius);
+                }
+            }
+        }
+        &:last-child{
+            margin-bottom: 0;
+
+            > * {
+                &:first-child{
+                    .border-bottom-left-radius(@com-border-radius);
+                }
+                &:last-child{
+                    .border-bottom-right-radius(@com-border-radius);
+                }
+            }
+        }
+    }
+}
+

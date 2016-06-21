@@ -1,0 +1,55 @@
+@import 'utils';
+
+@com-border-color: #BBB;
+@com-border-radius: .2em;
+@com-padding: .5em;
+
+@com-border-color-hover: #AAA;
+
+@com-border-color-focus: #39F;
+@com-box-shadow-focus: 0 0 .2em #39F;
+
+@com-opacity-disabled: .5;
+
+@com-separator-border: @onepx dotted #BBB;
+
+@com-space: .4em;
+
+@com-square: 2.2em;
+
+@com-color-primary: #39F;
+@com-color-success: #5C6;
+@com-color-danger: #F63;
+@com-color-warning: #FA3;
+@com-color-info: #3CE;
+@com-color-dark: #666;
+
+.com-font-setup(){
+    font-family: sans-serif;
+    font-size: 1em;
+    outline: 0;
+}
+
+.com-selectable-cell-setup(){
+    color: #555;
+    outline: 0;
+    text-decoration: none;
+
+    &.jb-selected{
+        background: #DEF;
+        color: #369;
+        font-weight: 600;
+    }
+
+    &:hover{
+        background: #EEE;
+    }
+    &:focus{
+        background: @com-border-color-focus;
+        color: #FFF;
+    }
+    &:active{
+        background: darken(@com-border-color-focus, 10%);
+        .box-shadow(0 2px 6px darken(@com-border-color-focus, 20%) inset);
+    }
+}

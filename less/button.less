@@ -1,0 +1,118 @@
+@import 'common/utils';
+@import 'common/component';
+
+.jb-button-colored(@l-background){
+    @l-border-color: shade(@l-background, 20%);
+    @l-border-color-focus: shade(@l-background, 35%);
+    @l-box-shadow: 0 @onepx 0 lighten(@l-background, 10%) inset;
+    @l-box-shadow-focus: 0 0 .3em @l-border-color-focus;
+
+    .box-shadow(@l-box-shadow);
+    .text-shadow(0 -@onepx 0 darken(@l-background, 15%));
+
+    background: @l-background;
+    border: @onepx solid @l-border-color;
+    color: #FFF;
+
+    &:hover{
+        background: lighten(@l-background, 8%);
+    }
+    &:focus{
+        .box-shadow(@l-box-shadow, @l-box-shadow-focus);
+
+        border-color: @l-border-color-focus;
+    }
+    &:active{
+        .box-shadow(0 .1em .4em darken(@l-background, 20%) inset, @l-box-shadow-focus);
+
+        background: shade(@l-background, 5%);
+        border-color: darken(@l-border-color-focus, 6%);
+        color: #F2F2F2;
+    }
+    &:disabled{
+        .box-shadow(none);
+
+        background: @l-background;
+        border-color: @l-border-color;
+        color: #FFF;
+    }
+}
+
+.jb-button{
+    @l-background: #F6F6F6;
+    @l-box-shadow: 0 @onepx 0 #FFF inset;
+
+    .com-font-setup();
+    .border-radius(@com-border-radius);
+    .box-shadow(@l-box-shadow);
+    .text-shadow(0 @onepx 0 #FFF);
+
+    background: @l-background;
+    border: @onepx solid @com-border-color;
+    color: #777;
+    cursor: pointer;
+    padding: @com-padding 0;
+
+    &:hover{
+        background: lighten(@l-background, 3%);
+        border-color: @com-border-color-hover;
+    }
+    &:focus{
+        .box-shadow(@l-box-shadow, @com-box-shadow-focus);
+        border-color: @com-border-color-focus;
+    }
+    &:active{
+        .box-shadow(0 .1em .4em #BBB inset, @com-box-shadow-focus);
+        background: #EEE;
+    }
+    &:disabled{
+        .box-shadow(none);
+
+        background: #F6F6F6;
+        border-color: @com-border-color;
+        cursor: default;
+        .opacity(@com-opacity-disabled);
+    }
+
+    &-caption{
+        display: inline-block;
+        padding: 0 1em;
+
+        + .jb-button-icon{
+            margin-left: -1em;
+        }
+    }
+    &-icon{
+        text-align: center;
+        width: @com-square;
+
+        + .jb-button-caption{
+            padding-left: 0;
+            margin-left: -.2em;
+        }
+    }
+
+    &.jb-primary{
+        .jb-button-colored(@com-color-primary);
+    }
+    &.jb-success{
+        .jb-button-colored(@com-color-success);
+    }
+    &.jb-danger{
+        .jb-button-colored(@com-color-danger);
+    }
+    &.jb-warning{
+        .jb-button-colored(@com-color-warning);
+    }
+    &.jb-info{
+        .jb-button-colored(@com-color-info);
+    }
+    &.jb-dark{
+        .jb-button-colored(@com-color-dark);
+    }
+
+    &::-moz-focus-inner{
+        border: 0;
+        padding: 0;
+    }
+}

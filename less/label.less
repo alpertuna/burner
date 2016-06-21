@@ -1,0 +1,86 @@
+@import 'common/utils';
+@import 'common/component';
+
+.jb-label-colored(@color){
+    color: darken(@color, 0%);
+}
+.jb-label-bg-colored(@color){
+    background: tint(@color, 92%);
+    border-color: shade(@color, 20%);
+}
+
+.jb-label{
+    .border-radius(@com-border-radius);
+
+    border: @onepx solid transparent;
+    color: #888;
+    display: inline-block;
+    padding: @com-padding 0;
+
+    &-bold .jb-label-caption{
+        font-weight: bold;
+    }
+    &-caption{
+        display: inline-block;
+    }
+    &-icon + &-caption{
+        margin-left: .3em;
+    }
+    &-disabled{
+        .opacity(@com-opacity-disabled);
+    }
+
+    &.jb-primary{
+        .jb-label-colored(@com-color-primary);
+    }
+    &.jb-success{
+        .jb-label-colored(@com-color-success);
+    }
+    &.jb-danger{
+        .jb-label-colored(@com-color-danger);
+    }
+    &.jb-warning{
+        .jb-label-colored(@com-color-warning);
+    }
+    &.jb-info{
+        .jb-label-colored(@com-color-info);
+    }
+}
+.jb-group .jb-label{
+    background: #FCFCFC;
+    border-color: @com-border-color;
+
+    &-caption{
+        padding: 0 1em;
+    }
+    &-icon{
+        text-align: center;
+        width: @com-square;
+
+        + .jb-label-caption{
+            padding-left: 0;
+            margin-left: -.2em;
+        }
+    }
+    &.jb-narrow .jb-label-caption{
+        padding: 0;
+        text-align: center;
+        width: @com-square/2;
+    }
+
+    &.jb-primary{
+        .jb-label-bg-colored(@com-color-primary);
+    }
+    &.jb-success{
+        .jb-label-bg-colored(@com-color-success);
+    }
+    &.jb-danger{
+        .jb-label-bg-colored(@com-color-danger);
+    }
+    &.jb-warning{
+        .jb-label-bg-colored(@com-color-warning);
+    }
+    &.jb-info{
+        .jb-label-bg-colored(@com-color-info);
+    }
+}

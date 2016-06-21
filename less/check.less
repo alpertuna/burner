@@ -1,0 +1,33 @@
+@import 'common/utils';
+@import 'common/component';
+@import 'input';
+
+.jb-check{
+    .jb-input();
+
+    cursor: pointer;
+    display: inline-block;
+    text-align: center;
+
+    &-icon{
+        text-align: center;
+        width: 1.2em;
+    }
+
+    &:active{
+        .box-shadow(0 .1em .4em #CCC inset, @com-box-shadow-focus);
+
+        background: #F8F8F8;
+    }
+
+    &:disabled{
+        .box-shadow(none);
+
+        background: #FFF;
+        cursor: default;
+    }
+
+    &::-moz-focus-inner{
+        border: 0;
+    }
+}
