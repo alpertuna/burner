@@ -1,7 +1,13 @@
 ({
     paths: {
-        'burner': 'js'
+        'burner': 'src'
     },
+    shim: {
+        'burner/third/date.format': true
+    },
+    wrapShim: true,
+    name: 'license',
+    /*preserveLicenseComments: false,*/
     include:[
         'burner/third/date.format',
         'burner/core/Utils',
