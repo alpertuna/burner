@@ -1,0 +1,38 @@
+{
+  "name": "jsburner-dev",
+  "version": "1.0.0",
+  "description": "JS Burner - A Framework for JavaScript",
+  "main": "dist/jsburner.min.js",
+  "scripts": {
+    "build-js-min": "r.js -o build.js out=dist/burner.min.js",
+    "build-js": "r.js -o build.js out=dist/burner.js optimize=none",
+    "build-css-min": "lessc --clean-css less/style.less dist/burner.min.css",
+    "build-css": "lessc less/style.less dist/burner.css",
+    "build-all": "npm run build-js && npm run build-js-min && npm run build-css && npm run build-css-min",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/alpertuna/jsburner.git"
+  },
+  "keywords": [
+    "js",
+    "javascript",
+    "burner",
+    "framework",
+    "interface",
+    "class",
+    "component"
+  ],
+  "author": "H.Alper Tuna",
+  "license": "MIT",
+  "bugs": {
+    "url": "https://github.com/alpertuna/jsburner/issues"
+  },
+  "homepage": "https://github.com/alpertuna/jsburner#readme",
+  "devDependencies": {
+    "less": "^2.7.1",
+    "less-plugin-clean-css": "^1.5.1",
+    "requirejs": "^2.2.0"
+  }
+}
