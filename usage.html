@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     
-<!-- Mirrored from burner-docs.local/usage by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 23 Jun 2016 00:09:14 GMT -->
+<!-- Mirrored from burner-docs.local/usage by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 23 Jun 2016 11:22:25 GMT -->
 <!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
 <head>
         <meta charset="UTF-8">
@@ -31,7 +31,7 @@
                 Usage            </a>
         </li><li>
             <a
-                href="library-documentation/Ajax.html"
+                href="library-documentation"
                             >
                 Library Documentation            </a>
         </li>    </ul>
@@ -232,7 +232,9 @@ Furthermore, you can overwrite native events using <code>.handle()</code> method
 
 <h1 id="input-components">Input Components</h1>
 
-<p>In this section, there is no need to explain usage and methods, examples are obvious. And not all methods, commonly used methods will be shown, so for full documentation, you should look <a href="library-documentation/Ajax.html">Library Documentation</a>.</p>
+<p>In this section, there is no need to explain usage and methods, examples are obvious. And not all methods, commonly used methods will be shown, so for full documentation, you should look <a href="library-documentation">Library Documentation</a>.</p>
+
+
 
 <h3 id="change-event"><code>change</code> Event</h3>
 
@@ -244,179 +246,183 @@ Furthermore, you can overwrite native events using <code>.handle()</code> method
 
 
 
-<pre class="prettyprint"><code class="language-js hljs ">Document.new().add(
-    Button.new(<span class="hljs-string">'Click Me!'</span>)
-    .on(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
-        alert(<span class="hljs-string">'Button has been clicked.'</span>);
-    }),
-    <span class="hljs-string">' '</span>,
-    Button.new(<span class="hljs-string">'With Icon'</span>)
-    .setIcon(<span class="hljs-string">'bolt'</span>),
-    <span class="hljs-string">' '</span>,
-    Button.new().setIcon(<span class="hljs-string">'bell'</span>)
-);</code></pre>
+<pre class="prettyprint"><code class="language-js hljs "><span class="hljs-built_in">require</span>([<span class="hljs-string">'burner/ui/Document'</span>, <span class="hljs-string">'burner/ui/Button'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(Document, Button)</span>{</span>
+    Document.new().add(
+        Button.new(<span class="hljs-string">'Click Me!'</span>)
+        .on(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+            alert(<span class="hljs-string">'Button has been clicked.'</span>);
+        }),
+        <span class="hljs-string">' '</span>,
+        Button.new(<span class="hljs-string">'With Icon'</span>)
+        .setIcon(<span class="hljs-string">'bolt'</span>),
+        <span class="hljs-string">' '</span>,
+        Button.new().setIcon(<span class="hljs-string">'bell'</span>)
+    );
+});</code></pre>
 
 <p>Themes and disabled states of <code>Button</code>;</p>
 
-
-
-<pre class="prettyprint"><code class="language-js hljs ">Document.new().add(
-    Button.new(<span class="hljs-string">'Normal'</span>), <span class="hljs-string">' '</span>,
-    Button.new(<span class="hljs-string">'Primary'</span>).setTheme(<span class="hljs-string">'PRIMARY'</span>), <span class="hljs-string">' '</span>,
-    Button.new(<span class="hljs-string">'Success'</span>).setTheme(<span class="hljs-string">'SUCCESS'</span>), <span class="hljs-string">' '</span>,
-    Button.new(<span class="hljs-string">'Warning'</span>).setTheme(<span class="hljs-string">'WARNING'</span>), <span class="hljs-string">' '</span>,
-    Button.new(<span class="hljs-string">'Danger'</span>).setTheme(<span class="hljs-string">'DANGER'</span>), <span class="hljs-string">' '</span>,
-    Button.new(<span class="hljs-string">'Info'</span>).setTheme(<span class="hljs-string">'INFO'</span>), <span class="hljs-string">' '</span>,
-    Button.new(<span class="hljs-string">'Dark'</span>).setTheme(<span class="hljs-string">'DARK'</span>),
-    <span class="hljs-string">'&lt;br /&gt;&lt;br /&gt;'</span>,
-    Button.new(<span class="hljs-string">'Normal'</span>).setDisabled(<span class="hljs-literal">true</span>), <span class="hljs-string">' '</span>,
-    Button.new(<span class="hljs-string">'Primary'</span>).setDisabled(<span class="hljs-literal">true</span>).setTheme(<span class="hljs-string">'PRIMARY'</span>), <span class="hljs-string">' '</span>,
-    Button.new(<span class="hljs-string">'Success'</span>).setDisabled(<span class="hljs-literal">true</span>).setTheme(<span class="hljs-string">'SUCCESS'</span>), <span class="hljs-string">' '</span>,
-    Button.new(<span class="hljs-string">'Warning'</span>).setDisabled(<span class="hljs-literal">true</span>).setTheme(<span class="hljs-string">'WARNING'</span>), <span class="hljs-string">' '</span>,
-    Button.new(<span class="hljs-string">'Danger'</span>).setDisabled(<span class="hljs-literal">true</span>).setTheme(<span class="hljs-string">'DANGER'</span>), <span class="hljs-string">' '</span>,
-    Button.new(<span class="hljs-string">'Info'</span>).setDisabled(<span class="hljs-literal">true</span>).setTheme(<span class="hljs-string">'INFO'</span>), <span class="hljs-string">' '</span>,
-    Button.new(<span class="hljs-string">'Dark'</span>).setDisabled(<span class="hljs-literal">true</span>).setTheme(<span class="hljs-string">'DARK'</span>)
-);</code></pre>
-
-
+<pre class="prettyprint"><code class="language-js hljs "><span class="hljs-built_in">require</span>([<span class="hljs-string">'burner/ui/Document'</span>, <span class="hljs-string">'burner/ui/Button'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(Document, Button)</span>{</span>
+    Document.new().add(
+        Button.new(<span class="hljs-string">'Normal'</span>), <span class="hljs-string">' '</span>,
+        Button.new(<span class="hljs-string">'Primary'</span>).setTheme(<span class="hljs-string">'PRIMARY'</span>), <span class="hljs-string">' '</span>,
+        Button.new(<span class="hljs-string">'Success'</span>).setTheme(<span class="hljs-string">'SUCCESS'</span>), <span class="hljs-string">' '</span>,
+        Button.new(<span class="hljs-string">'Warning'</span>).setTheme(<span class="hljs-string">'WARNING'</span>), <span class="hljs-string">' '</span>,
+        Button.new(<span class="hljs-string">'Danger'</span>).setTheme(<span class="hljs-string">'DANGER'</span>), <span class="hljs-string">' '</span>,
+        Button.new(<span class="hljs-string">'Info'</span>).setTheme(<span class="hljs-string">'INFO'</span>), <span class="hljs-string">' '</span>,
+        Button.new(<span class="hljs-string">'Dark'</span>).setTheme(<span class="hljs-string">'DARK'</span>),
+        <span class="hljs-string">'&lt;br /&gt;&lt;br /&gt;'</span>,
+        Button.new(<span class="hljs-string">'Normal'</span>).setDisabled(<span class="hljs-literal">true</span>), <span class="hljs-string">' '</span>,
+        Button.new(<span class="hljs-string">'Primary'</span>).setDisabled(<span class="hljs-literal">true</span>).setTheme(<span class="hljs-string">'PRIMARY'</span>), <span class="hljs-string">' '</span>,
+        Button.new(<span class="hljs-string">'Success'</span>).setDisabled(<span class="hljs-literal">true</span>).setTheme(<span class="hljs-string">'SUCCESS'</span>), <span class="hljs-string">' '</span>,
+        Button.new(<span class="hljs-string">'Warning'</span>).setDisabled(<span class="hljs-literal">true</span>).setTheme(<span class="hljs-string">'WARNING'</span>), <span class="hljs-string">' '</span>,
+        Button.new(<span class="hljs-string">'Danger'</span>).setDisabled(<span class="hljs-literal">true</span>).setTheme(<span class="hljs-string">'DANGER'</span>), <span class="hljs-string">' '</span>,
+        Button.new(<span class="hljs-string">'Info'</span>).setDisabled(<span class="hljs-literal">true</span>).setTheme(<span class="hljs-string">'INFO'</span>), <span class="hljs-string">' '</span>,
+        Button.new(<span class="hljs-string">'Dark'</span>).setDisabled(<span class="hljs-literal">true</span>).setTheme(<span class="hljs-string">'DARK'</span>)
+    );
+});</code></pre>
 
 <h2 id="input">Input</h2>
 
 
 
-<pre class="prettyprint"><code class="language-js hljs ">Document.new().add(
-    Input.new()
-    .setPlaceholder(<span class="hljs-string">'It is an placeholder'</span>)
-    .on(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(e)</span>{</span>
-        alert(<span class="hljs-string">'Value has changed: '</span> + <span class="hljs-keyword">this</span>.getValue());
-        <span class="hljs-comment">//Also works;</span>
-        <span class="hljs-comment">//alert('Value has changed: ' + e.target.value);</span>
-    }),
-    <span class="hljs-string">' '</span>,
-    Input.new().setValue(<span class="hljs-string">'Disabled Input'</span>).setDisabled(<span class="hljs-literal">true</span>)
-);</code></pre>
+<pre class="prettyprint"><code class="language-js hljs "><span class="hljs-built_in">require</span>([<span class="hljs-string">'burner/ui/Document'</span>, <span class="hljs-string">'burner/ui/Input'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(Document, Input)</span>{</span>
+    Document.new().add(
+        Input.new()
+        .setPlaceholder(<span class="hljs-string">'It is an placeholder'</span>)
+        .on(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(e)</span>{</span>
+            alert(<span class="hljs-string">'Value has changed: '</span> + <span class="hljs-keyword">this</span>.getValue());
+            <span class="hljs-comment">//Also works;</span>
+            <span class="hljs-comment">//alert('Value has changed: ' + e.target.value);</span>
+        }),
+        <span class="hljs-string">' '</span>,
+        Input.new().setValue(<span class="hljs-string">'Disabled Input'</span>).setDisabled(<span class="hljs-literal">true</span>)
+    );
+});</code></pre>
 
 <p><code>change</code> event is handled by <code>EventHandler</code>. Dispite of this, <code>e</code> parameter points native <code>change</code> event, as <code>Input</code> component passes native change event to handled <code>change</code> event. For more information <a href="#eventhandler">EventHandler</a>.</p>
-
-
 
 <h2 id="label">Label</h2>
 
 
 
-<pre class="prettyprint"><code class="language-js hljs ">Document.new().add(
-    Element.new().add(
-        Label.new(<span class="hljs-string">'A Label'</span>)
-    ),
-    Element.new().add(
-        Label.new(<span class="hljs-string">'A Label with Icon'</span>).setIcon(<span class="hljs-string">'camera'</span>)
-    )
-);</code></pre>
+<pre class="prettyprint"><code class="language-js hljs "><span class="hljs-built_in">require</span>([<span class="hljs-string">'burner/ui/Document'</span>, <span class="hljs-string">'burner/ui/Element'</span>, <span class="hljs-string">'burner/ui/Label'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(Document, Element, Label)</span>{</span>
+    Document.new().add(
+        Element.new().add(
+            Label.new(<span class="hljs-string">'A Label'</span>)
+        ),
+        Element.new().add(
+            Label.new(<span class="hljs-string">'A Label with Icon'</span>).setIcon(<span class="hljs-string">'camera'</span>)
+        )
+    );
+});</code></pre>
 
 <p>Have to say that <code>Label</code>’s appearance changes in <code>Group</code> component.</p>
-
-
 
 <h2 id="group">Group</h2>
 
 
 
-<pre class="prettyprint"><code class="language-js hljs "><span class="hljs-keyword">var</span> input = Input.new().setPlaceholder(<span class="hljs-string">'Type a subject to search'</span>);
+<pre class="prettyprint"><code class="language-js hljs "><span class="hljs-built_in">require</span>([<span class="hljs-string">'burner/ui/Document'</span>, <span class="hljs-string">'burner/ui/Group'</span>, <span class="hljs-string">'burner/ui/Button'</span>, <span class="hljs-string">'burner/ui/Input'</span>, <span class="hljs-string">'burner/ui/Label'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(Document, Group, Button, Input, Label)</span>{</span>
+    <span class="hljs-keyword">var</span> input = Input.new().setPlaceholder(<span class="hljs-string">'Type a subject to search'</span>);
 
-Document.new().add(
+    Document.new().add(
 
-    Group.new().add(
-        Label.new(<span class="hljs-string">'Subject'</span>),
-        input,
-        Button.new().setIcon(<span class="hljs-string">'search'</span>).on(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
-            alert(<span class="hljs-string">'Search subject is: '</span> + input.getValue())
-        })
-    ),
+        Group.new().add(
+            Label.new(<span class="hljs-string">'Subject'</span>),
+            input,
+            Button.new().setIcon(<span class="hljs-string">'search'</span>).on(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+                alert(<span class="hljs-string">'Search subject is: '</span> + input.getValue())
+            })
+        ),
 
-    <span class="hljs-string">'&lt;br /&gt;&lt;br /&gt;'</span>,
+        <span class="hljs-string">'&lt;br /&gt;&lt;br /&gt;'</span>,
 
-    Group.new().add(
-        Label.new(<span class="hljs-string">'Subject'</span>),
-        Input.new().setPlaceholder(<span class="hljs-string">'Type a subject to search'</span>),
-        Button.new().setIcon(<span class="hljs-string">'search'</span>).on(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
-            alert(<span class="hljs-string">'Search subject is: '</span> + input.getValue())
-        })
-    ).setDisabled(<span class="hljs-literal">true</span>)
+        Group.new().add(
+            Label.new(<span class="hljs-string">'Subject'</span>),
+            Input.new().setPlaceholder(<span class="hljs-string">'Type a subject to search'</span>),
+            Button.new().setIcon(<span class="hljs-string">'search'</span>).on(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+                alert(<span class="hljs-string">'Search subject is: '</span> + input.getValue())
+            })
+        ).setDisabled(<span class="hljs-literal">true</span>)
 
-);</code></pre>
-
-
+    );
+});</code></pre>
 
 <h2 id="spinner">Spinner</h2>
 
 
 
-<pre class="prettyprint"><code class="language-js hljs ">Document.new().add(
-    Label.new(<span class="hljs-string">'Default'</span>), <span class="hljs-string">' '</span>,
-    Spinner.new(),
-    <span class="hljs-string">'&lt;br /&gt;&lt;br /&gt;'</span>,
+<pre class="prettyprint"><code class="language-js hljs "><span class="hljs-built_in">require</span>([<span class="hljs-string">'burner/ui/Document'</span>, <span class="hljs-string">'burner/ui/Spinner'</span>, <span class="hljs-string">'burner/ui/Label'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(Document, Spinner, Label)</span>{</span>
+    Document.new().add(
+        Label.new(<span class="hljs-string">'Default'</span>), <span class="hljs-string">' '</span>,
+        Spinner.new(),
+        <span class="hljs-string">'&lt;br /&gt;&lt;br /&gt;'</span>,
 
-    Label.new(<span class="hljs-string">'Mininum is 2, and maximum is 10'</span>), <span class="hljs-string">' '</span>,
-    Spinner.new().setMin(<span class="hljs-number">2</span>).setMax(<span class="hljs-number">10</span>),
-    <span class="hljs-string">'&lt;br /&gt;&lt;br /&gt;'</span>,
+        Label.new(<span class="hljs-string">'Mininum is 2, and maximum is 10'</span>), <span class="hljs-string">' '</span>,
+        Spinner.new().setMin(<span class="hljs-number">2</span>).setMax(<span class="hljs-number">10</span>),
+        <span class="hljs-string">'&lt;br /&gt;&lt;br /&gt;'</span>,
 
-    Label.new(<span class="hljs-string">'Padding is 3'</span>), <span class="hljs-string">' '</span>,
-    Spinner.new().setPad(<span class="hljs-number">3</span>),
-    <span class="hljs-string">'&lt;br /&gt;&lt;br /&gt;'</span>,
+        Label.new(<span class="hljs-string">'Padding is 3'</span>), <span class="hljs-string">' '</span>,
+        Spinner.new().setPad(<span class="hljs-number">3</span>),
+        <span class="hljs-string">'&lt;br /&gt;&lt;br /&gt;'</span>,
 
-    Label.new(<span class="hljs-string">'Minimum is -5, maximum is 5, and has loop'</span>), <span class="hljs-string">' '</span>,
-    Spinner.new().setMin(-<span class="hljs-number">5</span>).setMax(<span class="hljs-number">5</span>).setLoop(<span class="hljs-literal">true</span>),
-    <span class="hljs-string">'&lt;br /&gt;&lt;br /&gt;'</span>,
+        Label.new(<span class="hljs-string">'Minimum is -5, maximum is 5, and has loop'</span>), <span class="hljs-string">' '</span>,
+        Spinner.new().setMin(-<span class="hljs-number">5</span>).setMax(<span class="hljs-number">5</span>).setLoop(<span class="hljs-literal">true</span>),
+        <span class="hljs-string">'&lt;br /&gt;&lt;br /&gt;'</span>,
 
-    Label.new(<span class="hljs-string">'Buttons are hidden'</span>), <span class="hljs-string">' '</span>,
-    Spinner.new().showButtons(<span class="hljs-literal">false</span>),
-    <span class="hljs-string">'&lt;br /&gt;&lt;br /&gt;'</span>,
+        Label.new(<span class="hljs-string">'Buttons are hidden'</span>), <span class="hljs-string">' '</span>,
+        Spinner.new().showButtons(<span class="hljs-literal">false</span>),
+        <span class="hljs-string">'&lt;br /&gt;&lt;br /&gt;'</span>,
 
-    Label.new(<span class="hljs-string">'Disabled'</span>), <span class="hljs-string">' '</span>,
-    Spinner.new().setDisabled(<span class="hljs-literal">true</span>)
-);</code></pre>
-
-
-
-<h2 id="select">Select</h2>
+        Label.new(<span class="hljs-string">'Disabled'</span>), <span class="hljs-string">' '</span>,
+        Spinner.new().setDisabled(<span class="hljs-literal">true</span>)
+    );
+});</code></pre>
 
 
 
-<pre class="prettyprint"><code class="language-js hljs ">Document.new().add(
-    Dropdown.new([
-        {
-            <span class="hljs-string">'title'</span>: <span class="hljs-string">'An Option'</span>,
-            <span class="hljs-string">'value'</span>: <span class="hljs-number">0</span>
-        },
-        {
-            <span class="hljs-string">'title'</span>: <span class="hljs-string">'Another Option'</span>,
-            <span class="hljs-string">'value'</span>: <span class="hljs-number">1</span>,
-            <span class="hljs-string">'default'</span>: <span class="hljs-literal">true</span>
-        },
-        {
-            <span class="hljs-string">'type'</span>: <span class="hljs-string">'SEPARATOR'</span>,
-        },
-        {
-            <span class="hljs-string">'title'</span>: <span class="hljs-string">'A Separated Option'</span>,
-            <span class="hljs-string">'value'</span>: <span class="hljs-number">2</span>
-        },
-        {
-            <span class="hljs-string">'title'</span>: <span class="hljs-string">'Title of Separator'</span>,
-            <span class="hljs-string">'type'</span>: <span class="hljs-string">'SEPARATOR'</span>
-        },
-        {
-            <span class="hljs-string">'title'</span>: <span class="hljs-string">'Last Option'</span>,
-            <span class="hljs-string">'value'</span>: <span class="hljs-number">3</span>
-        }
-    ]).on(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
-        alert(
-            <span class="hljs-string">'Selected item:'</span> +
-            <span class="hljs-keyword">this</span>.getTitle() +
-            <span class="hljs-string">', and value: '</span> +
-            <span class="hljs-keyword">this</span>.getValue()
-        );
-    })
-);</code></pre>
+<h2 id="dropdown">Dropdown</h2>
+
+
+
+<pre class="prettyprint"><code class="language-js hljs "><span class="hljs-built_in">require</span>([<span class="hljs-string">'burner/ui/Document'</span>, <span class="hljs-string">'burner/ui/Dropdown'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(Document, Dropdown)</span>{</span>
+    Document.new().add(
+        Dropdown.new([
+            {
+                <span class="hljs-string">'title'</span>: <span class="hljs-string">'An Option'</span>,
+                <span class="hljs-string">'value'</span>: <span class="hljs-number">0</span>
+            },
+            {
+                <span class="hljs-string">'title'</span>: <span class="hljs-string">'Another Option'</span>,
+                <span class="hljs-string">'value'</span>: <span class="hljs-number">1</span>,
+                <span class="hljs-string">'default'</span>: <span class="hljs-literal">true</span>
+            },
+            {
+                <span class="hljs-string">'type'</span>: <span class="hljs-string">'SEPARATOR'</span>,
+            },
+            {
+                <span class="hljs-string">'title'</span>: <span class="hljs-string">'A Separated Option'</span>,
+                <span class="hljs-string">'value'</span>: <span class="hljs-number">2</span>
+            },
+            {
+                <span class="hljs-string">'title'</span>: <span class="hljs-string">'Title of Separator'</span>,
+                <span class="hljs-string">'type'</span>: <span class="hljs-string">'SEPARATOR'</span>
+            },
+            {
+                <span class="hljs-string">'title'</span>: <span class="hljs-string">'Last Option'</span>,
+                <span class="hljs-string">'value'</span>: <span class="hljs-number">3</span>
+            }
+        ]).on(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+            alert(
+                <span class="hljs-string">'Selected item:'</span> +
+                <span class="hljs-keyword">this</span>.getTitle() +
+                <span class="hljs-string">', and value: '</span> +
+                <span class="hljs-keyword">this</span>.getValue()
+            );
+        })
+    );
+});</code></pre>
 
 
 
@@ -424,13 +430,15 @@ Document.new().add(
 
 
 
-<pre class="prettyprint"><code class="language-js hljs ">Document.new().add(
-    Check.new(), <span class="hljs-string">' '</span>,
-    Check.new().setIcon(<span class="hljs-string">'times'</span>).setValue(<span class="hljs-literal">true</span>), <span class="hljs-string">' '</span>,
-    Check.new().check().on(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
-        alert(<span class="hljs-keyword">this</span>.getValue() ? <span class="hljs-string">'Checked.'</span> : <span class="hljs-string">'Unchecked.'</span>);
-    })
-);</code></pre>
+<pre class="prettyprint"><code class="language-js hljs "><span class="hljs-built_in">require</span>([<span class="hljs-string">'burner/ui/Document'</span>, <span class="hljs-string">'burner/ui/Check'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(Document, Check)</span>{</span>
+    Document.new().add(
+        Check.new(), <span class="hljs-string">' '</span>,
+        Check.new().setIcon(<span class="hljs-string">'times'</span>).setValue(<span class="hljs-literal">true</span>), <span class="hljs-string">' '</span>,
+        Check.new().check().on(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+            alert(<span class="hljs-keyword">this</span>.getValue() ? <span class="hljs-string">'Checked.'</span> : <span class="hljs-string">'Unchecked.'</span>);
+        })
+    );
+});</code></pre>
 
 
 
@@ -438,14 +446,16 @@ Document.new().add(
 
 
 
-<pre class="prettyprint"><code class="language-js hljs "><span class="hljs-keyword">var</span> checkGroup = CheckGroup.new().on(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
-    alert(<span class="hljs-string">'Checked boxes are "'</span> + <span class="hljs-keyword">this</span>.getValue().join(<span class="hljs-string">'", "'</span>) + <span class="hljs-string">'" by order'</span>);
-});
-Document.new().add(
-    Check.new().setGroupValue(<span class="hljs-string">'first'</span>).bind(checkGroup).setValue(<span class="hljs-literal">true</span>), <span class="hljs-string">' '</span>,
-    Check.new().setGroupValue(<span class="hljs-string">'second'</span>).bind(checkGroup), <span class="hljs-string">' '</span>,
-    Check.new(<span class="hljs-string">'third'</span>).bind(checkGroup)
-);</code></pre>
+<pre class="prettyprint"><code class="language-js hljs "><span class="hljs-built_in">require</span>([<span class="hljs-string">'burner/ui/Document'</span>, <span class="hljs-string">'burner/ui/CheckGroup'</span>, <span class="hljs-string">'burner/ui/Check'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(Document, CheckGroup, Check)</span>{</span>
+    <span class="hljs-keyword">var</span> checkGroup = CheckGroup.new().on(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+        alert(<span class="hljs-string">'Checked boxes are "'</span> + <span class="hljs-keyword">this</span>.getValue().join(<span class="hljs-string">'", "'</span>) + <span class="hljs-string">'" by order'</span>);
+    });
+    Document.new().add(
+        Check.new().setGroupValue(<span class="hljs-string">'first'</span>).bind(checkGroup).setValue(<span class="hljs-literal">true</span>), <span class="hljs-string">' '</span>,
+        Check.new().setGroupValue(<span class="hljs-string">'second'</span>).bind(checkGroup), <span class="hljs-string">' '</span>,
+        Check.new(<span class="hljs-string">'third'</span>).bind(checkGroup)
+    );
+});</code></pre>
 
 
 
@@ -453,20 +463,22 @@ Document.new().add(
 
 
 
-<pre class="prettyprint"><code class="language-js hljs "><span class="hljs-keyword">var</span> radioGroup = RadioGroup.new().on(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
-    console.log(<span class="hljs-string">'radioGroup has changed. Value is: '</span> + <span class="hljs-keyword">this</span>.getValue());
+<pre class="prettyprint"><code class="language-js hljs "><span class="hljs-built_in">require</span>([<span class="hljs-string">'burner/ui/Document'</span>, <span class="hljs-string">'burner/ui/RadioGroup'</span>, <span class="hljs-string">'burner/ui/Check'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(Document, RadioGroup, Check)</span>{</span>
+    <span class="hljs-keyword">var</span> radioGroup = RadioGroup.new().on(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+        console.log(<span class="hljs-string">'radioGroup has changed. Value is: '</span> + <span class="hljs-keyword">this</span>.getValue());
+    });
+    Document.new().add(
+        Check.new(<span class="hljs-number">0</span>).bind(radioGroup).on(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+            console.log(<span class="hljs-string">'First check has changed. Value is: '</span> + <span class="hljs-keyword">this</span>.getValue());
+        }), <span class="hljs-string">' '</span>,
+        Check.new(<span class="hljs-number">1</span>).bind(radioGroup).on(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+            console.log(<span class="hljs-string">'Second check has changed. Value is: '</span> + <span class="hljs-keyword">this</span>.getValue());
+        }).setIcon(<span class="hljs-string">'check'</span>), <span class="hljs-string">' '</span>,
+        Check.new().setGroupValue(<span class="hljs-number">2</span>).bind(radioGroup).on(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+            console.log(<span class="hljs-string">'Third check has changed. Value is: '</span> + <span class="hljs-keyword">this</span>.getValue());
+        })
+    );
 });
-Document.new().add(
-    Check.new(<span class="hljs-number">0</span>).bind(radioGroup).on(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
-        console.log(<span class="hljs-string">'First check has changed. Value is: '</span> + <span class="hljs-keyword">this</span>.getValue());
-    }), <span class="hljs-string">' '</span>,
-    Check.new(<span class="hljs-number">1</span>).bind(radioGroup).on(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
-        console.log(<span class="hljs-string">'Second check has changed. Value is: '</span> + <span class="hljs-keyword">this</span>.getValue());
-    }).setIcon(<span class="hljs-string">'check'</span>), <span class="hljs-string">' '</span>,
-    Check.new().setGroupValue(<span class="hljs-number">2</span>).bind(radioGroup).on(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
-        console.log(<span class="hljs-string">'Third check has changed. Value is: '</span> + <span class="hljs-keyword">this</span>.getValue());
-    })
-);
 <span class="hljs-comment">//Check your console ;)</span></code></pre>
 
 
@@ -475,21 +487,23 @@ Document.new().add(
 
 
 
-<pre class="prettyprint"><code class="language-js hljs "><span class="hljs-keyword">var</span> radioGroup = RadioGroup.new().on(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
-    alert(<span class="hljs-string">'radioGroup has changed. Value is: '</span> + <span class="hljs-keyword">this</span>.getValue());
-});
+<pre class="prettyprint"><code class="language-js hljs "><span class="hljs-built_in">require</span>([<span class="hljs-string">'burner/ui/Document'</span>, <span class="hljs-string">'burner/ui/RadioGroup'</span>, <span class="hljs-string">'burner/ui/Switch'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(Document, RadioGroup, Switch)</span>{</span>
+    <span class="hljs-keyword">var</span> radioGroup = RadioGroup.new().on(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+        alert(<span class="hljs-string">'radioGroup has changed. Value is: '</span> + <span class="hljs-keyword">this</span>.getValue());
+    });
 
-Document.new().add(
-    Switch.new(), <span class="hljs-string">' '</span>,
-    Switch.new().setValue(<span class="hljs-literal">true</span>), <span class="hljs-string">' '</span>,
-    Switch.new().check().on(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
-        alert(<span class="hljs-keyword">this</span>.getValue() ? <span class="hljs-string">'Checked.'</span> : <span class="hljs-string">'Unchecked.'</span>);
-    }),
-    <span class="hljs-string">'&lt;br /&gt;&lt;br /&gt;'</span>,
-    Switch.new(<span class="hljs-number">0</span>).bind(radioGroup), <span class="hljs-string">' '</span>,
-    Switch.new(<span class="hljs-number">1</span>).bind(radioGroup).check(), <span class="hljs-string">' '</span>,
-    Switch.new(<span class="hljs-number">2</span>).bind(radioGroup)
-);</code></pre>
+    Document.new().add(
+        Switch.new(), <span class="hljs-string">' '</span>,
+        Switch.new().setValue(<span class="hljs-literal">true</span>), <span class="hljs-string">' '</span>,
+        Switch.new().check().on(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+            alert(<span class="hljs-keyword">this</span>.getValue() ? <span class="hljs-string">'Checked.'</span> : <span class="hljs-string">'Unchecked.'</span>);
+        }),
+        <span class="hljs-string">'&lt;br /&gt;&lt;br /&gt;'</span>,
+        Switch.new(<span class="hljs-number">0</span>).bind(radioGroup), <span class="hljs-string">' '</span>,
+        Switch.new(<span class="hljs-number">1</span>).bind(radioGroup).check(), <span class="hljs-string">' '</span>,
+        Switch.new(<span class="hljs-number">2</span>).bind(radioGroup)
+    );
+});</code></pre>
 
 
 
@@ -497,15 +511,17 @@ Document.new().add(
 
 
 
-<pre class="prettyprint"><code class="language-js hljs "><span class="hljs-keyword">var</span> date = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>();
-date.setYear(<span class="hljs-number">2017</span>);
+<pre class="prettyprint"><code class="language-js hljs "><span class="hljs-built_in">require</span>([<span class="hljs-string">'burner/ui/Document'</span>, <span class="hljs-string">'burner/ui/DatePicker'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(Document, DatePicker)</span>{</span>
+    <span class="hljs-keyword">var</span> date = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>();
+    date.setYear(<span class="hljs-number">2017</span>);
 
-Document.new().add(
-    DatePicker.new(), <span class="hljs-string">' '</span>,
-    DatePicker.new(date).on(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
-        alert(<span class="hljs-string">'DatePicker has changed: '</span> + <span class="hljs-keyword">this</span>.getValue());
-    })
-);</code></pre></div>
+    Document.new().add(
+        DatePicker.new(), <span class="hljs-string">' '</span>,
+        DatePicker.new(date).on(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+            alert(<span class="hljs-string">'DatePicker has changed: '</span> + <span class="hljs-keyword">this</span>.getValue());
+        })
+    );
+});</code></pre></div>
 <script type="text/javascript" src="js/require.js"></script>
 <script type="text/javascript" src="js/burner.min.js"></script>
 <script type="text/javascript" src="js/main.js"></script>
@@ -516,5 +532,5 @@ Document.new().add(
 </div>
     </body>
 
-<!-- Mirrored from burner-docs.local/usage by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 23 Jun 2016 00:09:15 GMT -->
+<!-- Mirrored from burner-docs.local/usage by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 23 Jun 2016 11:22:25 GMT -->
 </html>

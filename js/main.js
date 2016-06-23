@@ -19,7 +19,9 @@ require.config({
 });
 
 require([
-    'burner/core/Utils',
+    'burner/ui/Element',
+    'burner/third/date.format'
+    /*'burner/core/Utils',
     'burner/ui/Document',
     'burner/ui/Element',
     'burner/ui/Label',
@@ -37,9 +39,10 @@ require([
     'burner/ui/TimePicker',
     'burner/core/createClass',
     'burner/core/EventHandler',
-    'burner/third/date.format'
+    'burner/third/date.format'*/
 ], function(
-    Utils,
+    Element
+    /*Utils,
     Document,
     Element,
     Label,
@@ -56,11 +59,12 @@ require([
     Spinner,
     TimePicker,
     createClass,
-    EventHandler
+    EventHandler*/
 ){
     $(function(){
         $('.language-js').each(function(){
-            var demo = eval(this.innerText.replace('Document.new()', 'Element.new().addClass(\'demo\')'));
+            var demo = Element.new().addClass('demo');
+            eval(this.textContent.replace('Document.new()', 'demo'));
             demo.add(
                 Element.new().addClass('code-label').add('Demo')
             );
