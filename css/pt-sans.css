@@ -1,0 +1,21 @@
+@font-face{
+    font-family:'PT Sans';
+    font-style:normal;
+    font-weight:400;
+    src:local('PT Sans'),local('PTSans'),url("../fonts/PTSans-Regular-webfont.woff") format('woff')}
+@font-face{
+    font-family:'PT Sans';
+    font-style:normal;
+    font-weight:700;
+    src:local('PT Sans Bold'),local('PTSans-Bold'),url("../fonts/PTSans-Bold-webfont.woff") format('woff')}
+@font-face{
+    font-family:'PT Sans';
+    font-style:italic;
+    font-weight:400;
+    src:local('PT Sans Italic'),local('PTSans-Italic'),url("../fonts/PTSans-Italic-webfont.woff") format('woff')}
+@font-face{
+    font-family:'PT Sans';
+    font-style:italic;
+    font-weight:700;
+    src:local('PT Sans Bold Italic'),local('PTSans-BoldItalic'),url("../fonts/PTSans-BoldItalic-webfont.woff") format('woff')}
+

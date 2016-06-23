@@ -1,0 +1,304 @@
+BODY{
+    background: #F9F9F9;
+    /*font-family: 'Open Sans';*/
+    font-family: 'PT Sans', sans-serif;
+    font-size: 18px;
+    margin: 0;
+}
+.banner{
+    background: #333;
+    box-shadow: 0 0 5px #333;
+    height: 50px;
+    line-height: 50px;
+    position: relative;
+    z-index: 2;
+}
+.banner-logo{
+    color: #888;
+    display: inline-block;
+    font-size: 22px;
+    text-align: center;
+    text-shadow: 0 -1px 0 #000;
+    vertical-align: top;
+    width:400px;
+}
+.banner-logo SPAN{
+    color: #777;
+    font-size: 16px;
+}
+
+.banner-menu{
+    display: inline-block;
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.banner-menu LI{
+    display: inline-block;
+    margin: 0;
+    padding: 0;
+}
+.banner-menu A{
+    color: #EEE;
+    display: block;
+    outline: 0;
+    padding: 0 20px;
+    text-decoration: none;
+}
+.banner-menu A:hover{
+    background: #444;
+    color: #FFF;
+}
+.banner-menu A.active{
+    background: #444;
+    border-bottom: 4px solid #39F;
+    border-top: 4px solid transparent;
+    line-height: 42px;
+}
+
+.side-menu{
+    background: #DDD;
+    bottom: 31px;
+    box-shadow: 0 0 5px #333;
+    left: 0;
+    overflow: auto;
+    position: absolute;
+    top: 50px;
+    width: 260px;
+    z-index: 1;
+}
+.side-menu UL{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.side-menu LI{
+    margin: 0;
+    padding: 0;
+}
+.side-menu A{
+    color: #555;
+    display: block;
+    line-height: 36px;
+    outline: 0;
+    padding: 0 20px;
+    text-decoration: none;
+}
+.side-menu A:hover{
+    background: #EEE;
+    color: #333;
+}
+.side-menu A.active{
+    font-weight: bold;
+    border-left: 4px solid #39F;
+    padding-left: 16px;
+}
+
+.body{
+    bottom: 31px;
+    color: #444;
+    left: 0;
+    overflow: auto;
+    padding: 0 50px 20px 450px;
+    position: absolute;
+    right: 0;
+    top: 50px;
+}
+.body.has-side-menu{
+    left: 260px;
+}
+.body H1{
+    color: #444;
+    font-size: 40px;
+    font-weight: normal;
+}
+.body H2{
+    color: #444;
+    font-size: 34px;
+    font-weight: normal;
+}
+.body H3{
+    color: #444;
+    font-size: 28px;
+    font-weight: normal;
+}
+.body H4{
+    color: #444;
+    font-size: 22px;
+    font-weight: normal;
+}
+.body H1 .hashlink,
+.body H2 .hashlink,
+.body H3 .hashlink,
+.body H4 .hashlink{
+    opacity: .1;
+}
+.body H1 .hashlink:hover,
+.body H2 .hashlink:hover,
+.body H3 .hashlink:hover,
+.body H4 .hashlink:hover{
+    opacity: .4;
+}
+.body P{
+    /*text-indent: 20px;*/
+    margin: 20px 0;
+    padding: 0;
+}
+.body .hljs,
+.body BLOCKQUOTE,
+.body CODE{
+    background: #FCFCFC;
+    border: 1px solid #DDD;
+    border-radius: 3px;
+    padding: 1px 5px;
+}
+.body CODE{
+    color: #666;
+}
+.body .hljs,
+.body BLOCKQUOTE{
+    padding: 10px 16px;
+}
+.body .hljs,
+.body P CODE,
+.body LI CODE{
+    font-size: 14px;
+}
+.body .demo{
+    background: #FFF;
+    border: 1px solid #DDD;
+    border-bottom: 0;
+    border-radius: 3px 3px 0 0;
+    font-size: 16px;
+    padding: 10px 16px;
+    position: relative;
+}
+.body .demo .code-label,
+.body .hljs .code-label{
+    background: #F4F4F4;
+    border: 1px solid #DDD;
+    border-top: 0;
+    border-right: 0;
+    border-radius: 0 0 0 3px;
+    color: #999;
+    /*font-family: 'Open Sans';*/
+    font-family: 'PT Sans', sans-serif;
+    font-size: 13px;
+    padding: 2px 10px;
+    position: absolute;
+    top: 0px;
+    right: 0px;
+}
+.body .demo + .prettyprint{
+    margin-top: 0;
+}
+.body .demo + .prettyprint .hljs{
+    border-radius: 0 0 3px 3px;
+    position: relative;
+}
+.body A,
+.footer A{
+    color: #06C;
+    text-decoration: none;
+}
+.body A:hover,
+.footer A:hover{
+    text-decoration: underline;
+}
+.body BLOCKQUOTE{
+    border-left-width: 16px;
+    margin: 0;
+}
+.body HR{
+    border: 2px solid #DDD;
+    margin: 30px 0;
+}
+.body TABLE{
+    border: 1px solid #BBB;
+    border-spacing: 0;
+    border-collapse: collapse;
+    margin: 20px 0;
+}
+.body TABLE TH{
+    background: #EEE;
+    color: #666;
+    font-weight: normal;
+    text-align: left;
+}
+.body TABLE TH,
+.body TABLE TD{
+    border: 1px solid #BBB;
+    padding: 6px 12px;
+}
+
+.toc{
+    bottom: 31px;
+    left: 0;
+    overflow: auto;
+    padding: 20px;
+    position: fixed;
+    top: 50px;
+    width: 360px;
+}
+.has-side-menu .toc{
+    left: 260px;
+}
+.toc UL{
+    list-style: none;
+    margin: 0;
+    padding: 0;
+}
+.toc LI{
+    margin: 0;
+    padding: 0;
+}
+.toc A{
+    color: #06C;
+    display: block;
+    outline: 0;
+    padding: 5px 10px;
+    text-decoration: none;
+}
+.toc UL UL A{
+    padding-left: 40px;
+}
+/*.toc UL UL UL A{
+    padding-left: 80px;
+}*/
+.toc A:hover{
+    background: #EEE;
+    text-decoration: none;
+}
+.toc A:active{
+}
+
+.footer{
+    background: #DDD;
+    border-top: 1px solid #CCC;
+    bottom: 0;
+    color: #777;
+    font-size: 12px;
+    left: 0;
+    line-height: 30px;
+    padding: 0 50px;
+    position: absolute;
+    right: 0;
+    z-index: 3;
+}
+
+
+.ld-grey{
+    color: #888;
+}
+
+
+.body .demo,
+.jb-popup{
+    font-family: sans-serif;
+}
+.jb-popup A{
+    color: #555;
+}
+.jb-popup A:hover{
+    text-decoration: none;
+}

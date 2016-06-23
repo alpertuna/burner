@@ -1,0 +1,376 @@
+<!DOCTYPE html>
+<html>
+    
+<!-- Mirrored from burner-docs.local/class-structure by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 23 Jun 2016 00:10:24 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+        <link rel="stylesheet" type="text/css" href="css/highlight-github-gist.css">
+        <link rel="stylesheet" type="text/css" href="css/pt-sans.css">
+        <link rel="stylesheet" type="text/css" href="css/burner.min.css">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <script type="text/javascript" src="js/jquery-2.2.1.min.js"></script>
+        <script type="text/javascript" src="js/scroll.js"></script>
+        <title></title>
+    </head>
+    <body>
+        <div class="banner">
+    <div class="banner-logo">
+        JS Burner <span>A Framework for Javascript</span>
+    </div><ul class="banner-menu">
+        <li>
+            <a
+                href="class-structure.html"
+                class="active"            >
+                Class Structure            </a>
+        </li><li>
+            <a
+                href="usage.html"
+                            >
+                Usage            </a>
+        </li><li>
+            <a
+                href="library-documentation/Ajax.html"
+                            >
+                Library Documentation            </a>
+        </li>    </ul>
+</div>
+<div class="body">
+    <p><div class="toc">
+<ul>
+<li><a href="#class-structure">Class Structure</a></li>
+<li><a href="#basis-of-classes">Basis of Classes</a><ul>
+<li><ul>
+<li><a href="#creating-classes">Creating Classes</a></li>
+<li><a href="#creating-instances">Creating Instances</a></li>
+<li><a href="#extending-classes">Extending Classes</a></li>
+<li><a href="#interfaces-implementation">Interfaces &amp; Implementation</a></li>
+<li><a href="#writing-class-modules">Writing Class Modules</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#depths-of-class-system">Depths of Class System</a><ul>
+<li><ul>
+<li><a href="#methods-of-class-object">Methods of Class Object</a></li>
+<li><a href="#built-in-methods-and-properties-of-an-instance">Built-in Methods and Properties of An Instance</a></li>
+<li><a href="#method-references-in-instances">Method References in Instances</a></li>
+</ul>
+</li>
+</ul>
+</li>
+</ul>
+</div>
+</p>
+
+
+
+<h1 id="class-structure">Class Structure</h1>
+
+<p>In JS Burner Framework, writing application is more like Java. Framework does not use Javascript’s native class system because it doesn’t provide enough support. An important reason of using framework’s own class system is framework focuses on extended classes and super functions inside an instance. Another reason to say is that writing strategy of native javascript classes is like hacking functions and objects. And it makes code unreadable. Actually, with Ecma Script 2015 (Harmony), writing classes is like Java too. However still not enough for this framework. Also this framework focus on browser, not server-side, and for Ecma Script 2015, you have to use a compiler to use it in browser, and it makes development complicated. Also it causes some performance losses because of many dependencies of compilers and loaders.</p>
+
+
+
+<h1 id="basis-of-classes">Basis of Classes</h1>
+
+
+
+<h3 id="creating-classes">Creating Classes</h3>
+
+<p><code>createClass</code> main factory function to create classes. Methods are defined as properties of an object to pass it to <code>createClass</code>. To use properties, you access them with <code>this.set(propertyName, value)</code> and <code>this.get(propertyName)</code> methods. These methods are also placed automatically. After these examples, how to <a href="#writing-class-modules">import createClass module</a> will be explained.</p>
+
+
+
+<pre class="prettyprint"><code class="language-javascript hljs "><span class="hljs-keyword">var</span> Animal = createClass({
+    <span class="hljs-string">'init'</span>: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(name)</span>{</span>
+        <span class="hljs-comment">//Constructor...</span>
+        <span class="hljs-keyword">this</span>.set(<span class="hljs-string">'name'</span>, name); <span class="hljs-comment">//Not "this.name = name"</span>
+        console.log(<span class="hljs-string">'New '</span> + name + <span class="hljs-string">' born!'</span>);
+    },
+
+    <span class="hljs-string">'move'</span>: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+        <span class="hljs-keyword">var</span> name = <span class="hljs-keyword">this</span>.get(<span class="hljs-string">'name'</span>);
+        console.log(name + <span class="hljs-string">' is moving...'</span>);
+    },
+    <span class="hljs-string">'sleep'</span>: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+        console.log(<span class="hljs-keyword">this</span>.get(<span class="hljs-string">'name'</span>) + <span class="hljs-string">' is sleeping...'</span>);
+    }
+})</code></pre>
+
+
+
+<h3 id="creating-instances">Creating Instances</h3>
+
+<p>After create a class, <code>Class.new()</code> function is placed automatically into class object to create instance of that class. If you notice that, <code>new Class()</code> is not the way to create instances for classes. You also pass arguments to init (constructor) function with this <code>.new()</code> function.</p>
+
+
+
+<pre class="prettyprint"><code class="language-javascript hljs "><span class="hljs-keyword">var</span> animal = Animal.new(<span class="hljs-string">'dog'</span>); <span class="hljs-comment">//Not "new Animal()"</span>
+<span class="hljs-comment">/**
+ * Console:
+ * New dog born!
+ */</span>
+
+animal.move();
+<span class="hljs-comment">/**
+ * Console:
+ * dog is moving...
+ */</span></code></pre>
+
+
+
+<h3 id="extending-classes">Extending Classes</h3>
+
+<p>After create a class, like <code>.new()</code> function, there is also <code>.extend()</code> function to extend the class. So you don’t need “createClass” module anymore to extend a class, if you have. If you overwrite a method, you can call parent’s method with <code>this.super.method()</code>. If you overwrite constructor method, you can call it just with <code>this.super()</code></p>
+
+
+
+<pre class="prettyprint"><code class="language-javascript hljs "><span class="hljs-keyword">var</span> Dog = Animal.extend({
+    <span class="hljs-string">'init'</span>: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+        <span class="hljs-keyword">this</span>.super(<span class="hljs-string">'dog'</span>); <span class="hljs-comment">//Not "super()" w/o "this."</span>
+    },
+
+    <span class="hljs-string">'bark'</span>: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+        console.log(<span class="hljs-string">'Bark bark!'</span>);
+    },
+    <span class="hljs-string">'sleep'</span>: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+        <span class="hljs-keyword">this</span>.super.sleep();
+        console.log(<span class="hljs-string">'It is dreaming...'</span>);
+    }
+});
+
+<span class="hljs-keyword">var</span> dog = Dog.new();
+<span class="hljs-comment">/**
+ * Console:
+ * New dog born!
+ */</span>
+
+dog.bark(); <span class="hljs-comment">//New method</span>
+<span class="hljs-comment">/**
+ * Console:
+ * Bark bark!
+ */</span>
+dog.move(); <span class="hljs-comment">//Inherited method</span>
+<span class="hljs-comment">/**
+ * Console:
+ * dog is moving...
+ */</span>
+dog.sleep(); <span class="hljs-comment">//Overwritten method</span>
+<span class="hljs-comment">/**
+ * Console:
+ * dog is sleeping...
+ * It is dreaming...
+ */</span>
+
+<span class="hljs-keyword">var</span> Golden = Dog.extend({
+    <span class="hljs-string">'sleep'</span>: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+        <span class="hljs-keyword">this</span>.super.super.sleep(); <span class="hljs-comment">//This is also possible, it will bypass the middle class</span>
+    }
+});
+
+<span class="hljs-keyword">var</span> golden = Golden.new();
+<span class="hljs-comment">/**
+ * Console:
+ * New dog born!
+ */</span>
+golden.sleep();
+<span class="hljs-comment">/**
+ * Console:
+ * dog is sleeping...
+ */</span></code></pre>
+
+
+
+<h3 id="interfaces-implementation">Interfaces &amp; Implementation</h3>
+
+<p>Classes also can be implemented by interface(s). Interface structure is quite simple. It’s array of method names.</p>
+
+
+
+<pre class="prettyprint"><code class="language-javascript hljs "><span class="hljs-keyword">var</span> interface = [
+    <span class="hljs-string">'read'</span>,
+    <span class="hljs-string">'write'</span>,
+    <span class="hljs-string">'open'</span>,
+    <span class="hljs-string">'close'</span>
+];</code></pre>
+
+<p>And to implement it just put a <code>.implement()</code> call to tail of class. <code>.implement()</code> method also returns class itself, so you don`t need to apply it at another line.</p>
+
+
+
+<pre class="prettyprint"><code class="language-javascript hljs "><span class="hljs-keyword">var</span> Class = createClass({
+    <span class="hljs-string">'read'</span>: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>},
+    <span class="hljs-string">'write'</span>: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>},
+    <span class="hljs-string">'open'</span>: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>},
+    <span class="hljs-string">'close'</span>: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>}
+}).implement(interface);</code></pre>
+
+<p>If one the methods defined in interface is missed, it will throw an error and warn the developer. Implementation also traces inherited methods, so if super class has a method which interface has, you don`t need to overwrite that method in new extended class.</p>
+
+
+
+<h3 id="writing-class-modules">Writing Class Modules</h3>
+
+<p>JS Burner framework uses Asynchronous Module Definition. And this is an example to write appropriate classes in Burner Framework. <br>
+<code>createClass</code> module is placed in <code>core</code> directory, and if you install framework under <code>burner</code> directory, you can define a class like this;</p>
+
+
+
+<pre class="prettyprint"><code class="language-javascript hljs ">define([<span class="hljs-string">'burner/core/createClass'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(createClass)</span>{</span>
+    <span class="hljs-keyword">return</span> createClass({
+        <span class="hljs-string">'init'</span>: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+            <span class="hljs-comment">//Constructor...</span>
+        }
+    })
+})</code></pre>
+
+
+
+<h1 id="depths-of-class-system">Depths of Class System</h1>
+
+
+
+<h3 id="methods-of-class-object">Methods of Class Object</h3>
+
+<p>When you create or extend a class, these methods will be placed automatically;</p>
+
+<ul>
+<li><code>.new(...arguments)</code> Creates an instance</li>
+<li><code>.extend({})</code> Extends and creates new class</li>
+<li><code>.implement({})</code> Implements an interface and returns class itself</li>
+</ul>
+
+
+
+<h3 id="built-in-methods-and-properties-of-an-instance">Built-in Methods and Properties of An Instance</h3>
+
+<p>When you create an instance of a class, these methods will be placed automatically;</p>
+
+<ul>
+<li><code>.isInstanceOf(Class)</code> Check the instance is an instance of given Class or one of extended classes of given class.</li>
+<li><code>.set(propertyName, value)</code> Sets a property of instance and returns instance itself.</li>
+<li><code>.get(propertyName)</code> Returns a property of instance.</li>
+<li><code>.unset(propertyName)</code> Deletes a property of instance.</li>
+<li><code>.inc(propertyName[, increment])</code> It is a variant of <code>.set()</code> method. It increases the value of property, so property should be a number. Default value of increment is <code>1</code>.</li>
+<li><code>.ref</code> This is special property of instances. This gives the most evaluated (extended) model of instance (if class has been extended). So with this reference, base class also can reach extended class’ methods.</li>
+</ul>
+
+<h3 id="method-references-in-instances">Method References in Instances</h3>
+
+<p>While writing classes, when you use <code>this</code> keyword, it will let you access just current and inherited super methods, not for methods defined in extended class later. Also if you overwrite a method in an extended class, and when you call an inherited method, and if that method calls another method which you has overwritten, it will call its own layer’s method, not overwritten method. <br>
+That’s why, if you write methods which returns instance itself, you have not to return <code>this</code> so that when you call an inherited method, that will return its layer and after that method, you can’t access extended methods. <br>
+It’s an example to show wrong usage;</p>
+
+
+
+<pre class="prettyprint"><code class="language-javascript hljs "><span class="hljs-keyword">var</span> A = createClass({
+    <span class="hljs-string">'aFunction'</span>: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
+    }
+});
+
+<span class="hljs-keyword">var</span> B = A.extend({
+    <span class="hljs-string">'anotherFunction'</span>: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>;
+    }
+});
+
+<span class="hljs-keyword">var</span> b = B.new();
+<span class="hljs-comment">//Case 1, works</span>
+b.anotherFunction().aFunction();
+<span class="hljs-comment">//Case 2, does not work</span>
+b.aFunction().anotherFunction();</code></pre>
+
+<p>In case 1, <code>anotherFunction</code> returned <code>this</code> as <code>B</code> class, so next function reached <code>aFunction</code> because it is inherited to <code>B</code>. <br>
+In case2, <code>aFunction</code> returned <code>this</code> as <code>A</code> class, and <code>anotherFunction</code> is not defined or inherited in <code>A</code>, so it will throw an error.</p>
+
+<p>To solve this cases, there is a special property of all instances: <code>this.ref</code>. This reference always gives last version of instance, so all methods can return instance successfully.</p>
+
+<p>This is a correct example;</p>
+
+
+
+<pre class="prettyprint"><code class="language-javascript hljs "><span class="hljs-keyword">var</span> A = createClass({
+    <span class="hljs-string">'aFunction'</span>: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.ref;
+    }
+});
+
+<span class="hljs-keyword">var</span> B = A.extend({
+    <span class="hljs-string">'anotherFunction'</span>: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.ref;
+    }
+});
+
+<span class="hljs-keyword">var</span> b = B.new();
+<span class="hljs-comment">//Case 1, works</span>
+b.anotherFunction().aFunction();
+<span class="hljs-comment">//Case 2, works</span>
+b.aFunction().anotherFunction();</code></pre>
+
+<p>Using this approach brings with it some responsibilities. You can use methods by putting them as tail to instance. However, in class methods you should not to use this approach. Because there may be an extended class(es) and they may overwrite some methods. In that case they may return incorrect instance layer to react a method. <br>
+It is an incorrect example;</p>
+
+
+
+<pre class="prettyprint"><code class="language-javascript hljs "><span class="hljs-keyword">var</span> A = createClass({
+    <span class="hljs-string">'funA'</span>: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+        console.log(<span class="hljs-string">'A - funA'</span>);
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.ref;
+    },
+    <span class="hljs-string">'funB'</span>: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+        console.log(<span class="hljs-string">'A - funB'</span>);
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.ref;
+    },
+    <span class="hljs-string">'doIt'</span>: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.funA().funB(); <span class="hljs-comment">//Problematic    </span>
+    }
+});
+
+<span class="hljs-keyword">var</span> B = A.extend({
+    <span class="hljs-string">'funB'</span>: <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+        console.log(<span class="hljs-string">'B - funB'</span>);
+        <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.ref;
+    }
+});
+
+<span class="hljs-keyword">var</span> b = B.new();
+b.doIt();
+<span class="hljs-comment">/**
+ * Console:
+ * A - funA
+ * B - funB
+ */</span></code></pre>
+
+<p>As you see, when we call <code>.doIt()</code> after <code>funA</code> it called class <code>B</code>’s <code>funB</code>, not <code>A</code>’s. So while writing classes, you should not use tails approach. <br>
+Correct class <code>A.doIt</code> method definition;</p>
+
+
+
+<pre class="prettyprint"><code class="language-javascript hljs "><span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+    <span class="hljs-keyword">this</span>.funA();
+    <span class="hljs-keyword">this</span>.funB();
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.ref;
+}</code></pre>
+
+<p>or it is also can be used;</p>
+
+
+
+<pre class="prettyprint"><code class="language-javascript hljs "><span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+    <span class="hljs-keyword">this</span>.funA();
+    <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.funB();
+}</code></pre></div>
+<script type="text/javascript" src="js/require.js"></script>
+<script type="text/javascript" src="js/burner.min.js"></script>
+<script type="text/javascript" src="js/main.js"></script>
+<div class="footer">
+    JS Burner is written by <a href="http://github.com/alpertuna">H. Alper Tuna</a> -
+    Documentation website design <a href="http://github.com/alpertuna">H. Alper Tuna</a> -
+    Some pages are written with <a href="http://stackedit.io/">StackEdit</a>
+</div>
+    </body>
+
+<!-- Mirrored from burner-docs.local/class-structure by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 23 Jun 2016 00:10:24 GMT -->
+</html>

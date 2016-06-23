@@ -1,0 +1,520 @@
+<!DOCTYPE html>
+<html>
+    
+<!-- Mirrored from burner-docs.local/usage by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 23 Jun 2016 00:09:14 GMT -->
+<!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
+<head>
+        <meta charset="UTF-8">
+        <link rel="stylesheet" type="text/css" href="css/font-awesome.min.css">
+        <link rel="stylesheet" type="text/css" href="css/highlight-github-gist.css">
+        <link rel="stylesheet" type="text/css" href="css/pt-sans.css">
+        <link rel="stylesheet" type="text/css" href="css/burner.min.css">
+        <link rel="stylesheet" type="text/css" href="css/style.css">
+        <script type="text/javascript" src="js/jquery-2.2.1.min.js"></script>
+        <script type="text/javascript" src="js/scroll.js"></script>
+        <title></title>
+    </head>
+    <body>
+        <div class="banner">
+    <div class="banner-logo">
+        JS Burner <span>A Framework for Javascript</span>
+    </div><ul class="banner-menu">
+        <li>
+            <a
+                href="class-structure.html"
+                            >
+                Class Structure            </a>
+        </li><li>
+            <a
+                href="usage.html"
+                class="active"            >
+                Usage            </a>
+        </li><li>
+            <a
+                href="library-documentation/Ajax.html"
+                            >
+                Library Documentation            </a>
+        </li>    </ul>
+</div>
+<div class="body">
+    <p><div class="toc">
+<ul>
+<li><a href="#element-class">Element Class</a><ul>
+<li><ul>
+<li><a href="#creating-elements">Creating Elements</a></li>
+<li><a href="#adding-children-to-elements">Adding Children to Elements</a></li>
+<li><a href="#setting-attributes-of-elements">Setting Attributes of Elements</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#document-class">Document Class</a></li>
+<li><a href="#eventhandler">EventHandler</a><ul>
+<li><ul>
+<li><a href="#handled-events">Handled Events</a></li>
+<li><a href="#element-events">Element Events</a></li>
+</ul>
+</li>
+</ul>
+</li>
+<li><a href="#input-components">Input Components</a><ul>
+<li><ul>
+<li><a href="#change-event">change Event</a></li>
+</ul>
+</li>
+<li><a href="#button">Button</a></li>
+<li><a href="#input">Input</a></li>
+<li><a href="#label">Label</a></li>
+<li><a href="#group">Group</a></li>
+<li><a href="#spinner">Spinner</a></li>
+<li><a href="#select">Select</a></li>
+<li><a href="#check">Check</a></li>
+<li><a href="#checkgroup">CheckGroup</a></li>
+<li><a href="#radiogroup">RadioGroup</a></li>
+<li><a href="#switch">Switch</a></li>
+<li><a href="#datepicker">DatePicker</a></li>
+</ul>
+</li>
+</ul>
+</div>
+</p>
+
+
+
+<h1 id="element-class">Element Class</h1>
+
+<p>Element is main ui class of framework. It refers dom elements of html document. Each Element instance keeps one html dom. To specify tag for dom, you pass the tag name as string while creating an Element insance. Default tag value is <code>div</code> so if you don’t specify a tag name, it will create a <code>div</code> dom.  To reach real dom, you can use <code>.getDom()</code> method.</p>
+
+
+
+<h3 id="creating-elements">Creating Elements</h3>
+
+
+
+<pre class="prettyprint"><code class="language-javascript hljs "><span class="hljs-keyword">var</span> element = Element.new();
+element.getDom();
+<span class="hljs-comment">//&lt;div&gt;&lt;/div&gt;</span>
+
+<span class="hljs-keyword">var</span> element = Element.new(<span class="hljs-string">'h2'</span>);
+element.getDom();
+<span class="hljs-comment">//&lt;h2&gt;&lt;/h2&gt;</span></code></pre>
+
+
+
+<h3 id="adding-children-to-elements">Adding Children to Elements</h3>
+
+<p>To add child elements to an element, you use <code>.add()</code> method;</p>
+
+
+
+<pre class="prettyprint"><code class="language-javascript hljs "><span class="hljs-keyword">var</span> element = Element.new(<span class="hljs-string">'ul'</span>);
+element.add(
+    Element.new(<span class="hljs-string">'li'</span>),
+    Element.new(<span class="hljs-string">'li'</span>),
+    Element.new(<span class="hljs-string">'li'</span>)
+);
+element.getDom();
+<span class="hljs-comment">//&lt;ul&gt;&lt;li&gt;&lt;/li&gt;&lt;li&gt;&lt;/li&gt;&lt;li&gt;&lt;/li&gt;&lt;li&gt;&lt;/li&gt;&lt;/ul&gt;</span></code></pre>
+
+
+
+<h3 id="setting-attributes-of-elements">Setting Attributes of Elements</h3>
+
+<p>To play with dom, you can use these methods. I think there is no need to explain.</p>
+
+
+
+<pre class="prettyprint"><code class="language-javascript hljs "><span class="hljs-keyword">var</span> element = Element.new(<span class="hljs-string">'input'</span>)
+.setAttr(<span class="hljs-string">'type'</span>, <span class="hljs-string">'button'</span>)
+.setAttr(<span class="hljs-string">'value'</span>, <span class="hljs-string">'Click Me'</span>)
+.addClass(<span class="hljs-string">'btn'</span>)
+.on(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+    alert(<span class="hljs-string">'Button has been clicked'</span>);
+})
+.setStyle(<span class="hljs-string">'width'</span>, <span class="hljs-string">'100%'</span>);
+
+element.getDom();
+<span class="hljs-comment">//&lt;input type="button" value="Click Me" class="btn" style="width:100%;"&gt;</span></code></pre>
+
+<blockquote>
+  <p>For full documentation you can visit <a href="library-documentation/Element.html">Element Library Documentation</a>.</p>
+</blockquote>
+
+
+
+<h1 id="document-class">Document Class</h1>
+
+<p>Document class is the bridge to access native javascript document object in framework’s way. Usage is simple.</p>
+
+
+
+<pre class="prettyprint"><code class="language-javascript hljs "><span class="hljs-keyword">var</span> label = Element.new(<span class="hljs-string">'label'</span>)
+.setAttr(<span class="hljs-string">'for'</span>, <span class="hljs-string">'search_input'</span>)
+.add(<span class="hljs-string">'Subject:'</span>);
+
+<span class="hljs-keyword">var</span> input = Element.new(<span class="hljs-string">'input'</span>)
+.setAttr(<span class="hljs-string">'type'</span>, <span class="hljs-string">'text'</span>)
+.setAttr(<span class="hljs-string">'id'</span>, <span class="hljs-string">'search_input'</span>);
+
+<span class="hljs-keyword">var</span> button = Element.new(<span class="hljs-string">'button'</span>)
+.add(<span class="hljs-string">'Search!'</span>);
+
+Document.new().add(
+    label,
+    input,
+    button
+);</code></pre>
+
+<p><code>Document.add</code> appends native <code>document.body</code> with given child <code>Element</code>’s DOM. As a result It will produce this html;</p>
+
+
+
+<pre class="prettyprint"><code class="language-html hljs "><span class="hljs-tag">&lt;<span class="hljs-title">body</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">label</span> <span class="hljs-attribute">for</span>=<span class="hljs-value">"search_input"</span>&gt;</span>Subject:<span class="hljs-tag">&lt;/<span class="hljs-title">label</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">input</span> <span class="hljs-attribute">type</span>=<span class="hljs-value">"text"</span> <span class="hljs-attribute">id</span>=<span class="hljs-value">"search_input"</span>&gt;</span>
+    <span class="hljs-tag">&lt;<span class="hljs-title">button</span>&gt;</span>Search!<span class="hljs-tag">&lt;/<span class="hljs-title">button</span>&gt;</span>
+<span class="hljs-tag">&lt;/<span class="hljs-title">body</span>&gt;</span></code></pre>
+
+<p>Another thing to say, all instances of <code>Document</code> always points <code>document.body</code> as it’s DOM. That’s why it doesn’t create a new DOM like <code>Element</code>.</p>
+
+
+
+<h1 id="eventhandler">EventHandler</h1>
+
+<p>Event handling system is quite simple. There is an listener collection divided into action names, and when you call / trigger an action, listeners under that action name will be executed. This structure is comes from <a href="library-documentation/EventHandler.html">EventHandler</a> class, and you can extend this class to have this event handling system in your class.</p>
+
+
+
+<h3 id="handled-events">Handled Events</h3>
+
+<p>This is an example for how to use EventHandler methods.</p>
+
+
+
+<pre class="prettyprint"><code class="language-javascript hljs "><span class="hljs-keyword">var</span> instance = EventHandler.new()
+.handle(<span class="hljs-string">'an_event'</span>)
+.on(<span class="hljs-string">'an_event'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+    console.log(<span class="hljs-string">'A listener has been called.'</span>);
+})
+.on(<span class="hljs-string">'an_event'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(e)</span>{</span>
+    console.log(<span class="hljs-string">'Another listener has been called.'</span>);
+    console.log(<span class="hljs-string">'Passed argument is "'</span> + e + <span class="hljs-string">'"'</span>);
+})
+.trigger(<span class="hljs-string">'an_event'</span>, <span class="hljs-string">'Hello!'</span>);
+
+<span class="hljs-comment">/*
+Console:
+A listener has been called.
+Another listener has been called.
+Passed argument is "Hello!"
+*/</span></code></pre>
+
+<p>As you see, when you use an event, firstly you have to define that event with <code>.handle()</code> method. And you put listeners with <code>.on()</code> method in that event’s collection. Finally you call them with <code>.trigger()</code> method. Also you can pass an event object through trigger method as an argument. Here, <code>"Hello!"</code> string is our event object.</p>
+
+
+
+<h3 id="element-events">Element Events</h3>
+
+<p>Element class is also extends EventHandler but handling is a little different, because html dom has a handler as well. When you use <code>.handle()</code> method in <code>Element</code> class, there is no difference between handled events. However, if you add listener using <code>.on()</code> method without handling that action with <code>.handle()</code>, Element will assign your listener to native dom event handler. That’s why there is a <code>.handle()</code> method. Therefore, when you trigger a non-handled event, it will call dom’s dispatch method with same action name.</p>
+
+
+
+<pre class="prettyprint"><code class="language-javascript hljs "><span class="hljs-keyword">var</span> button = Element.new(<span class="hljs-string">'button'</span>)
+.on(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(e)</span>{</span>
+    console.log(<span class="hljs-string">'Button has been clicked.'</span>);
+})
+.trigger(<span class="hljs-string">'click'</span>);</code></pre>
+
+<p>When you click that button, it will print “Button has been clicked.” to console. Also native mouse event will be passed <code>e</code> argument of listener. Because it is not handled with <code>EventHandler</code> class. It is native dom handler. And <code>.trigger()</code> method called html dom’s <code>.click()</code> method because of this. <br>
+Furthermore, you can overwrite native events using <code>.handle()</code> method. For example after you <code>.handle('click')</code> and <code>.trigger('click')</code>, it won’t call native “click” method of dom, but listeners. Also when you click the button, listeners won’t be called. Since it’s handled by EventHandler class now.</p>
+
+
+
+<h1 id="input-components">Input Components</h1>
+
+<p>In this section, there is no need to explain usage and methods, examples are obvious. And not all methods, commonly used methods will be shown, so for full documentation, you should look <a href="library-documentation/Ajax.html">Library Documentation</a>.</p>
+
+<h3 id="change-event"><code>change</code> Event</h3>
+
+<p>For input components <code>change</code> event is fired only when user interacts and changes the state of component, not when you call <code>.setValue()</code> or derivations of it, like <code>.check()</code> for <a href="#check">Check</a> component. Also, have to say that, with <code>this</code> keyword in a <code>change</code> listener function, you can reach component directly, not DOM like <code>click</code> listener. Since <code>change</code> event is handled with <code>EventHandler</code>.</p>
+
+
+
+<h2 id="button">Button</h2>
+
+
+
+<pre class="prettyprint"><code class="language-js hljs ">Document.new().add(
+    Button.new(<span class="hljs-string">'Click Me!'</span>)
+    .on(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+        alert(<span class="hljs-string">'Button has been clicked.'</span>);
+    }),
+    <span class="hljs-string">' '</span>,
+    Button.new(<span class="hljs-string">'With Icon'</span>)
+    .setIcon(<span class="hljs-string">'bolt'</span>),
+    <span class="hljs-string">' '</span>,
+    Button.new().setIcon(<span class="hljs-string">'bell'</span>)
+);</code></pre>
+
+<p>Themes and disabled states of <code>Button</code>;</p>
+
+
+
+<pre class="prettyprint"><code class="language-js hljs ">Document.new().add(
+    Button.new(<span class="hljs-string">'Normal'</span>), <span class="hljs-string">' '</span>,
+    Button.new(<span class="hljs-string">'Primary'</span>).setTheme(<span class="hljs-string">'PRIMARY'</span>), <span class="hljs-string">' '</span>,
+    Button.new(<span class="hljs-string">'Success'</span>).setTheme(<span class="hljs-string">'SUCCESS'</span>), <span class="hljs-string">' '</span>,
+    Button.new(<span class="hljs-string">'Warning'</span>).setTheme(<span class="hljs-string">'WARNING'</span>), <span class="hljs-string">' '</span>,
+    Button.new(<span class="hljs-string">'Danger'</span>).setTheme(<span class="hljs-string">'DANGER'</span>), <span class="hljs-string">' '</span>,
+    Button.new(<span class="hljs-string">'Info'</span>).setTheme(<span class="hljs-string">'INFO'</span>), <span class="hljs-string">' '</span>,
+    Button.new(<span class="hljs-string">'Dark'</span>).setTheme(<span class="hljs-string">'DARK'</span>),
+    <span class="hljs-string">'&lt;br /&gt;&lt;br /&gt;'</span>,
+    Button.new(<span class="hljs-string">'Normal'</span>).setDisabled(<span class="hljs-literal">true</span>), <span class="hljs-string">' '</span>,
+    Button.new(<span class="hljs-string">'Primary'</span>).setDisabled(<span class="hljs-literal">true</span>).setTheme(<span class="hljs-string">'PRIMARY'</span>), <span class="hljs-string">' '</span>,
+    Button.new(<span class="hljs-string">'Success'</span>).setDisabled(<span class="hljs-literal">true</span>).setTheme(<span class="hljs-string">'SUCCESS'</span>), <span class="hljs-string">' '</span>,
+    Button.new(<span class="hljs-string">'Warning'</span>).setDisabled(<span class="hljs-literal">true</span>).setTheme(<span class="hljs-string">'WARNING'</span>), <span class="hljs-string">' '</span>,
+    Button.new(<span class="hljs-string">'Danger'</span>).setDisabled(<span class="hljs-literal">true</span>).setTheme(<span class="hljs-string">'DANGER'</span>), <span class="hljs-string">' '</span>,
+    Button.new(<span class="hljs-string">'Info'</span>).setDisabled(<span class="hljs-literal">true</span>).setTheme(<span class="hljs-string">'INFO'</span>), <span class="hljs-string">' '</span>,
+    Button.new(<span class="hljs-string">'Dark'</span>).setDisabled(<span class="hljs-literal">true</span>).setTheme(<span class="hljs-string">'DARK'</span>)
+);</code></pre>
+
+
+
+<h2 id="input">Input</h2>
+
+
+
+<pre class="prettyprint"><code class="language-js hljs ">Document.new().add(
+    Input.new()
+    .setPlaceholder(<span class="hljs-string">'It is an placeholder'</span>)
+    .on(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(e)</span>{</span>
+        alert(<span class="hljs-string">'Value has changed: '</span> + <span class="hljs-keyword">this</span>.getValue());
+        <span class="hljs-comment">//Also works;</span>
+        <span class="hljs-comment">//alert('Value has changed: ' + e.target.value);</span>
+    }),
+    <span class="hljs-string">' '</span>,
+    Input.new().setValue(<span class="hljs-string">'Disabled Input'</span>).setDisabled(<span class="hljs-literal">true</span>)
+);</code></pre>
+
+<p><code>change</code> event is handled by <code>EventHandler</code>. Dispite of this, <code>e</code> parameter points native <code>change</code> event, as <code>Input</code> component passes native change event to handled <code>change</code> event. For more information <a href="#eventhandler">EventHandler</a>.</p>
+
+
+
+<h2 id="label">Label</h2>
+
+
+
+<pre class="prettyprint"><code class="language-js hljs ">Document.new().add(
+    Element.new().add(
+        Label.new(<span class="hljs-string">'A Label'</span>)
+    ),
+    Element.new().add(
+        Label.new(<span class="hljs-string">'A Label with Icon'</span>).setIcon(<span class="hljs-string">'camera'</span>)
+    )
+);</code></pre>
+
+<p>Have to say that <code>Label</code>’s appearance changes in <code>Group</code> component.</p>
+
+
+
+<h2 id="group">Group</h2>
+
+
+
+<pre class="prettyprint"><code class="language-js hljs "><span class="hljs-keyword">var</span> input = Input.new().setPlaceholder(<span class="hljs-string">'Type a subject to search'</span>);
+
+Document.new().add(
+
+    Group.new().add(
+        Label.new(<span class="hljs-string">'Subject'</span>),
+        input,
+        Button.new().setIcon(<span class="hljs-string">'search'</span>).on(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+            alert(<span class="hljs-string">'Search subject is: '</span> + input.getValue())
+        })
+    ),
+
+    <span class="hljs-string">'&lt;br /&gt;&lt;br /&gt;'</span>,
+
+    Group.new().add(
+        Label.new(<span class="hljs-string">'Subject'</span>),
+        Input.new().setPlaceholder(<span class="hljs-string">'Type a subject to search'</span>),
+        Button.new().setIcon(<span class="hljs-string">'search'</span>).on(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+            alert(<span class="hljs-string">'Search subject is: '</span> + input.getValue())
+        })
+    ).setDisabled(<span class="hljs-literal">true</span>)
+
+);</code></pre>
+
+
+
+<h2 id="spinner">Spinner</h2>
+
+
+
+<pre class="prettyprint"><code class="language-js hljs ">Document.new().add(
+    Label.new(<span class="hljs-string">'Default'</span>), <span class="hljs-string">' '</span>,
+    Spinner.new(),
+    <span class="hljs-string">'&lt;br /&gt;&lt;br /&gt;'</span>,
+
+    Label.new(<span class="hljs-string">'Mininum is 2, and maximum is 10'</span>), <span class="hljs-string">' '</span>,
+    Spinner.new().setMin(<span class="hljs-number">2</span>).setMax(<span class="hljs-number">10</span>),
+    <span class="hljs-string">'&lt;br /&gt;&lt;br /&gt;'</span>,
+
+    Label.new(<span class="hljs-string">'Padding is 3'</span>), <span class="hljs-string">' '</span>,
+    Spinner.new().setPad(<span class="hljs-number">3</span>),
+    <span class="hljs-string">'&lt;br /&gt;&lt;br /&gt;'</span>,
+
+    Label.new(<span class="hljs-string">'Minimum is -5, maximum is 5, and has loop'</span>), <span class="hljs-string">' '</span>,
+    Spinner.new().setMin(-<span class="hljs-number">5</span>).setMax(<span class="hljs-number">5</span>).setLoop(<span class="hljs-literal">true</span>),
+    <span class="hljs-string">'&lt;br /&gt;&lt;br /&gt;'</span>,
+
+    Label.new(<span class="hljs-string">'Buttons are hidden'</span>), <span class="hljs-string">' '</span>,
+    Spinner.new().showButtons(<span class="hljs-literal">false</span>),
+    <span class="hljs-string">'&lt;br /&gt;&lt;br /&gt;'</span>,
+
+    Label.new(<span class="hljs-string">'Disabled'</span>), <span class="hljs-string">' '</span>,
+    Spinner.new().setDisabled(<span class="hljs-literal">true</span>)
+);</code></pre>
+
+
+
+<h2 id="select">Select</h2>
+
+
+
+<pre class="prettyprint"><code class="language-js hljs ">Document.new().add(
+    Dropdown.new([
+        {
+            <span class="hljs-string">'title'</span>: <span class="hljs-string">'An Option'</span>,
+            <span class="hljs-string">'value'</span>: <span class="hljs-number">0</span>
+        },
+        {
+            <span class="hljs-string">'title'</span>: <span class="hljs-string">'Another Option'</span>,
+            <span class="hljs-string">'value'</span>: <span class="hljs-number">1</span>,
+            <span class="hljs-string">'default'</span>: <span class="hljs-literal">true</span>
+        },
+        {
+            <span class="hljs-string">'type'</span>: <span class="hljs-string">'SEPARATOR'</span>,
+        },
+        {
+            <span class="hljs-string">'title'</span>: <span class="hljs-string">'A Separated Option'</span>,
+            <span class="hljs-string">'value'</span>: <span class="hljs-number">2</span>
+        },
+        {
+            <span class="hljs-string">'title'</span>: <span class="hljs-string">'Title of Separator'</span>,
+            <span class="hljs-string">'type'</span>: <span class="hljs-string">'SEPARATOR'</span>
+        },
+        {
+            <span class="hljs-string">'title'</span>: <span class="hljs-string">'Last Option'</span>,
+            <span class="hljs-string">'value'</span>: <span class="hljs-number">3</span>
+        }
+    ]).on(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+        alert(
+            <span class="hljs-string">'Selected item:'</span> +
+            <span class="hljs-keyword">this</span>.getTitle() +
+            <span class="hljs-string">', and value: '</span> +
+            <span class="hljs-keyword">this</span>.getValue()
+        );
+    })
+);</code></pre>
+
+
+
+<h2 id="check">Check</h2>
+
+
+
+<pre class="prettyprint"><code class="language-js hljs ">Document.new().add(
+    Check.new(), <span class="hljs-string">' '</span>,
+    Check.new().setIcon(<span class="hljs-string">'times'</span>).setValue(<span class="hljs-literal">true</span>), <span class="hljs-string">' '</span>,
+    Check.new().check().on(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+        alert(<span class="hljs-keyword">this</span>.getValue() ? <span class="hljs-string">'Checked.'</span> : <span class="hljs-string">'Unchecked.'</span>);
+    })
+);</code></pre>
+
+
+
+<h2 id="checkgroup">CheckGroup</h2>
+
+
+
+<pre class="prettyprint"><code class="language-js hljs "><span class="hljs-keyword">var</span> checkGroup = CheckGroup.new().on(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+    alert(<span class="hljs-string">'Checked boxes are "'</span> + <span class="hljs-keyword">this</span>.getValue().join(<span class="hljs-string">'", "'</span>) + <span class="hljs-string">'" by order'</span>);
+});
+Document.new().add(
+    Check.new().setGroupValue(<span class="hljs-string">'first'</span>).bind(checkGroup).setValue(<span class="hljs-literal">true</span>), <span class="hljs-string">' '</span>,
+    Check.new().setGroupValue(<span class="hljs-string">'second'</span>).bind(checkGroup), <span class="hljs-string">' '</span>,
+    Check.new(<span class="hljs-string">'third'</span>).bind(checkGroup)
+);</code></pre>
+
+
+
+<h2 id="radiogroup">RadioGroup</h2>
+
+
+
+<pre class="prettyprint"><code class="language-js hljs "><span class="hljs-keyword">var</span> radioGroup = RadioGroup.new().on(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+    console.log(<span class="hljs-string">'radioGroup has changed. Value is: '</span> + <span class="hljs-keyword">this</span>.getValue());
+});
+Document.new().add(
+    Check.new(<span class="hljs-number">0</span>).bind(radioGroup).on(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+        console.log(<span class="hljs-string">'First check has changed. Value is: '</span> + <span class="hljs-keyword">this</span>.getValue());
+    }), <span class="hljs-string">' '</span>,
+    Check.new(<span class="hljs-number">1</span>).bind(radioGroup).on(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+        console.log(<span class="hljs-string">'Second check has changed. Value is: '</span> + <span class="hljs-keyword">this</span>.getValue());
+    }).setIcon(<span class="hljs-string">'check'</span>), <span class="hljs-string">' '</span>,
+    Check.new().setGroupValue(<span class="hljs-number">2</span>).bind(radioGroup).on(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+        console.log(<span class="hljs-string">'Third check has changed. Value is: '</span> + <span class="hljs-keyword">this</span>.getValue());
+    })
+);
+<span class="hljs-comment">//Check your console ;)</span></code></pre>
+
+
+
+<h2 id="switch">Switch</h2>
+
+
+
+<pre class="prettyprint"><code class="language-js hljs "><span class="hljs-keyword">var</span> radioGroup = RadioGroup.new().on(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+    alert(<span class="hljs-string">'radioGroup has changed. Value is: '</span> + <span class="hljs-keyword">this</span>.getValue());
+});
+
+Document.new().add(
+    Switch.new(), <span class="hljs-string">' '</span>,
+    Switch.new().setValue(<span class="hljs-literal">true</span>), <span class="hljs-string">' '</span>,
+    Switch.new().check().on(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+        alert(<span class="hljs-keyword">this</span>.getValue() ? <span class="hljs-string">'Checked.'</span> : <span class="hljs-string">'Unchecked.'</span>);
+    }),
+    <span class="hljs-string">'&lt;br /&gt;&lt;br /&gt;'</span>,
+    Switch.new(<span class="hljs-number">0</span>).bind(radioGroup), <span class="hljs-string">' '</span>,
+    Switch.new(<span class="hljs-number">1</span>).bind(radioGroup).check(), <span class="hljs-string">' '</span>,
+    Switch.new(<span class="hljs-number">2</span>).bind(radioGroup)
+);</code></pre>
+
+
+
+<h2 id="datepicker">DatePicker</h2>
+
+
+
+<pre class="prettyprint"><code class="language-js hljs "><span class="hljs-keyword">var</span> date = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>();
+date.setYear(<span class="hljs-number">2017</span>);
+
+Document.new().add(
+    DatePicker.new(), <span class="hljs-string">' '</span>,
+    DatePicker.new(date).on(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+        alert(<span class="hljs-string">'DatePicker has changed: '</span> + <span class="hljs-keyword">this</span>.getValue());
+    })
+);</code></pre></div>
+<script type="text/javascript" src="js/require.js"></script>
+<script type="text/javascript" src="js/burner.min.js"></script>
+<script type="text/javascript" src="js/main.js"></script>
+<div class="footer">
+    JS Burner is written by <a href="http://github.com/alpertuna">H. Alper Tuna</a> -
+    Documentation website design <a href="http://github.com/alpertuna">H. Alper Tuna</a> -
+    Some pages are written with <a href="http://stackedit.io/">StackEdit</a>
+</div>
+    </body>
+
+<!-- Mirrored from burner-docs.local/usage by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 23 Jun 2016 00:09:15 GMT -->
+</html>
