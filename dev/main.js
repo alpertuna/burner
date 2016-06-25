@@ -7,6 +7,9 @@
 'use strict';
 
 require.config({
+    'paths': {
+        'burner': '../src'
+    }
 });
 
 require([
@@ -27,6 +30,7 @@ require([
     'burner/ui/Spinner',
     'burner/ui/TimePicker',
     'burner/ui/Notifier',
+    'burner/ui/Breadcrumb',
     'burner/core/createClass',
     'burner/core/EventHandler',
     'burner/core/Ajax',
@@ -50,12 +54,13 @@ require([
     Spinner,
     TimePicker,
     Notifier,
+    Breadcrumb,
     createClass,
     EventHandler,
     Ajax,
     AjaxGroup
 ){
-    Document.new().add(
-        Label.new('Testing')
-    )
+    /*window.Document = Document;
+    window.Button = Button;
+    window.Label = Label;*/
 })
