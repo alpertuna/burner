@@ -1,0 +1,16 @@
+@import 'common/utils';
+
+.jb-breadcrumb{
+    .transform(skewX(-20deg));
+
+    padding-left: .5em;
+
+    .jb-button-caption,
+    .jb-label-caption{
+        .transform(skewX(20deg));
+    }
+
+    > * + *{
+        margin-left: .5em;
+    }
+}

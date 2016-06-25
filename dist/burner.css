@@ -74,43 +74,53 @@ BODY {
 .jb-label.jb-info {
   color: #33ccee;
 }
-.jb-group .jb-label {
+.jb-group .jb-label,
+.jb-breadcrumb .jb-label {
   background: #FCFCFC;
   border-color: #BBB;
 }
-.jb-group .jb-label-caption {
+.jb-group .jb-label-caption,
+.jb-breadcrumb .jb-label-caption {
   padding: 0 1em;
 }
-.jb-group .jb-label-icon {
+.jb-group .jb-label-icon,
+.jb-breadcrumb .jb-label-icon {
   text-align: center;
   width: 2.2em;
 }
-.jb-group .jb-label-icon + .jb-label-caption {
+.jb-group .jb-label-icon + .jb-label-caption,
+.jb-breadcrumb .jb-label-icon + .jb-label-caption {
   padding-left: 0;
   margin-left: -0.2em;
 }
-.jb-group .jb-label.jb-narrow .jb-label-caption {
+.jb-group .jb-label.jb-narrow .jb-label-caption,
+.jb-breadcrumb .jb-label.jb-narrow .jb-label-caption {
   padding: 0;
   text-align: center;
   width: 1.1em;
 }
-.jb-group .jb-label.jb-primary {
+.jb-group .jb-label.jb-primary,
+.jb-breadcrumb .jb-label.jb-primary {
   background: #eff7ff;
   border-color: #297acc;
 }
-.jb-group .jb-label.jb-success {
+.jb-group .jb-label.jb-success,
+.jb-breadcrumb .jb-label.jb-success {
   background: #f1fbf3;
   border-color: #44a352;
 }
-.jb-group .jb-label.jb-danger {
+.jb-group .jb-label.jb-danger,
+.jb-breadcrumb .jb-label.jb-danger {
   background: #fff3ef;
   border-color: #cc5229;
 }
-.jb-group .jb-label.jb-warning {
+.jb-group .jb-label.jb-warning,
+.jb-breadcrumb .jb-label.jb-warning {
   background: #fff8ef;
   border-color: #cc8829;
 }
-.jb-group .jb-label.jb-info {
+.jb-group .jb-label.jb-info,
+.jb-breadcrumb .jb-label.jb-info {
   background: #effbfe;
   border-color: #29a3be;
 }
@@ -774,6 +784,21 @@ BODY {
 }
 .jb-timepicker .jb-input {
   width: 1.2em;
+}
+.jb-breadcrumb {
+  transform: skewX(-20deg);
+  -ms-transform: skewX(-20deg);
+  -webkit-transform: skewX(-20deg);
+  padding-left: .5em;
+}
+.jb-breadcrumb .jb-button-caption,
+.jb-breadcrumb .jb-label-caption {
+  transform: skewX(20deg);
+  -ms-transform: skewX(20deg);
+  -webkit-transform: skewX(20deg);
+}
+.jb-breadcrumb > * + * {
+  margin-left: .5em;
 }
 .jb-group {
   display: inline-block;
