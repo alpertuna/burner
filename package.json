@@ -34,6 +34,7 @@
     "font-awesome": "^4.6.3",
     "gulp": "^3.9.1",
     "gulp-less": "^3.1.0",
+    "gulp-rename": "^1.2.2",
     "less": "^2.7.1",
     "less-plugin-clean-css": "^1.5.1",
     "requirejs": "^2.2.0"
