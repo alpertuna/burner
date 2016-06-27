@@ -93,6 +93,7 @@ define(['../core/Utils', './Element', './Icon'], function(Utils, Element, Icon){
             return this.ref;
         },
 
+        'bound': false,
         'bind': function(input){
             var inputId = input.getAttr('id');
             if(Utils.isUnset(inputId)){
@@ -100,7 +101,11 @@ define(['../core/Utils', './Element', './Icon'], function(Utils, Element, Icon){
                 input.setAttr('id', inputId);
             }
             this.setAttr('for', inputId);
+            this.set('bound', true);
             return this.ref;
+        },
+        'isBound': function(){
+            return this.get('bound');
         }
     });
 });

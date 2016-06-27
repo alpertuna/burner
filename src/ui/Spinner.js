@@ -103,6 +103,10 @@ define(['../core/Utils', './iInput', './Input', './Button', './Group', './Elemen
                 buttonUp
             );
             repaint.call(this);
+
+
+            //TODO have to check
+            //this.setDefaultValue(0);
         },
 
         'buttonsAreShown': true,
@@ -153,6 +157,20 @@ define(['../core/Utils', './iInput', './Input', './Button', './Group', './Elemen
             this.get('input').setValue(value);
             validate.call(this);
             return this.ref;
+        },
+
+        //TODO have to check
+        'defaultValue': 0,
+        'setDefaultValue': function(value){
+            this.setValue(value);
+            this.set('defaultValue', this.getValue());
+            return this.ref;
+        },
+        'resetValue': function(){
+            return this.setValue(this.get('defaultValue'));
+        },
+        'focus': function(){
+            return this.get('input').focus();
         }
     }).implement(iInput)
 })

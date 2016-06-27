@@ -10,6 +10,9 @@ define(['./EventHandler'], function(EventHandler){
     function readyStateChange(){
         var xhttp = this.get('xhttp');
         if(xhttp.readyState == 4){
+            //TODO here, if there is ajax group, there can be trigger instead of using onalways bellow
+            this.trigger('always', xhttp.responseText);
+
             var fail = false;
             if(xhttp.status == 200){
                 if(this.get('events').success.length){
@@ -26,8 +29,6 @@ define(['./EventHandler'], function(EventHandler){
 
             if(fail)
                 this.trigger('fail', xhttp.responseText);
-
-            this.trigger('always', xhttp.responseText);
         }
     }
 
