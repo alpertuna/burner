@@ -9,6 +9,7 @@
     "build-css-min": "lessc --clean-css less/style.less dist/burner.min.css",
     "build-css": "lessc less/style.less dist/burner.css",
     "build-all": "npm run build-js && npm run build-js-min && npm run build-css && npm run build-css-min",
+    "less-watcher": "gulp less",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
   "repository": {
