@@ -31,6 +31,7 @@ require([
     'burner/ui/TimePicker',
     'burner/ui/Notifier',
     'burner/ui/Breadcrumb',
+    'burner/ui/Message',
     'burner/core/createClass',
     'burner/core/EventHandler',
     'burner/core/Ajax',
@@ -55,6 +56,7 @@ require([
     TimePicker,
     Notifier,
     Breadcrumb,
+    Message,
     createClass,
     EventHandler,
     Ajax,
@@ -63,4 +65,12 @@ require([
     /*window.Document = Document;
     window.Button = Button;
     window.Label = Label;*/
+
+    /*Document.new().add(
+        Message.new('Hello'),
+        Message.new('Hello', 'DANGER'),
+        Message.new('Hello', 'WARNING'),
+        Message.new('Hello', 'SUCCESS'),
+        Message.new('Hello', 'PRIMARY')
+    )*/
 })

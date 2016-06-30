@@ -926,6 +926,38 @@ BODY {
     border-top-color: fade(#333, 70%);
     margin: 0 auto;
 }*/
+.jb-message {
+  border-radius: 0.16em;
+  box-shadow: 0 0 0.2em #E6E6E6;
+  border: 0.0625em solid;
+  margin: .5em;
+  padding: .5em .8em;
+}
+.jb-message.jb-primary {
+  background: #f7fbff;
+  border-color: #8fc7ff;
+  color: #39F;
+}
+.jb-message.jb-success {
+  background: #f8fdf9;
+  border-color: #9ce1a6;
+  color: #5C6;
+}
+.jb-message.jb-danger {
+  background: #fff9f7;
+  border-color: #ffab8f;
+  color: #F63;
+}
+.jb-message.jb-warning {
+  background: #fffcf7;
+  border-color: #ffd08f;
+  color: #FA3;
+}
+.jb-message.jb-info {
+  background: #f7fdfe;
+  border-color: #88e1f5;
+  color: #3CE;
+}
 .jb-notifier {
   margin-bottom: .3em;
   pointer-events: none;

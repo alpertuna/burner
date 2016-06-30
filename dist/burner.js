@@ -586,6 +586,9 @@ define('burner/core/Ajax',['./EventHandler'], function(EventHandler){
     function readyStateChange(){
         var xhttp = this.get('xhttp');
         if(xhttp.readyState == 4){
+            //TODO here, if there is ajax group, there can be trigger instead of using onalways bellow
+            this.trigger('always', xhttp.responseText);
+
             var fail = false;
             if(xhttp.status == 200){
                 if(this.get('events').success.length){
@@ -602,8 +605,6 @@ define('burner/core/Ajax',['./EventHandler'], function(EventHandler){
 
             if(fail)
                 this.trigger('fail', xhttp.responseText);
-
-            this.trigger('always', xhttp.responseText);
         }
     }
 
@@ -839,6 +840,26 @@ define('burner/ui/Element',['../core/EventHandler', '../core/Utils', './TextElem
                 element.set('parent', this);
                 this.get('children').unshift(element);
             }, this);
+
+            return this.ref;
+        },
+        'addAt': function(element, index){
+            var children = this.get('children');
+            if(index == children.length) return this.add(element);
+
+            if(Utils.isNumber(element)) element = Utils.toString(element);
+            if(!Utils.isString(element) && (!element || !element.getDom))
+                //TODO Error
+                throw 'Child has to be an Element, string or number.';
+
+            if(Utils.isString(element))
+                element = TextElement.new(element);
+
+            var dom = this.getDom();
+            dom.insertBefore(element.getDom(), children[index]);
+
+            element.set('parent', this);
+            children.splice(index, 0, element);
 
             return this.ref;
         },
@@ -1620,6 +1641,7 @@ define('burner/ui/Label',['../core/Utils', './Element', './Icon'], function(Util
             return this.ref;
         },
 
+        'bound': false,
         'bind': function(input){
             var inputId = input.getAttr('id');
             if(Utils.isUnset(inputId)){
@@ -1627,7 +1649,11 @@ define('burner/ui/Label',['../core/Utils', './Element', './Icon'], function(Util
                 input.setAttr('id', inputId);
             }
             this.setAttr('for', inputId);
+            this.set('bound', true);
             return this.ref;
+        },
+        'isBound': function(){
+            return this.get('bound');
         }
     });
 });
@@ -1809,6 +1835,10 @@ define('burner/ui/Spinner',['../core/Utils', './iInput', './Input', './Button', 
                 buttonUp
             );
             repaint.call(this);
+
+
+            //TODO have to check
+            //this.setDefaultValue(0);
         },
 
         'buttonsAreShown': true,
@@ -1859,6 +1889,20 @@ define('burner/ui/Spinner',['../core/Utils', './iInput', './Input', './Button', 
             this.get('input').setValue(value);
             validate.call(this);
             return this.ref;
+        },
+
+        //TODO have to check
+        'defaultValue': 0,
+        'setDefaultValue': function(value){
+            this.setValue(value);
+            this.set('defaultValue', this.getValue());
+            return this.ref;
+        },
+        'resetValue': function(){
+            return this.setValue(this.get('defaultValue'));
+        },
+        'focus': function(){
+            return this.get('input').focus();
         }
     }).implement(iInput)
 })

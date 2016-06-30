@@ -1,0 +1,32 @@
+@import 'common/component';
+
+.jb-message-colored(@color){
+    background: tint(@color, 96%);
+    border-color: lighten(@color, 18%);
+    color: @color;
+}
+
+.jb-message{
+    .border-radius(.16em);
+    .box-shadow(0 0 .2em #E6E6E6);
+
+    border: @onepx solid;
+    margin: .5em;
+    padding: .5em .8em;
+
+    &.jb-primary{
+        .jb-message-colored(@com-color-primary);
+    }
+    &.jb-success{
+        .jb-message-colored(@com-color-success);
+    }
+    &.jb-danger{
+        .jb-message-colored(@com-color-danger);
+    }
+    &.jb-warning{
+        .jb-message-colored(@com-color-warning);
+    }
+    &.jb-info{
+        .jb-message-colored(@com-color-info);
+    }
+}
