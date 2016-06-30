@@ -149,6 +149,26 @@ define(['../core/EventHandler', '../core/Utils', './TextElement'], function(Even
 
             return this.ref;
         },
+        'addAt': function(element, index){
+            var children = this.get('children');
+            if(index == children.length) return this.add(element);
+
+            if(Utils.isNumber(element)) element = Utils.toString(element);
+            if(!Utils.isString(element) && (!element || !element.getDom))
+                //TODO Error
+                throw 'Child has to be an Element, string or number.';
+
+            if(Utils.isString(element))
+                element = TextElement.new(element);
+
+            var dom = this.getDom();
+            dom.insertBefore(element.getDom(), children[index]);
+
+            element.set('parent', this);
+            children.splice(index, 0, element);
+
+            return this.ref;
+        },
         'remove': function(element){
             //Remove element
             if(element){
