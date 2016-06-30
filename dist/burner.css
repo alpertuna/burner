@@ -159,7 +159,7 @@ BODY {
   border-color: #1c548c;
 }
 .jb-input.jb-primary:focus {
-  box-shadow: 0 0.07em 0.15em #DDD inset, 0 0 0.3em #2163a6;
+  box-shadow: 0 0.07em 0.15em #DDD inset, 0 0 0.2em #0033ff;
   border-color: #2163a6;
 }
 .jb-input.jb-primary:disabled {
@@ -175,7 +175,7 @@ BODY {
   border-color: #2f7038;
 }
 .jb-input.jb-success:focus {
-  box-shadow: 0 0.07em 0.15em #DDD inset, 0 0 0.3em #378542;
+  box-shadow: 0 0.07em 0.15em #DDD inset, 0 0 0.2em #009900;
   border-color: #378542;
 }
 .jb-input.jb-success:disabled {
@@ -191,7 +191,7 @@ BODY {
   border-color: #8c381c;
 }
 .jb-input.jb-danger:focus {
-  box-shadow: 0 0.07em 0.15em #DDD inset, 0 0 0.3em #a64221;
+  box-shadow: 0 0.07em 0.15em #DDD inset, 0 0 0.2em #ff0000;
   border-color: #a64221;
 }
 .jb-input.jb-danger:disabled {
@@ -207,7 +207,7 @@ BODY {
   border-color: #8c5e1c;
 }
 .jb-input.jb-warning:focus {
-  box-shadow: 0 0.07em 0.15em #DDD inset, 0 0 0.3em #a66f21;
+  box-shadow: 0 0.07em 0.15em #DDD inset, 0 0 0.2em #ff5500;
   border-color: #a66f21;
 }
 .jb-input.jb-warning:disabled {
@@ -223,7 +223,7 @@ BODY {
   border-color: #1c7083;
 }
 .jb-input.jb-info:focus {
-  box-shadow: 0 0.07em 0.15em #DDD inset, 0 0 0.3em #21859b;
+  box-shadow: 0 0.07em 0.15em #DDD inset, 0 0 0.2em #0099dd;
   border-color: #21859b;
 }
 .jb-input.jb-info:disabled {
@@ -520,7 +520,7 @@ BODY {
   border-color: #1c548c;
 }
 .jb-check.jb-primary:focus {
-  box-shadow: 0 0.07em 0.15em #DDD inset, 0 0 0.3em #2163a6;
+  box-shadow: 0 0.07em 0.15em #DDD inset, 0 0 0.2em #0033ff;
   border-color: #2163a6;
 }
 .jb-check.jb-primary:disabled {
@@ -536,7 +536,7 @@ BODY {
   border-color: #2f7038;
 }
 .jb-check.jb-success:focus {
-  box-shadow: 0 0.07em 0.15em #DDD inset, 0 0 0.3em #378542;
+  box-shadow: 0 0.07em 0.15em #DDD inset, 0 0 0.2em #009900;
   border-color: #378542;
 }
 .jb-check.jb-success:disabled {
@@ -552,7 +552,7 @@ BODY {
   border-color: #8c381c;
 }
 .jb-check.jb-danger:focus {
-  box-shadow: 0 0.07em 0.15em #DDD inset, 0 0 0.3em #a64221;
+  box-shadow: 0 0.07em 0.15em #DDD inset, 0 0 0.2em #ff0000;
   border-color: #a64221;
 }
 .jb-check.jb-danger:disabled {
@@ -568,7 +568,7 @@ BODY {
   border-color: #8c5e1c;
 }
 .jb-check.jb-warning:focus {
-  box-shadow: 0 0.07em 0.15em #DDD inset, 0 0 0.3em #a66f21;
+  box-shadow: 0 0.07em 0.15em #DDD inset, 0 0 0.2em #ff5500;
   border-color: #a66f21;
 }
 .jb-check.jb-warning:disabled {
@@ -584,7 +584,7 @@ BODY {
   border-color: #1c7083;
 }
 .jb-check.jb-info:focus {
-  box-shadow: 0 0.07em 0.15em #DDD inset, 0 0 0.3em #21859b;
+  box-shadow: 0 0.07em 0.15em #DDD inset, 0 0 0.2em #0099dd;
   border-color: #21859b;
 }
 .jb-check.jb-info:disabled {
