@@ -492,7 +492,10 @@ define('burner/core/EventHandler',['./createClass'], function(createClass){
             var events = this.get('events');
             if(!events || !events[action])
                 //TODO Error
-                throw 'There is no "' + action + '" action to handle.';
+                throw [
+                    'NO_ACTION',
+                    'There is no "' + action + '" action to handle.'
+                ];
 
             events[action].push(func);
             return this.ref;
@@ -507,7 +510,10 @@ define('burner/core/EventHandler',['./createClass'], function(createClass){
 
             if(!events || !events[action])
                 //TODO Error
-                throw 'There is no "' + action + '" action to handle.';
+                throw [
+                    'NO_ACTION',
+                    'There is no "' + action + '" action to handle.'
+                ];
 
             var index = events[action].indexOf(func);
             if(index != -1) events[action].splice(index, 1);
@@ -517,7 +523,10 @@ define('burner/core/EventHandler',['./createClass'], function(createClass){
             var events = this.get('events');
             if(!events || !events[action])
                 //TODO Error
-                throw 'There is no "' + action + '" action to handle.';
+                throw [
+                    'NO_ACTION',
+                    'There is no "' + action + '" action to handle.'
+                ];
 
             for(var i in events[action])
                 events[action][i].call(this.ref, event);
@@ -887,15 +896,22 @@ define('burner/ui/Element',['../core/EventHandler', '../core/Utils', './TextElem
             try{
                 this.super.on(action, func);
             }catch(e){
-                this.getDom().addEventListener(action, func);
+                if(e[0] == 'NO_ACTION')
+                    this.getDom().addEventListener(action, func);
+                else
+                    throw e;
             }
+
             return this.ref;
         },
         'off': function(action, func){
             try{
                 this.super.off(action, func);
             }catch(e){
-                this.getDom().removeEventListener(action, func);
+                if(e[0] == 'NO_ACTION')
+                    this.getDom().removeEventListener(action, func);
+                else
+                    throw e;
             }
             return this.ref;
         },
@@ -903,7 +919,10 @@ define('burner/ui/Element',['../core/EventHandler', '../core/Utils', './TextElem
             try{
                 this.super.trigger(action, event);
             }catch(e){
-                this.getDom().dispatchEvent(new Event(action));
+                if(e[0] == 'NO_ACTION')
+                    this.getDom().dispatchEvent(new Event(action));
+                else
+                    throw e;
             }
             return this.ref;
         },
@@ -1196,6 +1215,14 @@ define('burner/ui/Document',['../core/Utils', './Element'], function(Utils, Elem
 define('burner/ui/Popup',['../core/Utils', './Document', './Element'], function(Utils, Document, Element){
     var shownPopup;
 
+    function targetClickedInClickMode(e){
+        if(this.hasClass('jb-hidden')){
+            this.show();
+            this.putHideHandler(e);
+        }else
+            this.hide();
+    }
+
     return Element.extend({
         'init': function(){
             this.super();
@@ -1210,12 +1237,12 @@ define('burner/ui/Popup',['../core/Utils', './Document', './Element'], function(
         'adjustPosition': function(){
             this.get('target').get('parent').add(this);
 
-            switch(this.get('direction')){
+            /*switch(this.get('direction')){
                 case 'TOP':this.addClass('jb-popup-top');break;
                 case 'BOTTOM':this.addClass('jb-popup-bottom');break;
                 case 'LEFT':this.addClass('jb-popup-left');break;
                 case 'RIGHT':this.addClass('jb-popup-right');break;
-            }
+            }*/
 
             var targetRect = this.get('targetDom').getBoundingClientRect();
             var targetRectTop = this.get('targetDom').offsetTop;
@@ -1224,33 +1251,69 @@ define('burner/ui/Popup',['../core/Utils', './Document', './Element'], function(
             var top, left;
 
             var direction = this.get('direction');
+            var align = this.get('align');
 
             if(direction == 'BOTTOM'){
-                if(
-                    targetRect.top + targetRect.height + thisRect.height > window.innerHeight &&
-                    targetRect.top - thisRect.height >= 0
-                ){
-                    direction = 'TOP';
+                if(targetRect.top + targetRect.height + thisRect.height > window.innerHeight){
+                    if(targetRect.top - thisRect.height >= 0){
+                        direction = 'TOP';
+                    }else if(targetRect.left + targetRect.width + thisRect.width <= window.innerWidth){
+                        direction = 'RIGHT';
+
+                        if(window.innerHeight - targetRect.top > thisRect.height){
+                            align = 'TOP';
+                        }else if(window.innerHeight - thisRect.height < 0)
+                            align = 'PAGE_TOP';
+                        else
+                            align = 'PAGE_BOTTOM';
+                    }
                 }
             }
 
             switch(direction){
-                case 'TOP':top = targetRectTop - thisRect.height;break;
-                case 'BOTTOM':top = targetRectTop + targetRect.height;break;
-                case 'LEFT':left = targetRectLeft - thisRect.width;break;
-                case 'RIGHT':left = targetRectLeft + targetRect.width;break;
+                case 'TOP':
+                    top = targetRectTop - thisRect.height;
+                    break;
+                case 'BOTTOM':
+                    top = targetRectTop + targetRect.height;
+                    break;
+                case 'LEFT':
+                    left = targetRectLeft - thisRect.width;
+                    break;
+                case 'RIGHT':
+                    left = targetRectLeft + targetRect.width;
+                    break;
             }
-            switch(this.get('align')){
+            this.removeClass('jb-popup-align-top jb-popup-align-bottom jb-popup-align-left jb-popup-align-right');
+            switch(align){
                 case 'CENTER':
                     if(Utils.isSet(left))
                         top = targetRectTop + (targetRect.height - thisRect.height)/2;
                     else
                         left = targetRectLeft + (targetRect.width - thisRect.width)/2;
                 break;
-                case 'LEFT':left = targetRectLeft;break;
-                case 'RIGHT':left = targetRectLeft + targetRect.width - thisRect.width;break;
-                case 'TOP':top = targetRectTop;break;
-                case 'BOTTOM':top = targetRectTop + targetRect.height - thisRect.height;break;
+                case 'LEFT':
+                    left = targetRectLeft;
+                    this.addClass('jb-popup-align-left');
+                    break;
+                case 'RIGHT':
+                    left = targetRectLeft + targetRect.width - thisRect.width;
+                    this.addClass('jb-popup-align-right');
+                    break;
+                case 'TOP':
+                    top = targetRectTop;
+                    this.addClass('jb-popup-align-top');
+                    break;
+                case 'BOTTOM':
+                    top = targetRectTop + targetRect.height - thisRect.height;
+                    this.addClass('jb-popup-align-bottom');
+                    break;
+                case 'PAGE_TOP':
+                    toap = targetRectTop - targetRect.top;
+                    break;
+                case 'PAGE_BOTTOM':
+                    top = targetRectTop - targetRect.top + window.innerHeight - thisRect.height;
+                    break;
             }
 
             this.setStyle({
@@ -1314,8 +1377,8 @@ define('burner/ui/Popup',['../core/Utils', './Document', './Element'], function(
                     this.on('show', this.closeOtherPopup);
                     this.on('hide', function(){shownPopup = null});
 
-                    element.on('click', this.show);
-                    element.on('click', this.putHideHandler);
+                    element.on('click', targetClickedInClickMode.bind(this));
+
                     this.on('hide', this.removeHideHandler);
                     this.on('click', function(e){e.stopPropagation()});
                     break;
@@ -1540,6 +1603,12 @@ define('burner/ui/Button',['../core/Utils', './Element', './Icon'], function(Uti
                 this.setAttr('disabled', 'disabled');
             else
                 this.removeAttr('disabled');
+
+            return this.ref;
+        },
+
+        'focus': function(){
+            this.getDom().focus();
 
             return this.ref;
         }

@@ -9,6 +9,14 @@
 define(['../core/Utils', './Document', './Element'], function(Utils, Document, Element){
     var shownPopup;
 
+    function targetClickedInClickMode(e){
+        if(this.hasClass('jb-hidden')){
+            this.show();
+            this.putHideHandler(e);
+        }else
+            this.hide();
+    }
+
     return Element.extend({
         'init': function(){
             this.super();
@@ -23,12 +31,12 @@ define(['../core/Utils', './Document', './Element'], function(Utils, Document, E
         'adjustPosition': function(){
             this.get('target').get('parent').add(this);
 
-            switch(this.get('direction')){
+            /*switch(this.get('direction')){
                 case 'TOP':this.addClass('jb-popup-top');break;
                 case 'BOTTOM':this.addClass('jb-popup-bottom');break;
                 case 'LEFT':this.addClass('jb-popup-left');break;
                 case 'RIGHT':this.addClass('jb-popup-right');break;
-            }
+            }*/
 
             var targetRect = this.get('targetDom').getBoundingClientRect();
             var targetRectTop = this.get('targetDom').offsetTop;
@@ -37,33 +45,69 @@ define(['../core/Utils', './Document', './Element'], function(Utils, Document, E
             var top, left;
 
             var direction = this.get('direction');
+            var align = this.get('align');
 
             if(direction == 'BOTTOM'){
-                if(
-                    targetRect.top + targetRect.height + thisRect.height > window.innerHeight &&
-                    targetRect.top - thisRect.height >= 0
-                ){
-                    direction = 'TOP';
+                if(targetRect.top + targetRect.height + thisRect.height > window.innerHeight){
+                    if(targetRect.top - thisRect.height >= 0){
+                        direction = 'TOP';
+                    }else if(targetRect.left + targetRect.width + thisRect.width <= window.innerWidth){
+                        direction = 'RIGHT';
+
+                        if(window.innerHeight - targetRect.top > thisRect.height){
+                            align = 'TOP';
+                        }else if(window.innerHeight - thisRect.height < 0)
+                            align = 'PAGE_TOP';
+                        else
+                            align = 'PAGE_BOTTOM';
+                    }
                 }
             }
 
             switch(direction){
-                case 'TOP':top = targetRectTop - thisRect.height;break;
-                case 'BOTTOM':top = targetRectTop + targetRect.height;break;
-                case 'LEFT':left = targetRectLeft - thisRect.width;break;
-                case 'RIGHT':left = targetRectLeft + targetRect.width;break;
+                case 'TOP':
+                    top = targetRectTop - thisRect.height;
+                    break;
+                case 'BOTTOM':
+                    top = targetRectTop + targetRect.height;
+                    break;
+                case 'LEFT':
+                    left = targetRectLeft - thisRect.width;
+                    break;
+                case 'RIGHT':
+                    left = targetRectLeft + targetRect.width;
+                    break;
             }
-            switch(this.get('align')){
+            this.removeClass('jb-popup-align-top jb-popup-align-bottom jb-popup-align-left jb-popup-align-right');
+            switch(align){
                 case 'CENTER':
                     if(Utils.isSet(left))
                         top = targetRectTop + (targetRect.height - thisRect.height)/2;
                     else
                         left = targetRectLeft + (targetRect.width - thisRect.width)/2;
                 break;
-                case 'LEFT':left = targetRectLeft;break;
-                case 'RIGHT':left = targetRectLeft + targetRect.width - thisRect.width;break;
-                case 'TOP':top = targetRectTop;break;
-                case 'BOTTOM':top = targetRectTop + targetRect.height - thisRect.height;break;
+                case 'LEFT':
+                    left = targetRectLeft;
+                    this.addClass('jb-popup-align-left');
+                    break;
+                case 'RIGHT':
+                    left = targetRectLeft + targetRect.width - thisRect.width;
+                    this.addClass('jb-popup-align-right');
+                    break;
+                case 'TOP':
+                    top = targetRectTop;
+                    this.addClass('jb-popup-align-top');
+                    break;
+                case 'BOTTOM':
+                    top = targetRectTop + targetRect.height - thisRect.height;
+                    this.addClass('jb-popup-align-bottom');
+                    break;
+                case 'PAGE_TOP':
+                    toap = targetRectTop - targetRect.top;
+                    break;
+                case 'PAGE_BOTTOM':
+                    top = targetRectTop - targetRect.top + window.innerHeight - thisRect.height;
+                    break;
             }
 
             this.setStyle({
@@ -127,8 +171,8 @@ define(['../core/Utils', './Document', './Element'], function(Utils, Document, E
                     this.on('show', this.closeOtherPopup);
                     this.on('hide', function(){shownPopup = null});
 
-                    element.on('click', this.show);
-                    element.on('click', this.putHideHandler);
+                    element.on('click', targetClickedInClickMode.bind(this));
+
                     this.on('hide', this.removeHideHandler);
                     this.on('click', function(e){e.stopPropagation()});
                     break;

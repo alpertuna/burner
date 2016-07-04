@@ -891,6 +891,19 @@ BODY {
 .jb-popup {
   position: absolute;
   z-index: 2;
+  padding: 0.4em;
+}
+.jb-popup-align-top {
+  padding-top: 0;
+}
+.jb-popup-align-bottom {
+  padding-bottom: 0;
+}
+.jb-popup-align-right {
+  padding-right: 0;
+}
+.jb-popup-align-left {
+  padding-left: 0;
 }
 .jb-tip {
   z-index: 3;

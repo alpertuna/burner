@@ -1,4 +1,23 @@
+@import 'common/utils';
+@import 'common/component';
+
 .jb-popup{
+    //background: #EEE;
     position: absolute;
     z-index: 2;
+
+    padding: @com-space;
+
+    &-align-top{
+        padding-top: 0;
+    }
+    &-align-bottom{
+        padding-bottom: 0;
+    }
+    &-align-right{
+        padding-right: 0;
+    }
+    &-align-left{
+        padding-left: 0;
+    }
 }
