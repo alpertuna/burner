@@ -22,7 +22,10 @@ define(['./createClass'], function(createClass){
             var events = this.get('events');
             if(!events || !events[action])
                 //TODO Error
-                throw 'There is no "' + action + '" action to handle.';
+                throw [
+                    'NO_ACTION',
+                    'There is no "' + action + '" action to handle.'
+                ];
 
             events[action].push(func);
             return this.ref;
@@ -37,7 +40,10 @@ define(['./createClass'], function(createClass){
 
             if(!events || !events[action])
                 //TODO Error
-                throw 'There is no "' + action + '" action to handle.';
+                throw [
+                    'NO_ACTION',
+                    'There is no "' + action + '" action to handle.'
+                ];
 
             var index = events[action].indexOf(func);
             if(index != -1) events[action].splice(index, 1);
@@ -47,7 +53,10 @@ define(['./createClass'], function(createClass){
             var events = this.get('events');
             if(!events || !events[action])
                 //TODO Error
-                throw 'There is no "' + action + '" action to handle.';
+                throw [
+                    'NO_ACTION',
+                    'There is no "' + action + '" action to handle.'
+                ];
 
             for(var i in events[action])
                 events[action][i].call(this.ref, event);

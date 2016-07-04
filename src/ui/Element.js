@@ -193,15 +193,22 @@ define(['../core/EventHandler', '../core/Utils', './TextElement'], function(Even
             try{
                 this.super.on(action, func);
             }catch(e){
-                this.getDom().addEventListener(action, func);
+                if(e[0] == 'NO_ACTION')
+                    this.getDom().addEventListener(action, func);
+                else
+                    throw e;
             }
+
             return this.ref;
         },
         'off': function(action, func){
             try{
                 this.super.off(action, func);
             }catch(e){
-                this.getDom().removeEventListener(action, func);
+                if(e[0] == 'NO_ACTION')
+                    this.getDom().removeEventListener(action, func);
+                else
+                    throw e;
             }
             return this.ref;
         },
@@ -209,7 +216,10 @@ define(['../core/EventHandler', '../core/Utils', './TextElement'], function(Even
             try{
                 this.super.trigger(action, event);
             }catch(e){
-                this.getDom().dispatchEvent(new Event(action));
+                if(e[0] == 'NO_ACTION')
+                    this.getDom().dispatchEvent(new Event(action));
+                else
+                    throw e;
             }
             return this.ref;
         },
