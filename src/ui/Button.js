@@ -81,6 +81,12 @@ define(['../core/Utils', './Element', './Icon'], function(Utils, Element, Icon){
                 this.removeAttr('disabled');
 
             return this.ref;
+        },
+
+        'focus': function(){
+            this.getDom().focus();
+
+            return this.ref;
         }
     });
 });
