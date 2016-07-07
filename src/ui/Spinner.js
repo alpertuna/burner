@@ -131,6 +131,7 @@ define(['../core/Utils', './iInput', './Input', './Button', './Group', './Elemen
             validate.call(this);
             return this.ref;
         },
+        'min': 0,
         'setMin': function(value){
             if(value === null) this.set('loop', false);
             this.set('min', value);
