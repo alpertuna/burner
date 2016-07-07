@@ -32,7 +32,6 @@ define(['../core/Utils', './Document', './Element', './Group'], function(Utils, 
         'adjustPosition': function(){
             if(!this.get('placed')){
                 var parent = this.get('target').getParent();
-                console.log(parent._classId);
                 if(parent.isInstanceOf(Group)) parent = parent.getParent();
                 parent.add(this);
                 this.set('placed', true);
