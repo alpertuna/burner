@@ -124,7 +124,7 @@ define(['../core/EventHandler', '../core/Utils', './TextElement'], function(Even
                 var dom = this.get('dom');
                 dom.appendChild(element.getDom());
 
-                element.set('parent', this);
+                element.set('parent', this.ref);
                 this.get('children').push(element);
             }, this);
 
@@ -143,7 +143,7 @@ define(['../core/EventHandler', '../core/Utils', './TextElement'], function(Even
                 var dom = this.getDom();
                 dom.insertBefore(element.getDom(), dom.firstChild);
 
-                element.set('parent', this);
+                element.set('parent', this.ref);
                 this.get('children').unshift(element);
             }, this);
 
@@ -164,8 +164,25 @@ define(['../core/EventHandler', '../core/Utils', './TextElement'], function(Even
             var dom = this.getDom();
             dom.insertBefore(element.getDom(), children[index]);
 
-            element.set('parent', this);
+            element.set('parent', this.ref);
             children.splice(index, 0, element);
+
+            return this.ref;
+        },
+        'addAfter': function(element, targetElement){
+            if(Utils.isNumber(element)) element = Utils.toString(element);
+            if(!Utils.isString(element) && (!element || !element.getDom))
+                //TODO Error
+                throw 'Child has to be an Element, string or number.';
+
+            if(Utils.isString(element))
+                element = TextElement.new(element);
+
+            var dom = this.getDom();
+            dom.insertBefore(element.getDom(), targetElement.getDom().nextSibling);
+
+            element.set('parent', this.ref);
+            this.get('children').unshift(element);
 
             return this.ref;
         },
@@ -184,6 +201,10 @@ define(['../core/EventHandler', '../core/Utils', './TextElement'], function(Even
             this.get('parent').remove(this);
 
             return this.ref;
+        },
+
+        'getParent': function(){
+            return this.get('parent');
         },
 
         /*
