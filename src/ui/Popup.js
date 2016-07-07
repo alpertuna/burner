@@ -6,7 +6,7 @@
 
 'use strict';
 
-define(['../core/Utils', './Document', './Element'], function(Utils, Document, Element){
+define(['../core/Utils', './Document', './Element', './Group'], function(Utils, Document, Element, Group){
     var shownPopup;
 
     function targetClickedInClickMode(e){
@@ -28,8 +28,15 @@ define(['../core/Utils', './Document', './Element'], function(Utils, Document, E
             //Document.new().add(this);
         },
 
+        'placed': false,
         'adjustPosition': function(){
-            this.get('target').get('parent').add(this);
+            if(!this.get('placed')){
+                var parent = this.get('target').getParent();
+                console.log(parent._classId);
+                if(parent.isInstanceOf(Group)) parent = parent.getParent();
+                parent.add(this);
+                this.set('placed', true);
+            }
 
             /*switch(this.get('direction')){
                 case 'TOP':this.addClass('jb-popup-top');break;
