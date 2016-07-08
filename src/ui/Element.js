@@ -249,9 +249,15 @@ define(['../core/EventHandler', '../core/Utils', './TextElement'], function(Even
          * Ready-to-use handled events
          *===========================================================*/
         'hide': function(){
+            if(this.hasClass('jb-hidden'))
+                return this.ref;
+
             return this.trigger('hide');
         },
         'show': function(){
+            if(!this.hasClass('jb-hidden'))
+                return this.ref;
+
             return this.trigger('show');
         },
 
