@@ -5,12 +5,12 @@
 
     padding-left: .5em;
 
-    .jb-button-caption,
-    .jb-label-caption{
+    .jb-button > *,
+    .jb-label > *{
         .transform(skewX(20deg));
     }
 
-    > * + *{
+    &:not(.jb-group) > * + *{
         margin-left: .5em;
     }
 }
