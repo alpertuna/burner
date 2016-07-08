@@ -13,10 +13,6 @@ define(['./Element', './Icon'], function(Element, Icon){
 
             var className, iconName;
             switch(theme){
-                case 'PRIMARY':
-                    className = 'jb-primary';
-                    iconName = 'info-circle';
-                    break;
                 case 'WARNING':
                     className = 'jb-warning';
                     iconName = 'warning';
@@ -30,8 +26,12 @@ define(['./Element', './Icon'], function(Element, Icon){
                     iconName = 'check-circle';
                     break;
                 case 'INFO':
-                default:
                     className = 'jb-info';
+                    iconName = 'info-circle';
+                    break;
+                default:
+                case 'PRIMARY':
+                    className = 'jb-primary';
                     iconName = 'info-circle';
                     break;
             }
