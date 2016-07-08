@@ -791,13 +791,13 @@ BODY {
   -webkit-transform: skewX(-20deg);
   padding-left: .5em;
 }
-.jb-breadcrumb .jb-button-caption,
-.jb-breadcrumb .jb-label-caption {
+.jb-breadcrumb .jb-button > *,
+.jb-breadcrumb .jb-label > * {
   transform: skewX(20deg);
   -ms-transform: skewX(20deg);
   -webkit-transform: skewX(20deg);
 }
-.jb-breadcrumb > * + * {
+.jb-breadcrumb:not(.jb-group) > * + * {
   margin-left: .5em;
 }
 .jb-group {
@@ -943,7 +943,6 @@ BODY {
   border-radius: 0.16em;
   box-shadow: 0 0 0.2em #E6E6E6;
   border: 0.0625em solid;
-  margin: .5em;
   padding: .5em .8em;
 }
 .jb-message.jb-primary {

@@ -827,7 +827,7 @@ define('burner/ui/Element',['../core/EventHandler', '../core/Utils', './TextElem
                 var dom = this.get('dom');
                 dom.appendChild(element.getDom());
 
-                element.set('parent', this);
+                element.set('parent', this.ref);
                 this.get('children').push(element);
             }, this);
 
@@ -846,7 +846,7 @@ define('burner/ui/Element',['../core/EventHandler', '../core/Utils', './TextElem
                 var dom = this.getDom();
                 dom.insertBefore(element.getDom(), dom.firstChild);
 
-                element.set('parent', this);
+                element.set('parent', this.ref);
                 this.get('children').unshift(element);
             }, this);
 
@@ -867,8 +867,25 @@ define('burner/ui/Element',['../core/EventHandler', '../core/Utils', './TextElem
             var dom = this.getDom();
             dom.insertBefore(element.getDom(), children[index]);
 
-            element.set('parent', this);
+            element.set('parent', this.ref);
             children.splice(index, 0, element);
+
+            return this.ref;
+        },
+        'addAfter': function(element, targetElement){
+            if(Utils.isNumber(element)) element = Utils.toString(element);
+            if(!Utils.isString(element) && (!element || !element.getDom))
+                //TODO Error
+                throw 'Child has to be an Element, string or number.';
+
+            if(Utils.isString(element))
+                element = TextElement.new(element);
+
+            var dom = this.getDom();
+            dom.insertBefore(element.getDom(), targetElement.getDom().nextSibling);
+
+            element.set('parent', this.ref);
+            this.get('children').unshift(element);
 
             return this.ref;
         },
@@ -887,6 +904,10 @@ define('burner/ui/Element',['../core/EventHandler', '../core/Utils', './TextElem
             this.get('parent').remove(this);
 
             return this.ref;
+        },
+
+        'getParent': function(){
+            return this.get('parent');
         },
 
         /*
@@ -931,9 +952,15 @@ define('burner/ui/Element',['../core/EventHandler', '../core/Utils', './TextElem
          * Ready-to-use handled events
          *===========================================================*/
         'hide': function(){
+            if(this.hasClass('jb-hidden'))
+                return this.ref;
+
             return this.trigger('hide');
         },
         'show': function(){
+            if(!this.hasClass('jb-hidden'))
+                return this.ref;
+
             return this.trigger('show');
         },
 
@@ -1212,7 +1239,7 @@ define('burner/ui/Document',['../core/Utils', './Element'], function(Utils, Elem
 
 
 
-define('burner/ui/Popup',['../core/Utils', './Document', './Element'], function(Utils, Document, Element){
+define('burner/ui/Popup',['../core/Utils', './Document', './Element', './Group'], function(Utils, Document, Element, Group){
     var shownPopup;
 
     function targetClickedInClickMode(e){
@@ -1234,8 +1261,14 @@ define('burner/ui/Popup',['../core/Utils', './Document', './Element'], function(
             //Document.new().add(this);
         },
 
+        'placed': false,
         'adjustPosition': function(){
-            this.get('target').get('parent').add(this);
+            if(!this.get('placed')){
+                var parent = this.get('target').getParent();
+                if(parent.isInstanceOf(Group)) parent = parent.getParent();
+                parent.add(this);
+                this.set('placed', true);
+            }
 
             /*switch(this.get('direction')){
                 case 'TOP':this.addClass('jb-popup-top');break;
@@ -1932,6 +1965,7 @@ define('burner/ui/Spinner',['../core/Utils', './iInput', './Input', './Button', 
             validate.call(this);
             return this.ref;
         },
+        'min': 0,
         'setMin': function(value){
             if(value === null) this.set('loop', false);
             this.set('min', value);
