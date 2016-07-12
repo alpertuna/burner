@@ -46,6 +46,9 @@ BODY {
   color: #888;
   display: inline-block;
   padding: 0.5em 0;
+  /*&-icon + &-caption{
+        margin-left: .3em;
+    }*/
 }
 .jb-label-bold .jb-label-caption {
   font-weight: bold;
@@ -53,8 +56,13 @@ BODY {
 .jb-label-caption {
   display: inline-block;
 }
+.jb-label-icon {
+  text-align: center;
+  width: 2.2em;
+}
 .jb-label-icon + .jb-label-caption {
-  margin-left: .3em;
+  padding-left: 0;
+  margin-left: -0.2em;
 }
 .jb-label-disabled {
   opacity: 0.5;
@@ -799,6 +807,49 @@ BODY {
 }
 .jb-breadcrumb:not(.jb-group) > * + * {
   margin-left: .5em;
+}
+.jb-tree UL,
+.jb-tree LI {
+  margin: 0;
+  padding: 0;
+}
+.jb-tree UL {
+  list-style: none;
+}
+.jb-tree UL {
+  position: relative;
+}
+.jb-tree LI {
+  padding-left: 2.6em;
+  padding-top: 0.4em;
+  position: relative;
+}
+.jb-tree UL:before,
+.jb-tree LI:before,
+.jb-tree LI:after {
+  content: "";
+  position: absolute;
+}
+.jb-tree UL:before {
+  border-left: 0.0625em solid #CCC;
+  height: 1.4em;
+  left: 1.1em;
+  top: 0;
+}
+.jb-tree LI:before {
+  border-left: 0.0625em solid #CCC;
+  height: 100%;
+  left: 1.1em;
+  top: 1.4em;
+}
+.jb-tree LI:after {
+  border-bottom: 0.0625em solid #CCC;
+  left: 1.1em;
+  top: 1.4em;
+  width: 1.5em;
+}
+.jb-tree LI:last-child:before {
+  display: none;
 }
 .jb-group {
   display: inline-block;

@@ -32,6 +32,7 @@ require([
     'burner/ui/Notifier',
     'burner/ui/Breadcrumb',
     'burner/ui/Message',
+    'burner/ui/Tree',
     'burner/core/createClass',
     'burner/core/EventHandler',
     'burner/core/Ajax',
@@ -57,6 +58,7 @@ require([
     Notifier,
     Breadcrumb,
     Message,
+    Tree,
     createClass,
     EventHandler,
     Ajax,
@@ -66,11 +68,71 @@ require([
     window.Button = Button;
     window.Label = Label;*/
 
-    /*Document.new().add(
-        Message.new('Hello'),
-        Message.new('Hello', 'DANGER'),
-        Message.new('Hello', 'WARNING'),
-        Message.new('Hello', 'SUCCESS'),
-        Message.new('Hello', 'PRIMARY')
-    )*/
+    Document.new()
+    .add(
+        Tree.new([
+            {
+                'icon': 'bolt',
+                'title': 'Root 1',
+                'subItems': [
+                    {
+                        'icon': 'bell',
+                        'title': 'Sub Item 1',
+                        'subItems': [
+                            {
+                                'icon': 'cog',
+                                'title': 'Sub sub item'
+                            }
+                        ]
+                    },
+                    {
+                        'icon': 'bell',
+                        'title': 'Sub sub item',
+                        'subItems': [
+                            {
+                                'icon': 'cog',
+                                'title': 'Sub sub item'
+                            },
+                            {
+                                'icon': 'cog',
+                                'title': 'Sub sub item'
+                            }
+                        ]
+                    },
+                    {
+                        'icon': 'bell',
+                        'title': 'Sub Item 1',
+                        'subItems': [
+                            {
+                                'icon': 'cog',
+                                'title': 'Sub sub item'
+                            }
+                        ]
+                    }
+                ]
+            },
+            {
+                'icon': 'user',
+                'title': 'Root 2',
+                'subItems': [
+                    {
+                        'icon': 'cog',
+                        'title': 'Sub sub item',
+                        'subItemCallBack': function(callBack){
+                            setTimeout(callBack.bind(this, [
+                                {
+                                    'icon': 'cog',
+                                    'title': 'Sub sub item'
+                                },
+                                {
+                                    'icon': 'cog',
+                                    'title': 'Sub sub item'
+                                }
+                            ]), 2000);
+                        }
+                    }
+                ]
+            }
+        ])
+    )
 })

@@ -23,8 +23,17 @@
     &-caption{
         display: inline-block;
     }
-    &-icon + &-caption{
+    /*&-icon + &-caption{
         margin-left: .3em;
+    }*/
+    &-icon{
+        text-align: center;
+        width: @com-square;
+
+        + .jb-label-caption{
+            padding-left: 0;
+            margin-left: -.2em;
+        }
     }
     &-disabled{
         .opacity(@com-opacity-disabled);

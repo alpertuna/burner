@@ -1,0 +1,51 @@
+@import 'common/utils';
+@import 'common/component';
+
+.jb-tree{
+    @l-guide-color: #CCC;
+    @l-guide-line: @onepx solid @l-guide-color;
+
+    @h-line-width: 1.5em;
+
+    UL, LI{
+        margin: 0;
+        padding: 0;
+    }
+    UL{
+        list-style: none;
+    }
+
+    UL{
+        position: relative;
+    }
+    LI{
+        padding-left: 1.1em + @h-line-width;
+        padding-top: @com-space;
+        position: relative;
+    }
+    UL:before, LI:before, LI:after{
+        content: "";
+        position: absolute;
+    }
+    UL:before{
+        border-left: @l-guide-line;
+        height: 1em + @com-space;
+        left: 1.1em;
+        top: 0;
+    }
+    LI:before{
+        border-left: @l-guide-line;
+        height: 100%;
+        left: 1.1em;
+        top: 1em + @com-space;
+    }
+    LI:after{
+        border-bottom: @l-guide-line;
+        left: 1.1em;
+        top: 1em + @com-space;
+        width: @h-line-width;
+    }
+    LI:last-child:before{
+        display: none;
+    }
+}
