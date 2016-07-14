@@ -260,6 +260,9 @@ define(['../core/EventHandler', '../core/Utils', './TextElement'], function(Even
 
             return this.trigger('show');
         },
+        'isShown': function(){
+            return !this.hasClass('jb-hidden');
+        },
 
         /*'animate': function(property, value, unit, duration){
             var clock = this.get('animationClock');
