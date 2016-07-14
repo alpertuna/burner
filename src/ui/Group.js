@@ -13,6 +13,15 @@ define(['../core/Utils', './Element'], function(Utils, Element){
             this.addClass(vertical ? 'jb-v-group' : 'jb-group');
         },
 
+        'setSpace': function(value){
+            if(value)
+                this.removeClass('jb-group').addClass('jb-spaced-group');
+            else
+                this.removeClass('jb-spaced-group').addClass('jb-group');
+
+            return this.ref
+        },
+
         'setDisabled': function(value){
             Utils.each(this.get('children'), function(child){
                 child.setDisabled(value);

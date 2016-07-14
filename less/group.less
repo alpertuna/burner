@@ -3,6 +3,7 @@
 
 .jb-group{
     display: inline-block;
+    white-space: nowrap;
 
     //First depth
     > * {
@@ -109,3 +110,11 @@
     }
 }
 
+.jb-spaced-group{
+    display: inline-block;
+    white-space: nowrap;
+
+    > * + *{
+        margin-left: @com-space;
+    }
+}
