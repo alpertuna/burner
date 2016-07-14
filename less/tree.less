@@ -4,8 +4,10 @@
 .jb-tree{
     @l-guide-color: #CCC;
     @l-guide-line: @onepx solid @l-guide-color;
+    @l-half-square: @com-square/2;
 
-    @h-line-width: 1.5em;
+    @h-line-width: @l-half-square + @com-space + @onepx;
+    @h-line-width-nochild: @h-line-width + @com-square + @com-space + @onepx;
 
     UL, LI{
         margin: 0;
@@ -19,7 +21,7 @@
         position: relative;
     }
     LI{
-        padding-left: 1.1em + @h-line-width;
+        padding-left: @l-half-square + @h-line-width;
         padding-top: @com-space;
         position: relative;
     }
@@ -30,22 +32,35 @@
     UL:before{
         border-left: @l-guide-line;
         height: 1em + @com-space;
-        left: 1.1em;
+        left: @l-half-square;
         top: 0;
     }
     LI:before{
         border-left: @l-guide-line;
         height: 100%;
-        left: 1.1em;
+        left: @l-half-square;
         top: 1em + @com-space;
     }
     LI:after{
         border-bottom: @l-guide-line;
-        left: 1.1em;
+        left: @l-half-square;
         top: 1em + @com-space;
         width: @h-line-width;
     }
+
     LI:last-child:before{
         display: none;
+    }
+
+    LI.jb-tree-nochild{
+        padding-left: @l-half-square + @h-line-width-nochild;
+
+        &:after{
+            width: @h-line-width-nochild;
+        }
+    }
+
+    &-noroot > UL:before{
+        border: 0;
     }
 }
