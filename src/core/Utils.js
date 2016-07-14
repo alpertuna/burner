@@ -105,8 +105,8 @@ define(function(){
             if(!reference) reference = this;
             var result = [];
             this.each(arr, function(item){
-                result.push(callback(item));
-            }, reference);
+                result.push(callback.call(reference, item));
+            });
             return result;
         },
         'inArray': function(arr, item){
