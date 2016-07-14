@@ -963,6 +963,9 @@ define('burner/ui/Element',['../core/EventHandler', '../core/Utils', './TextElem
 
             return this.trigger('show');
         },
+        'isShown': function(){
+            return !this.hasClass('jb-hidden');
+        },
 
         /*'animate': function(property, value, unit, duration){
             var clock = this.get('animationClock');
@@ -1192,6 +1195,15 @@ define('burner/ui/Group',['../core/Utils', './Element'], function(Utils, Element
         'init': function(vertical){
             this.super();
             this.addClass(vertical ? 'jb-v-group' : 'jb-group');
+        },
+
+        'setSpace': function(value){
+            if(value)
+                this.removeClass('jb-group').addClass('jb-spaced-group');
+            else
+                this.removeClass('jb-spaced-group').addClass('jb-group');
+
+            return this.ref
         },
 
         'setDisabled': function(value){

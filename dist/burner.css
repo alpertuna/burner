@@ -58,7 +58,7 @@ BODY {
 }
 .jb-label-icon {
   text-align: center;
-  width: 2.2em;
+  width: 2.1875em;
 }
 .jb-label-icon + .jb-label-caption {
   padding-left: 0;
@@ -94,7 +94,7 @@ BODY {
 .jb-group .jb-label-icon,
 .jb-breadcrumb .jb-label-icon {
   text-align: center;
-  width: 2.2em;
+  width: 2.1875em;
 }
 .jb-group .jb-label-icon + .jb-label-caption,
 .jb-breadcrumb .jb-label-icon + .jb-label-caption {
@@ -105,7 +105,7 @@ BODY {
 .jb-breadcrumb .jb-label.jb-narrow .jb-label-caption {
   padding: 0;
   text-align: center;
-  width: 1.1em;
+  width: 1.09375em;
 }
 .jb-group .jb-label.jb-primary,
 .jb-breadcrumb .jb-label.jb-primary {
@@ -279,7 +279,7 @@ BODY {
 }
 .jb-button-icon {
   text-align: center;
-  width: 2.2em;
+  width: 2.1875em;
 }
 .jb-button-icon + .jb-button-caption {
   padding-left: 0;
@@ -446,7 +446,7 @@ BODY {
   padding: 0;
 }
 .jb-dropdown-popup {
-  padding: 0.4em 0;
+  padding: 0.375em 0;
 }
 .jb-dropdown-popup LI {
   margin: 0;
@@ -707,17 +707,17 @@ BODY {
     width: 6em;
 }*/
 .jb-datepicker-popup {
-  padding: 0.4em 0;
+  padding: 0.375em 0;
 }
 .jb-datepicker-popup-content {
   border-radius: 0.2em;
   box-shadow: 0 0 0.3em rgba(0, 0, 0, 0.8);
   background: #FFF;
   overflow: hidden;
-  width: 21em;
+  width: 20.875em;
 }
 .jb-datepicker-popup-header {
-  padding: 0.4em;
+  padding: 0.375em;
 }
 .jb-datepicker-popup-header .jb-label {
   font-weight: bold;
@@ -780,11 +780,11 @@ BODY {
 }
 .jb-datepicker-popup-footer {
   border-top: 0.0625em dotted #BBB;
-  padding: 0.4em;
+  padding: 0.375em;
   text-align: right;
 }
 .jb-spinner .jb-button .jb-button-icon {
-  width: 1.1em;
+  width: 1.09375em;
 }
 .jb-spinner .jb-input {
   text-align: right;
@@ -820,8 +820,8 @@ BODY {
   position: relative;
 }
 .jb-tree LI {
-  padding-left: 2.6em;
-  padding-top: 0.4em;
+  padding-left: 2.625em;
+  padding-top: 0.375em;
   position: relative;
 }
 .jb-tree UL:before,
@@ -832,27 +832,37 @@ BODY {
 }
 .jb-tree UL:before {
   border-left: 0.0625em solid #CCC;
-  height: 1.4em;
-  left: 1.1em;
+  height: 1.375em;
+  left: 1.09375em;
   top: 0;
 }
 .jb-tree LI:before {
   border-left: 0.0625em solid #CCC;
   height: 100%;
-  left: 1.1em;
-  top: 1.4em;
+  left: 1.09375em;
+  top: 1.375em;
 }
 .jb-tree LI:after {
   border-bottom: 0.0625em solid #CCC;
-  left: 1.1em;
-  top: 1.4em;
-  width: 1.5em;
+  left: 1.09375em;
+  top: 1.375em;
+  width: 1.53125em;
 }
 .jb-tree LI:last-child:before {
   display: none;
 }
+.jb-tree LI.jb-tree-nochild {
+  padding-left: 5.25em;
+}
+.jb-tree LI.jb-tree-nochild:after {
+  width: 4.15625em;
+}
+.jb-tree-noroot > UL:before {
+  border: 0;
+}
 .jb-group {
   display: inline-block;
+  white-space: nowrap;
 }
 .jb-group > * {
   border-radius: 0;
@@ -939,10 +949,17 @@ BODY {
 .jb-v-group .jb-group:last-child > *:last-child {
   border-bottom-right-radius: 0.2em;
 }
+.jb-spaced-group {
+  display: inline-block;
+  white-space: nowrap;
+}
+.jb-spaced-group > * + * {
+  margin-left: 0.375em;
+}
 .jb-popup {
   position: absolute;
   z-index: 2;
-  padding: 0.4em;
+  padding: 0.375em;
 }
 .jb-popup-align-top {
   padding-top: 0;
@@ -960,16 +977,16 @@ BODY {
   z-index: 3;
 }
 .jb-tip.jb-popup-top {
-  padding-bottom: 0.4em;
+  padding-bottom: 0.375em;
 }
 .jb-tip.jb-popup-bottom {
-  padding-top: 0.4em;
+  padding-top: 0.375em;
 }
 .jb-tip.jb-popup-left {
-  padding-right: 0.4em;
+  padding-right: 0.375em;
 }
 .jb-tip.jb-popup-right {
-  padding-left: 0.4em;
+  padding-left: 0.375em;
 }
 .jb-tip-content {
   border-radius: 0.2em;
