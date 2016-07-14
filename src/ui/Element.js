@@ -113,10 +113,11 @@ define(['../core/EventHandler', '../core/Utils', './TextElement'], function(Even
         },
         'add': function(){
             Utils.each(arguments, function(element){
+                if(Utils.isUnset(element)) return;
                 if(Utils.isNumber(element)) element = Utils.toString(element);
                 if(!Utils.isString(element) && (!element || !element.getDom))
                     //TODO Error
-                    throw 'Child has to be an Element, string or number.';
+                    throw 'Child has to be an Element, string or number. (' + element + ')';
 
                 if(Utils.isString(element))
                     element = TextElement.new(element);
@@ -132,10 +133,11 @@ define(['../core/EventHandler', '../core/Utils', './TextElement'], function(Even
         },
         'prepend': function(){
             Utils.each(arguments, function(element){
+                if(Utils.isUnset(element)) return;
                 if(Utils.isNumber(element)) element = Utils.toString(element);
                 if(!Utils.isString(element) && (!element || !element.getDom))
                     //TODO Error
-                    throw 'Child has to be an Element, string or number.';
+                    throw 'Child has to be an Element, string or number. (' + element + ')';
 
                 if(Utils.isString(element))
                     element = TextElement.new(element);
@@ -153,10 +155,11 @@ define(['../core/EventHandler', '../core/Utils', './TextElement'], function(Even
             var children = this.get('children');
             if(index == children.length) return this.add(element);
 
+            if(Utils.isUnset(element)) return;
             if(Utils.isNumber(element)) element = Utils.toString(element);
             if(!Utils.isString(element) && (!element || !element.getDom))
                 //TODO Error
-                throw 'Child has to be an Element, string or number.';
+                throw 'Child has to be an Element, string or number. (' + element + ')';
 
             if(Utils.isString(element))
                 element = TextElement.new(element);
@@ -170,10 +173,11 @@ define(['../core/EventHandler', '../core/Utils', './TextElement'], function(Even
             return this.ref;
         },
         'addAfter': function(element, targetElement){
+            if(Utils.isUnset(element)) return;
             if(Utils.isNumber(element)) element = Utils.toString(element);
             if(!Utils.isString(element) && (!element || !element.getDom))
                 //TODO Error
-                throw 'Child has to be an Element, string or number.';
+                throw 'Child has to be an Element, string or number. (' + element + ')';
 
             if(Utils.isString(element))
                 element = TextElement.new(element);
