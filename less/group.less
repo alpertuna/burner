@@ -112,9 +112,13 @@
 
 .jb-spaced-group{
     display: inline-block;
+    margin-right: -@com-space;
     white-space: nowrap;
 
-    > * + *{
-        margin-left: @com-space;
+    > *{
+        margin-right: @com-space;
+    }
+    > .jb-spaced-group{
+        margin-right: 0;
     }
 }

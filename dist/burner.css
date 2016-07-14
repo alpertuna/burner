@@ -952,10 +952,14 @@ BODY {
 }
 .jb-spaced-group {
   display: inline-block;
+  margin-right: -0.375em;
   white-space: nowrap;
 }
-.jb-spaced-group > * + * {
-  margin-left: 0.375em;
+.jb-spaced-group > * {
+  margin-right: 0.375em;
+}
+.jb-spaced-group > .jb-spaced-group {
+  margin-right: 0;
 }
 .jb-popup {
   position: absolute;
