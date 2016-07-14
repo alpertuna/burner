@@ -67,4 +67,8 @@ require([
     /*window.Document = Document;
     window.Button = Button;
     window.Label = Label;*/
+
+    Document.new().add(
+        Check.new()
+    );
 })

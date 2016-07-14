@@ -41,7 +41,7 @@ BODY {
   color: #3CE;
 }
 .jb-label {
-  border-radius: 0.2em;
+  border-radius: 0.1875em;
   border: 0.0625em solid transparent;
   color: #888;
   display: inline-block;
@@ -133,18 +133,18 @@ BODY {
   border-color: #29a3be;
 }
 .jb-container-input {
-  padding-right: 1.025em;
+  padding-right: 1em;
 }
 .jb-input {
   font-family: sans-serif;
   font-size: 1em;
   outline: 0;
-  border-radius: 0.2em;
+  border-radius: 0.1875em;
   box-shadow: 0 0.07em 0.15em #DDD inset;
   background: #FFF;
   border: 0.0625em solid #BBB;
   color: #555;
-  padding: 0.5em 0.45em;
+  padding: 0.5em 0.4375em;
 }
 .jb-input:hover {
   border-color: #AAA;
@@ -242,7 +242,7 @@ BODY {
   font-family: sans-serif;
   font-size: 1em;
   outline: 0;
-  border-radius: 0.2em;
+  border-radius: 0.1875em;
   box-shadow: 0 0.0625em 0 #FFF inset;
   text-shadow: 0 0.0625em 0 #FFF;
   background: #F6F6F6;
@@ -476,7 +476,7 @@ BODY {
   box-shadow: 0 2px 6px #0066cc inset;
 }
 .jb-dropdown-popup-content {
-  border-radius: 0.2em;
+  border-radius: 0.1875em;
   box-shadow: 0 0 0.3em rgba(0, 0, 0, 0.8);
   background: #FFF;
   list-style: none;
@@ -497,14 +497,15 @@ BODY {
   font-family: sans-serif;
   font-size: 1em;
   outline: 0;
-  border-radius: 0.2em;
+  border-radius: 0.1875em;
   box-shadow: 0 0.07em 0.15em #DDD inset;
   background: #FFF;
   border: 0.0625em solid #BBB;
   color: #555;
-  padding: 0.5em 0.45em;
+  padding: 0.5em 0.4375em;
   cursor: pointer;
   display: inline-block;
+  padding: 0.5em 0;
   text-align: center;
 }
 .jb-check:hover {
@@ -601,7 +602,7 @@ BODY {
 }
 .jb-check-icon {
   text-align: center;
-  width: 1.2em;
+  width: 2.1875em;
 }
 .jb-check:active {
   box-shadow: 0 0.1em 0.4em #CCC inset, 0 0 0.2em #39F;
@@ -622,7 +623,7 @@ BODY {
   font-family: sans-serif;
   font-size: 1em;
   outline: 0;
-  border-radius: 0.2em;
+  border-radius: 0.1875em;
   box-shadow: 0 0.07em 0.2em #CCC inset;
   background: #FCFCFC;
   border: 1px solid #BBB;
@@ -691,7 +692,7 @@ BODY {
   width: 1.8em;
 }
 .jb-switch-middle {
-  border-radius: 0.2em;
+  border-radius: 0.1875em;
   box-shadow: 0 1px 0 #FFF inset, 0 0 0.2em 0.1em #DDD;
   text-shadow: 0 1px 0 #FFF;
   background: #F6F6F6;
@@ -710,7 +711,7 @@ BODY {
   padding: 0.375em 0;
 }
 .jb-datepicker-popup-content {
-  border-radius: 0.2em;
+  border-radius: 0.1875em;
   box-shadow: 0 0 0.3em rgba(0, 0, 0, 0.8);
   background: #FFF;
   overflow: hidden;
@@ -735,7 +736,7 @@ BODY {
   width: 6.5em;
 }
 .jb-datepicker-popup-cell {
-  border-radius: 0.2em;
+  border-radius: 0.1875em;
   border-color: transparent;
   display: inline-block;
   line-height: 2em;
@@ -820,7 +821,7 @@ BODY {
   position: relative;
 }
 .jb-tree LI {
-  padding-left: 2.625em;
+  padding-left: 2.6875em;
   padding-top: 0.375em;
   position: relative;
 }
@@ -846,16 +847,16 @@ BODY {
   border-bottom: 0.0625em solid #CCC;
   left: 1.09375em;
   top: 1.375em;
-  width: 1.53125em;
+  width: 1.59375em;
 }
 .jb-tree LI:last-child:before {
   display: none;
 }
 .jb-tree LI.jb-tree-nochild {
-  padding-left: 5.25em;
+  padding-left: 5.375em;
 }
 .jb-tree LI.jb-tree-nochild:after {
-  width: 4.15625em;
+  width: 4.28125em;
 }
 .jb-tree-noroot > UL:before {
   border: 0;
@@ -869,12 +870,12 @@ BODY {
   margin-right: -0.0625em;
 }
 .jb-group > *:first-child {
-  border-bottom-left-radius: 0.2em;
-  border-top-left-radius: 0.2em;
+  border-bottom-left-radius: 0.1875em;
+  border-top-left-radius: 0.1875em;
 }
 .jb-group > *:last-child {
-  border-bottom-right-radius: 0.2em;
-  border-top-right-radius: 0.2em;
+  border-bottom-right-radius: 0.1875em;
+  border-top-right-radius: 0.1875em;
   margin-right: 0;
 }
 .jb-group .jb-group {
@@ -885,12 +886,12 @@ BODY {
   margin-right: -0.0625em;
 }
 .jb-group .jb-group:first-child > :first-child {
-  border-bottom-left-radius: 0.2em;
-  border-top-left-radius: 0.2em;
+  border-bottom-left-radius: 0.1875em;
+  border-top-left-radius: 0.1875em;
 }
 .jb-group .jb-group:last-child > :last-child {
-  border-bottom-right-radius: 0.2em;
-  border-top-right-radius: 0.2em;
+  border-bottom-right-radius: 0.1875em;
+  border-top-right-radius: 0.1875em;
   margin-right: 0;
 }
 .jb-group .jb-group .jb-group {
@@ -901,12 +902,12 @@ BODY {
   margin-right: -0.0625em;
 }
 .jb-group .jb-group:first-child > .jb-group:first-child > :first-child {
-  border-bottom-left-radius: 0.2em;
-  border-top-left-radius: 0.2em;
+  border-bottom-left-radius: 0.1875em;
+  border-top-left-radius: 0.1875em;
 }
 .jb-group .jb-group:last-child > .jb-group:first-child > :last-child {
-  border-bottom-right-radius: 0.2em;
-  border-top-right-radius: 0.2em;
+  border-bottom-right-radius: 0.1875em;
+  border-top-right-radius: 0.1875em;
   margin-right: 0;
 }
 .jb-group .jb-button:hover,
@@ -935,19 +936,19 @@ BODY {
   border-radius: 0;
 }
 .jb-v-group .jb-group:first-child > *:first-child {
-  border-top-left-radius: 0.2em;
+  border-top-left-radius: 0.1875em;
 }
 .jb-v-group .jb-group:first-child > *:last-child {
-  border-top-right-radius: 0.2em;
+  border-top-right-radius: 0.1875em;
 }
 .jb-v-group .jb-group:last-child {
   margin-bottom: 0;
 }
 .jb-v-group .jb-group:last-child > *:first-child {
-  border-bottom-left-radius: 0.2em;
+  border-bottom-left-radius: 0.1875em;
 }
 .jb-v-group .jb-group:last-child > *:last-child {
-  border-bottom-right-radius: 0.2em;
+  border-bottom-right-radius: 0.1875em;
 }
 .jb-spaced-group {
   display: inline-block;
@@ -989,7 +990,7 @@ BODY {
   padding-left: 0.375em;
 }
 .jb-tip-content {
-  border-radius: 0.2em;
+  border-radius: 0.1875em;
   box-shadow: 0 0 3px rgba(51, 51, 51, 0.8);
   background: rgba(51, 51, 51, 0.8);
   color: #F2F2F2;
