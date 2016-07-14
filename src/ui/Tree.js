@@ -15,43 +15,46 @@ define([
     './Group'
 ], function(Utils, Element, Label, Button, Check, Group){
     function setSubItemsFromCallBack(item, items){
-        setSubItems(item.subItemContainer, items);
         item.refreshButton.setDisabled(false).setIcon('refresh');
-        item.toggleCheck.setDisabled(false);
-
-        /*if(!item.toggleCheck.getParent())
-            item.group.prepend(item.toggleCheck);*/
-
-        toggle(item);
+        if(items.length){
+            item.toggleCheck.setDisabled(false).show();
+            item.li.removeClass('jb-tree-nochild');
+            setSubItems.call(this, item.subItemContainer, items);
+            toggle(item);
+        }else{
+            item.toggleCheck.hide();
+            item.li.addClass('jb-tree-nochild');
+        }
     }
     function callSubItems(item){
-        /*if(item.subItemContainer)*/
-            item.subItemContainer.clear().hide();
-        item.toggleCheck.setDisabled(true);//.setIcon('circle-o-notch fa-spin');
+        item.subItemContainer.clear().hide();
+        item.toggleCheck.setDisabled(true);
         item.refreshButton.setDisabled(true).setIcon('circle-o-notch fa-spin');
         item.subItemCallBack(setSubItemsFromCallBack.bind(this, item));
     }
     function toggle(item){
         if(item.callBackIsWaiting){
             item.callBackIsWaiting = false;
-            item.toggleGroup.add(item.refreshButton);
+            item.group.add(item.refreshButton);
             item.refresh();
             return;
         }
 
-        if(item.toggleCheck.getValue()){
+        if(item.toggleCheck.getValue())
             item.subItemContainer.show();
-        }else{
+        else
             item.subItemContainer.hide();
-        }
     }
     function setSubItems(container, items){
+        var itemList = this.get('itemList');
+
         Utils.each(items, function(item){
             var group = Group.new().setSpace(true);
             item.group = group;
-            var element = Element.new('li').add(
+            var li = Element.new('li').add(
                 group
             );
+            item.li = li;
 
             if(item.subItems && item.subItems.length == 0) delete item.subItems;
 
@@ -59,7 +62,7 @@ define([
             if(item.subItems || item.subItemCallBack){
                 //Sub Item Container
                 var subItemContainer = Element.new('ul').hide();
-                element.add(subItemContainer);
+                li.add(subItemContainer);
                 item.subItemContainer = subItemContainer;
 
                 //Toggle Button
@@ -67,7 +70,8 @@ define([
                 .setIcon('minus')
                 .on('change', toggle.bind(this, item));
                 item.toggleCheck = toggleCheck;
-            }else element.addClass('jb-tree-nochild');
+                group.add(toggleCheck);
+            }else li.addClass('jb-tree-nochild');
 
             //If sub items from callback
             if(item.subItemCallBack){
@@ -79,26 +83,24 @@ define([
                 .on('click', callSubItems.bind(this, item));
                 item.refreshButton = refreshButton;
                 item.refresh = callSubItems.bind(this, item); //To refresh from outside
-                group.add(
-                    item.toggleGroup = Group.new().add(
-                        toggleCheck
-                    )
-                )
             }
 
             //If sub items from parameter
             if(item.subItems){
                 item.callBackIsWaiting = false;
 
-                setSubItems(subItemContainer, item.subItems);
-                group.add(toggleCheck);
+                setSubItems.call(this, subItemContainer, item.subItems);
             }
+
+            //If item has id, add it to list
+            if(Utils.isSet(item.id))
+                itemList[item.id] = item;
 
             //Item
             group.add(item.element);
 
-            container.add(element);
-        });
+            container.add(li);
+        }, this);
     }
 
     return Element.extend({
@@ -110,9 +112,12 @@ define([
             this.add(content);
             this.set('content', content);
 
-            this.setItems(items);
+            if(items)
+                this.setItems(items);
         },
         'setItems': function(items){
+            this.set('itemList', {});
+
             var content = this.get('content').clear();
             if(items.length == 0)
                 content.hide();
@@ -127,6 +132,10 @@ define([
             else
                 this.addClass('jb-tree-noroot');
 
+            return this.ref;
+        },
+        'refresh': function(itemId){
+            this.get('itemList')[itemId].refresh();
             return this.ref;
         }
     })
