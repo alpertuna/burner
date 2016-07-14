@@ -202,7 +202,8 @@ define(['../core/EventHandler', '../core/Utils', './TextElement'], function(Even
             }
 
             //Remove this from parent
-            this.get('parent').remove(this);
+            var parent = this.get('parent');
+            if(parent) parent.remove(this);
 
             return this.ref;
         },
