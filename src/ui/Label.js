@@ -6,7 +6,13 @@
 
 'use strict';
 
-define(['../core/Utils', './Element', './Icon'], function(Utils, Element, Icon){
+define([
+    '../core/Utils', './Element', './Icon',
+    './Spinner', './Input', './Button', './Check', './Switch'
+], function(
+    Utils, Element, Icon,
+    Spinner, Input, Button, Check, Switch
+){
     var uid=0;
     function genUid(){
         return 'label_' + (uid++);
@@ -95,6 +101,16 @@ define(['../core/Utils', './Element', './Icon'], function(Utils, Element, Icon){
 
         'bound': false,
         'bind': function(input){
+            if(input.isInstanceOf(Spinner)){
+                input = input.get('input');
+            }else if(
+                !input.isInstanceOf(Button) &&
+                !input.isInstanceOf(Switch) &&
+                !input.isInstanceOf(Check) &&
+                !input.isInstanceOf(Input)
+            )
+                return this.ref;
+
             var inputId = input.getAttr('id');
             if(Utils.isUnset(inputId)){
                 inputId = genUid();
