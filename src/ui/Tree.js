@@ -30,7 +30,7 @@ define([
         item.subItemContainer.clear().hide();
         item.toggleCheck.setDisabled(true);
         item.refreshButton.setDisabled(true).setIcon('circle-o-notch fa-spin');
-        item.subItemCallBack(setSubItemsFromCallBack.bind(this, item));
+        item.subItemProvider(setSubItemsFromCallBack.bind(this, item));
     }
     function toggle(item){
         if(item.callBackIsWaiting){
@@ -59,7 +59,7 @@ define([
             if(item.subItems && item.subItems.length == 0) delete item.subItems;
 
             //If there are sub items
-            if(item.subItems || item.subItemCallBack){
+            if(item.subItems || item.subItemProvider){
                 //Sub Item Container
                 var subItemContainer = Element.new('ul').hide();
                 li.add(subItemContainer);
@@ -74,7 +74,7 @@ define([
             }else li.addClass('jb-tree-nochild');
 
             //If sub items from callback
-            if(item.subItemCallBack){
+            if(item.subItemProvider){
                 item.callBackIsWaiting = true;
 
                 //Refresh Button
