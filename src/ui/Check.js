@@ -4,7 +4,19 @@
  * Date: 28.04.2016
  */
 
-define(['../core/Utils', './iInput', './Element', './Icon'], function(Utils, iInput, Element, Icon){
+'use strict';
+
+define([
+    '../core/Utils',
+    './ComponentContainer', './Element', './Icon',
+    './utils/setTheme',
+    './interfaces/iComponent', './interfaces/iInput'
+], function(
+    Utils,
+    ComponentContainer, Element, Icon,
+    setTheme,
+    iComponent, iInput
+){
     function repaint(){
         var icon = this.get('icon');
         if(this.getValue())
@@ -21,30 +33,40 @@ define(['../core/Utils', './iInput', './Element', './Icon'], function(Utils, iIn
 
         this.toggle();
 
-        if(oldValue != this.get('value')){
-            this.trigger('change');
+        var newValue = this.get('value');
+
+        if(oldValue != newValue){
+            this.trigger('change',{
+                'value': newValue
+            });
 
             if(group){
                 if(isRadioGroup) Utils.each(group.get('options'), function(option){
                     if(option.get('groupValue') == oldGroupValue){
-                        option.trigger('change');
+                        option.trigger('change', {'value': false});
                         return false;
                     }
                 });
-                group.trigger('change');
+                group.trigger('change', {
+                    'value': group.getValue()
+                });
             }
         }
     }
 
-    return Element.extend({
+    return ComponentContainer.extend({
         'value': false,
         'init': function(groupValue){
-            this.super('button');
-            this.addClass('jb-check');
+            var component = Element.new('button');
+            component.addClass('jb-check');
+            this.super(component);
+
             this.setIcon('check');
-            this.handle('change');
             this.set('groupValue', groupValue);
+            this.handle('change');
+            this.handle('click');
             this.on('click', toggle.bind(this));
+            component.getDom().addEventListener('click', toggle.bind(this));
         },
 
         'bind': function(group){
@@ -52,7 +74,7 @@ define(['../core/Utils', './iInput', './Element', './Icon'], function(Utils, iIn
             var options = group.get('options');
             options.push(this);
             if(group.get('type') == 'RADIO'){
-                this.addClass('jb-radio');
+                this.getComponent().addClass('jb-radio');
                 this.setIcon('circle');
                 if(options.length == 1) this.check();
             }
@@ -62,20 +84,22 @@ define(['../core/Utils', './iInput', './Element', './Icon'], function(Utils, iIn
         'setIcon': function(name){
             var icon = this.get('icon');
             if(icon)
-                this.remove(icon);
+                icon.remove();
 
             icon = Icon.new(name+ ' jb-check-icon');
-            this.add(icon);
+            this.getComponent().add(icon);
             this.set('icon', icon);
             repaint.call(this);
 
             return this.ref;
         },
         'setDisabled': function(value){
+            var component = this.getComponent();
+
             if(value)
-                this.setAttr('disabled', 'disabled');
+                component.setAttr('disabled', 'disabled');
             else
-                this.removeAttr('disabled');
+                component.removeAttr('disabled');
 
             return this.ref;
         },
@@ -116,6 +140,23 @@ define(['../core/Utils', './iInput', './Element', './Icon'], function(Utils, iIn
         },
         'uncheck': function(){
             return this.setValue(false);
+        },
+
+        'defaultValue': false,
+        'setDefaultValue': function(value){
+            this.set('defaultValue', value);
+            this.setValue(value);
+            return this.ref;
+        },
+        'resetValue': function(){
+            this.setValue(this.get('defaultValue'));
+            return this.ref;
+        },
+
+        'setTheme': setTheme,
+        'focus': function(){
+            this.getComponent().getDom().focus();
+            return this.ref;
         }
-    }).implement(iInput)
+    }).implement(iComponent, iInput)
 })

@@ -10,7 +10,7 @@
     .box-shadow(@l-box-shadow);
     .text-shadow(0 -@onepx 0 darken(@l-background, 15%));
 
-    background: @l-background;
+    background: linear-gradient(lighten(@l-background, 4%), @l-background);
     border: @onepx solid @l-border-color;
     color: #FFF;
 
@@ -31,6 +31,7 @@
     }
     &:disabled{
         .box-shadow(none);
+        .text-shadow(none);
 
         background: @l-background;
         border-color: @l-border-color;
@@ -42,7 +43,8 @@
     @l-background: #F6F6F6;
     @l-box-shadow: 0 @onepx 0 #FFF inset;
 
-    .com-font-setup();
+    .com-setup();
+
     .border-radius(@com-border-radius);
     .box-shadow(@l-box-shadow);
     .text-shadow(0 @onepx 0 #FFF);
@@ -51,7 +53,7 @@
     border: @onepx solid @com-border-color;
     color: #777;
     cursor: pointer;
-    padding: @com-padding 0;
+    padding: 0;
 
     &:hover{
         background: lighten(@l-background, 3%);
@@ -88,7 +90,7 @@
 
         + .jb-button-caption{
             padding-left: 0;
-            margin-left: -.2em;
+            margin-left: -@com-space;
         }
     }
 

@@ -10,8 +10,10 @@
 define(['../core/createClass'], function(createClass){
     return createClass({
         'init': function(text){
-            this.set('dom', document.createElement('span'));
-            this.get('dom').innerHTML = text;
+            /*this.set('dom', document.createElement('span'));
+            this.get('dom').innerHTML = text;*/
+           if(text == '&nbsp;') text = '\u00A0';
+            this.set('dom', document.createTextNode(text));
         },
         'getDom': function(){
             return this.get('dom');

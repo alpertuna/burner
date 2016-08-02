@@ -3,24 +3,33 @@
 
 .jb-group{
     display: inline-block;
+    vertical-align: middle;
     white-space: nowrap;
 
     //First depth
-    > * {
-        .border-radius(0);
+    > .jb-com-container{
         margin-right: -@onepx;
 
-        &:first-child{
+        > *{
+            .border-radius(0);
+            //margin-right: -@onepx;
+        }
+
+        &:first-child *{
             .border-bottom-left-radius(@com-border-radius);
             .border-top-left-radius(@com-border-radius);
         }
-        &:last-child{
+
+        &:last-child *{
             .border-bottom-right-radius(@com-border-radius);
             .border-top-right-radius(@com-border-radius);
+            //margin-right: 0;
+        }
+        &:last-child{
             margin-right: 0;
         }
     }
-    .jb-group{
+    /*.jb-group{
         //Second depth
         margin-right:0;
 
@@ -56,7 +65,7 @@
             .border-top-right-radius(@com-border-radius);
             margin-right: 0;
         }
-    }
+    }*/
 
     //Focusable components
     .jb-button,
@@ -72,9 +81,22 @@
             z-index: 1;
         }
     }
+
+    &.jb-group-block{
+        display: table;
+        width: 100%;
+
+        > .jb-com-container{
+            display: table-cell;
+            width: 1%;
+        }
+        > .jb-input-container{
+            width: 100%;
+        }
+    }
 }
 
-.jb-v-group{
+/*.jb-vertical-group{
     display: inline-block;
 
     .jb-group{
@@ -108,7 +130,7 @@
             }
         }
     }
-}
+}*/
 
 .jb-spaced-group{
     display: inline-block;
@@ -118,7 +140,7 @@
     > *{
         margin-right: @com-space;
     }
-    > .jb-spaced-group{
+    .jb-spaced-group{
         margin-right: 0;
     }
 }

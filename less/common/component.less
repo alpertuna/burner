@@ -24,9 +24,11 @@
 @com-color-info: #3CE;
 @com-color-dark: #666;
 
-.com-font-setup(){
+.com-setup(){
+    display: inline-block;
     font-family: sans-serif;
     font-size: 1em;
+    line-height: 2em;
     outline: 0;
 }
 
@@ -42,7 +44,7 @@
     }
 
     &:hover{
-        background: #EEE;
+        background: #F2F2F2;
     }
     &:focus{
         background: @com-border-color-focus;
@@ -52,4 +54,12 @@
         background: darken(@com-border-color-focus, 10%);
         .box-shadow(0 2px 6px darken(@com-border-color-focus, 20%) inset);
     }
+}
+
+.jb-com-container{
+    display: inline-block;
+    vertical-align: top;
+}
+.jb-com-message{
+    padding: @com-space 0 0 @com-space;
 }

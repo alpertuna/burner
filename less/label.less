@@ -10,12 +10,14 @@
 }
 
 .jb-label{
+    .com-setup();
+
     .border-radius(@com-border-radius);
 
     border: @onepx solid transparent;
     color: #888;
     display: inline-block;
-    padding: @com-padding 0;
+    padding: 0;
 
     &-bold .jb-label-caption{
         font-weight: bold;
@@ -27,12 +29,8 @@
         margin-left: .3em;
     }*/
     &-icon{
-        text-align: center;
-        width: @com-square;
-
         + .jb-label-caption{
-            padding-left: 0;
-            margin-left: -.2em;
+            margin-left: @com-space;
         }
     }
     &-disabled{
@@ -56,26 +54,22 @@
     }
 }
 .jb-group .jb-label,
-.jb-breadcrumb .jb-label{
+.jb-breadcrumb .jb-label,
+.jb-label.jb-label-boxed{
     background: #FCFCFC;
     border-color: @com-border-color;
 
-    &-caption{
+    .jb-label-caption{
         padding: 0 1em;
     }
-    &-icon{
+    .jb-label-icon{
         text-align: center;
         width: @com-square;
 
         + .jb-label-caption{
             padding-left: 0;
-            margin-left: -.2em;
+            margin-left: -@com-space;
         }
-    }
-    &.jb-narrow .jb-label-caption{
-        padding: 0;
-        text-align: center;
-        width: @com-square/2;
     }
 
     &.jb-primary{

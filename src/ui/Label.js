@@ -7,39 +7,44 @@
 'use strict';
 
 define([
-    '../core/Utils', './Element', './Icon',
-    './Spinner', './Input', './Button', './Check', './Switch'
+    '../core/Utils',
+    './ComponentContainer', './Element', './Icon', './Spinner',
+    './utils/setTheme',
+    './interfaces/iComponent'
 ], function(
-    Utils, Element, Icon,
-    Spinner, Input, Button, Check, Switch
+    Utils,
+    ComponentContainer, Element, Icon, Spinner,
+    setTheme,
+    iComponent
 ){
     var uid=0;
     function genUid(){
         return 'label_' + (uid++);
     }
 
-    return Element.extend({
+    return ComponentContainer.extend({
         'init': function(caption){
-            this.super('label');
+            var component = Element.new('label')
+                .addClass('jb-label');
+            this.super(component);
 
-            if(!Utils.isSet(caption))
-                caption = '';
 
             var captionElement = Element.new()
-            .addClass('jb-label-caption');
-
+                .addClass('jb-label-caption');
+            component.add(captionElement);
             this.set('captionElement', captionElement);
-            this.addClass('jb-label');
-            this.add(captionElement);
+
+            if(!Utils.isSet(caption)) caption = '';
             this.setCaption(caption);
         },
 
         'setBold': function(value){
-            if(value)
-                this.addClass('jb-label-bold');
-            else
-                this.removeClass('jb-label-bold');
+            this.get('component').setClass('jb-label-bold', value);
+            return this.ref
+        },
 
+        'setBoxed': function(value){
+            this.get('component').setClass('jb-label-boxed', value);
             return this.ref
         },
 
@@ -54,74 +59,60 @@ define([
         'setIcon': function(name){
             var iconElement = this.get('iconElement');
 
-            if(iconElement)
-                this.remove(iconElement);
+            if(iconElement) iconElement.remove();
 
             iconElement = Icon.new(name).addClass('jb-label-icon');
-            this.prepend(iconElement);
+            this.get('component').prepend(iconElement);
             this.set('iconElement', iconElement);
 
             return this.ref;
         },
 
         'setDisabled': function(value){
+            var component = this.get('component');
+
             if(value){
-                this.addClass('jb-label-disabled');
+                component.addClass('jb-label-disabled');
                 return this.ref;
             }
 
-            this.removeClass('jb-label-disabled');
+            component.removeClass('jb-label-disabled');
             return this.ref;
         },
 
-        //NORMAL, PRIMARY, DANGER, WARNING, INFO
-        'setTheme': function(theme){
-            this.removeClass('jb-primary jb-danger jb-warning jb-info');
+        'setTheme': setTheme,
 
-            switch(theme){
-                case 'PRIMARY':
-                    this.addClass('jb-primary');
-                    break;
-                case 'SUCCESS':
-                    this.addClass('jb-success');
-                    break;
-                case 'DANGER':
-                    this.addClass('jb-danger');
-                    break;
-                case 'WARNING':
-                    this.addClass('jb-warning');
-                    break;
-                case 'INFO':
-                    this.addClass('jb-info');
-                    break;
+        'boundComponent': false,
+        'bind': function(component){
+            if(component.isInstanceOf(Spinner)){
+                component = component.get('input');
+            }else if(!component.isImplementedBy(iComponent))
+                //TODO Error
+                throw 'Label cannot bind a non-component element.';
+                //return this.ref;
+
+            component = component.getComponent();
+
+            var componentId = component.getAttr('id');
+            if(Utils.isUnset(componentId)){
+                componentId = genUid();
+                component.setAttr('id', componentId);
             }
-
+            this.getComponent().setAttr('for', componentId);
+            this.set('boundComponent', component);
             return this.ref;
         },
-
-        'bound': false,
-        'bind': function(input){
-            if(input.isInstanceOf(Spinner)){
-                input = input.get('input');
-            }else if(
-                !input.isInstanceOf(Button) &&
-                !input.isInstanceOf(Switch) &&
-                !input.isInstanceOf(Check) &&
-                !input.isInstanceOf(Input)
-            )
-                return this.ref;
-
-            var inputId = input.getAttr('id');
-            if(Utils.isUnset(inputId)){
-                inputId = genUid();
-                input.setAttr('id', inputId);
-            }
-            this.setAttr('for', inputId);
-            this.set('bound', true);
-            return this.ref;
+        'getBoundComponent': function(){
+            return this.get('boundComponent');
         },
         'isBound': function(){
-            return this.get('bound');
+            return this.get('boundComponent') !== false;
+        },
+
+        'focus': function(){
+            if(this.isBound())
+                this.getBoundComponent().focus();
+            return this.ref;
         }
-    });
-});
+    }).implement(iComponent)
+})

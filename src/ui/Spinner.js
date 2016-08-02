@@ -4,7 +4,15 @@
  * Date: 03.05.2016
  */
 
-define(['../core/Utils', './iInput', './Input', './Button', './Group', './Element'], function(Utils, iInput, Input, Button, Group, Element){
+define([
+    '../core/Utils',
+    './Button', './ComponentContainer', './Element', './Group', './Input',
+    './interfaces/iComponent', './interfaces/iInput'
+], function(
+    Utils,
+    Button, ComponentContainer, Element, Group, Input,
+    iComponent, iInput
+){
     function countFaster(direction){
         direction *= 10;
         increase.call(this, direction);
@@ -46,6 +54,7 @@ define(['../core/Utils', './iInput', './Input', './Button', './Group', './Elemen
         var input = this.get('input');
         input.setValue(value);
         validate.call(this);
+        triggerChange.call(this);
         return this.ref;
     }
     function validate(){
@@ -65,6 +74,11 @@ define(['../core/Utils', './iInput', './Input', './Button', './Group', './Elemen
         repaint.call(this);
         return this.ref;
     }
+    function triggerChange(){
+        this.trigger('change', {
+            'value': this.getValue()
+        });
+    }
     function repaint(){
         //this.get('input').getDom().value = this.get('value'); //To avoid onchange loop
         var value = this.get('value');
@@ -75,29 +89,32 @@ define(['../core/Utils', './iInput', './Input', './Button', './Group', './Elemen
         return this.ref;
     }
 
-    return Group.extend({
+    return ComponentContainer.extend({
         'init': function(){
-            this.super();
+            var group = Group.new();
+            this.super(group);
+            this.handle('change');
 
             var input = Input.new()
-            .on('change', validate.bind(this));
+                .on('change', validate.bind(this))
+                .on('change', triggerChange.bind(this));
             var buttonDown = Button.new()
-            .setIcon('angle-down')
-            .on('mousedown', waitToCount.bind(this, -1))
-            .on('mouseup', abortCount.bind(this))
-            .on('mouseout', abortCount.bind(this));
+                .setIcon('angle-down');
+            buttonDown.getDom().addEventListener('mousedown', waitToCount.bind(this, -1));
+            buttonDown.getDom().addEventListener('mouseup', abortCount.bind(this));
+            buttonDown.getDom().addEventListener('mouseout', abortCount.bind(this));
             var buttonUp = Button.new()
-            .setIcon('angle-up')
-            .on('mousedown', waitToCount.bind(this, 1))
-            .on('mouseup', abortCount.bind(this))
-            .on('mouseout', abortCount.bind(this));
+                .setIcon('angle-up');
+            buttonUp.getDom().addEventListener('mousedown', waitToCount.bind(this, 1));
+            buttonUp.getDom().addEventListener('mouseup', abortCount.bind(this));
+            buttonUp.getDom().addEventListener('mouseout', abortCount.bind(this));
 
             this.set('value', 0);
             this.set('input', input);
             this.set('buttonUp', buttonUp);
             this.set('buttonDown', buttonDown);
-            this.addClass('jb-spinner');
-            this.add(
+            group.addClass('jb-spinner');
+            group.add(
                 buttonDown,
                 input,
                 buttonUp
@@ -114,11 +131,12 @@ define(['../core/Utils', './iInput', './Input', './Button', './Group', './Elemen
             if(this.get('buttonsAreShown') == value) return this.ref;
 
             if(value){
-                this.prepend(this.get('buttonDown'));
-                this.add(this.get('buttonUp'));
+                this.getComponent()
+                    .prepend(this.get('buttonDown'))
+                    .add(this.get('buttonUp'));
             }else{
-                this.remove(this.get('buttonDown'));
-                this.remove(this.get('buttonUp'));
+                this.get('buttonDown').remove();
+                this.get('buttonUp').remove();
             }
 
             this.set('buttonsAreShown', value);
@@ -172,6 +190,13 @@ define(['../core/Utils', './iInput', './Input', './Button', './Group', './Elemen
         },
         'focus': function(){
             return this.get('input').focus();
+        },
+
+        'setTheme': function(theme){
+            this.getComponent().setTheme(theme);
+        },
+        'setDisabled': function(value){
+            this.getComponent().setDisabled(value);
         }
-    }).implement(iInput)
+    }).implement(iComponent, iInput)
 })

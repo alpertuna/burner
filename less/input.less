@@ -29,20 +29,18 @@
     }
 }
 
-.jb-container-input{
-    padding-right: (@l-horizontal-padding + @onepx) * 2;
-}
 .jb-input{
     @l-box-shadow: 0 .07em .15em #DDD inset;
 
-    .com-font-setup();
+    .com-setup();
+
     .border-radius(@com-border-radius);
     .box-shadow(@l-box-shadow);
 
     background: #FFF;
     border: @onepx solid @com-border-color;
     color: #555;
-    padding: @com-padding @l-horizontal-padding;
+    padding: 0 @l-horizontal-padding;
 
     &:hover{
         border-color: @com-border-color-hover;
@@ -72,5 +70,12 @@
     }
     &.jb-info{
         .jb-input-colored(@com-color-info);
+    }
+}
+.jb-input-container{
+    padding-right: (@onepx + @l-horizontal-padding) * 2;
+
+    > .jb-input{
+        width: 100%;
     }
 }

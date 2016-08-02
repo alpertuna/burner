@@ -4,7 +4,8 @@
 .jb-switch{
     @l-box-shadow: 0 .07em .2em #CCC inset;
 
-    .com-font-setup();
+    .com-setup();
+
     .border-radius(@com-border-radius);
     .box-shadow(@l-box-shadow);
 
@@ -70,7 +71,6 @@
     &-left,
     &-right{
         display: inline-block;
-        padding: .5em 0;
         text-align: center;
         width: 2em;
     }
@@ -93,7 +93,6 @@
         border: solid @com-border-color;
         border-width: 0 1px;
         color: #CCC;
-        padding: .5em 0;
     }
 
     &::-moz-focus-inner{

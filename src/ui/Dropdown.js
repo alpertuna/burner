@@ -4,20 +4,27 @@
  * Date: 25.04.2016
  */
 
-define(['../core/Utils', './iInput', './Button', './Element', './DropdownPopup', './Icon'], function(Utils, iInput, Button, Element, DropdownPopup, Icon){
+define([
+    '../core/Utils',
+    './Button', './DropdownPopup', './Element', './Icon',
+    './interfaces/iInput'
+], function(
+    Utils,
+    Button, DropdownPopup, Element, Icon,
+    iInput
+){
     return Button.extend({
         'init': function(items){
             this.super();
-
             this.addClass('jb-dropdown');
-            this.add(Icon.new('caret-down jb-button-icon'));
+            this.handle('change');
+
+            this.getComponent().add(Icon.new('caret-down jb-button-icon'));
 
             var popup = DropdownPopup.new(items);
             popup.bind(this, 'CLICK');
             popup.selectDefault();
             this.set('popup', popup);
-
-            this.handle('change');
         },
 
         'getValue': function(){
@@ -33,6 +40,6 @@ define(['../core/Utils', './iInput', './Button', './Element', './DropdownPopup',
         },
         'getTitle': function(){
             return this.get('popup').get('selectedItem').title;
-        },
-    }).implement(iInput);
+        }
+    })//.implement(iInput);
 });

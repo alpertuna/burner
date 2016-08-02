@@ -99,9 +99,12 @@ define(['../core/EventHandler', '../core/Utils', './TextElement'], function(Even
             return this.getDom().classList.contains(className);
         },
         'toggleClass': function(className){
-            if(this.hasClass(className))
-                return this.removeClass(className);
-            return this.addClass(className);
+            return this.setClass(className, !this.hasClass(className));
+        },
+        'setClass': function(className, value){
+            if(value)
+                return this.addClass(className);
+            return this.removeClass(className);
         },
 
         /*
@@ -211,11 +214,17 @@ define(['../core/EventHandler', '../core/Utils', './TextElement'], function(Even
         'getParent': function(){
             return this.get('parent');
         },
+        'getChildren': function(){
+            return this.get('children');
+        },
+        'getChildAt': function(index){
+            return this.getChildren()[index];
+        },
 
         /*
          * Event Handling
          *===========================================================*/
-        'on': function(action, func){
+        /*'on': function(action, func){
             try{
                 this.super.on(action, func);
             }catch(e){
@@ -248,7 +257,7 @@ define(['../core/EventHandler', '../core/Utils', './TextElement'], function(Even
                     throw e;
             }
             return this.ref;
-        },
+        },*/
 
         /*
          * Ready-to-use handled events

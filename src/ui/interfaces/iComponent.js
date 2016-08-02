@@ -1,13 +1,15 @@
-/**
- * js/ui/iInput.js
+/*
+ * src/ui/interfaces/iComponent.js
  * Author: H.Alper Tuna <halpertuna@gmail.com>
- * Date: 28.04.2016
+ * Date: 02.08.2016
  */
+
+'use strict';
 
 define(function(){
     return [
+        'focus',
         'setDisabled',
-        'setValue',
-        'getValue'
+        'setTheme'
     ]
-});
+})

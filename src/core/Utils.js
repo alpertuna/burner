@@ -112,6 +112,9 @@ define(function(){
         'inArray': function(arr, item){
             return arr.indexOf(item) != -1;
         },
+        'cloneArray': function(arr){
+            return arr.slice();
+        },
 
         //Object Operations
         'extend': function(){

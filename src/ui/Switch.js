@@ -4,7 +4,17 @@
  * Date: 29.04.2016
  */
 
-define(['../core/Utils', './iInput', './Element', './Icon'], function(Utils, iInput, Element, Icon){
+define([
+    '../core/Utils',
+    './ComponentContainer', './Element', './Icon',
+    './utils/setTheme',
+    './interfaces/iComponent', './interfaces/iInput'
+], function(
+    Utils,
+    ComponentContainer, Element, Icon,
+    setTheme,
+    iComponent, iInput
+){
     function repaint(){
         if(this.getValue())
             this.addClass('jb-switch-checked');
@@ -20,29 +30,40 @@ define(['../core/Utils', './iInput', './Element', './Icon'], function(Utils, iIn
 
         this.toggle();
 
-        if(oldValue != this.get('value')){
-            this.trigger('change');
+        var newValue = this.get('value');
+
+        if(oldValue != newValue){
+            this.trigger('change',{
+                'value': newValue
+            });
 
             if(group){
                 if(isRadioGroup) Utils.each(group.get('options'), function(option){
                     if(option.get('groupValue') == oldGroupValue){
-                        option.trigger('change');
+                        option.trigger('change', {'value': false});
                         return false;
                     }
                 });
-                group.trigger('change');
+                group.trigger('change', {
+                    'value': group.getValue()
+                });
             }
         }
     }
 
-    return Element.extend({
+    return ComponentContainer.extend({
         'value': false,
         'init': function(groupValue){
-            this.super('button');
-            this.addClass('jb-switch');
+            var component = Element.new('button');
+            component.addClass('jb-check');
+            this.super(component);
+
             this.handle('change');
-            this.set('groupValue', groupValue);
+            this.handle('click');
             this.on('click', toggle.bind(this));
+            this.set('groupValue', groupValue);
+            component.addClass('jb-switch');
+            component.getDom().addEventListener('click', this.trigger.bind(this, 'click'));
 
             var left = Element.new()
             .addClass('jb-switch-left')
@@ -56,12 +77,12 @@ define(['../core/Utils', './iInput', './Element', './Icon'], function(Utils, iIn
             .add(
                 left,
                 Element.new().addClass('jb-switch-middle-container').add(
-                    Element.new().addClass('jb-switch-middle').add('<b>lll</b>')//Icon.new('bars fa-rotate-90'))
+                    Element.new().addClass('jb-switch-middle').add(Element.new('b').add('lll'))//Icon.new('bars fa-rotate-90'))
                 ),
                 right
             );
 
-            this.add(
+            component.add(
                 Element.new().addClass('jb-switch-cover').add(
                     container
                 )
@@ -81,18 +102,6 @@ define(['../core/Utils', './iInput', './Element', './Icon'], function(Utils, iIn
             return this.ref;
         },
 
-        'setIcon': function(name){
-            var icon = this.get('icon');
-            if(icon)
-                this.remove(icon);
-
-            icon = Icon.new(name+ ' jb-check-icon');
-            this.add(icon);
-            this.set('icon', icon);
-            repaint.call(this);
-
-            return this.ref;
-        },
         'setDisabled': function(value){
             if(value)
                 this.setAttr('disabled', 'disabled');
@@ -138,6 +147,24 @@ define(['../core/Utils', './iInput', './Element', './Icon'], function(Utils, iIn
         },
         'uncheck': function(){
             return this.setValue(false);
+        },
+
+        'defaultValue': false,
+        'setDefaultValue': function(value){
+            this.set('defaultValue', value);
+            this.setValue(value);
+            return this.ref;
+        },
+        'resetValue': function(){
+            this.setValue(this.get('defaultValue'));
+            return this.ref;
+        },
+
+
+        'setTheme': setTheme,
+        'focus': function(){
+            this.getComponent().getDom().focus();
+            return this.ref;
         }
-    }).implement(iInput)
+    }).implement(iComponent, iInput)
 })

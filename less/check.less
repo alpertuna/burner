@@ -6,8 +6,7 @@
     .jb-input();
 
     cursor: pointer;
-    display: inline-block;
-    padding: @com-padding 0;
+    padding: 0;
     text-align: center;
 
     &-icon{
@@ -16,9 +15,9 @@
     }
 
     &:active{
-        .box-shadow(0 .1em .4em #CCC inset, @com-box-shadow-focus);
+        .box-shadow(0 .1em .4em #CCC inset, @com-box-shadow-focus) !important; /* To overwrite input colored action shadow */
 
-        background: #F8F8F8;
+        background: #F8F8F8 !important;
     }
 
     &:disabled{

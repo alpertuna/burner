@@ -12,7 +12,7 @@ define(['../core/Utils', './Popup', './Element'], function(Utils, Popup, Element
             this.super();
             var content = Element.new('ul').addClass('jb-dropdown-popup-content');
 
-            this.setDirection('BOTTOM', 'LEFT');
+            this.setDirection('BOTTOM', 'RIGHT');
             this.addClass('jb-dropdown-popup');
             this.add(content);
 
@@ -36,9 +36,9 @@ define(['../core/Utils', './Popup', './Element'], function(Utils, Popup, Element
                         this.set('defaultItem', item);
 
                     itemElement =  Element.new('a')
-                    .setAttr('href', 'javascript:;')
-                    .add(item.title)
-                    .on('click', this.select.bind(this, item, true));
+                        .setAttr('href', 'javascript:;')
+                        .add(item.title);
+                    itemElement.getDom().addEventListener('click', this.select.bind(this, item, true));
 
 
                     item.element = itemElement;

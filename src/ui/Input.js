@@ -6,80 +6,75 @@
 
 'use strict';
 
-define(['../core/Utils', './iInput', './Element'], function(Utils, iInput, Element){
-    return Element.extend({
-        'init': function(value){
-            this.super('input');
-            this.setAttr('type', 'text');
-            this.addClass('jb-input');
-            this.handle('change');
-            this.getDom().addEventListener('change', this.trigger.bind(this, 'change'));
+define([
+    '../core/Utils',
+    './ComponentContainer', './Element',
+    './utils/setTheme',
+    './interfaces/iComponent', './interfaces/iInput'
+], function(
+    Utils,
+    ComponentContainer, Element,
+    setTheme,
+    iComponent, iInput
+){
+    function change(e){
+        this.trigger('change',{
+            value: e.target.value
+        });
+    }
 
-            if(Utils.isSet(value)) this.val(value);
+    return ComponentContainer.extend({
+        'init': function(){
+            var component = Element.new('input')
+                .setAttr('type', 'text')
+                .addClass('jb-input');
+            this.super(component);
+
+            this.addClass('jb-com-container jb-input-container');
+            this.handle('change');
+
+            component.getDom().addEventListener('change', change.bind(this));
         },
 
         'setPlaceholder': function(value){
-            this.get('content')
-            this.setAttr('placeholder', value);
+            this.get('component').setAttr('placeholder', value);
+            return this.ref;
+        },
+
+        'setTheme': setTheme,
+
+        'setDisabled': function(value){
+            var component = this.getComponent();
+
+            if(value)
+                component.setAttr('disabled', 'disabled');
+            else
+                component.removeAttr('disabled');
 
             return this.ref;
         },
 
-        //NORMAL, PRIMARY, DANGER, WARNING, INFO
-        'setTheme': function(theme){
-            this.removeClass('jb-primary jb-danger jb-warning jb-info');
-
-            switch(theme){
-                case 'PRIMARY':
-                    this.addClass('jb-primary');
-                    break;
-                case 'SUCCESS':
-                    this.addClass('jb-success');
-                    break;
-                case 'DANGER':
-                    this.addClass('jb-danger');
-                    break;
-                case 'WARNING':
-                    this.addClass('jb-warning');
-                    break;
-                case 'INFO':
-                    this.addClass('jb-info');
-                    break;
-            }
-
+        'focus': function(){
+            this.getComponent().getDom().focus();
             return this.ref;
         },
 
-        'setValue': function(value, isDefault){
-            if(isDefault)
-                console.warn('Method of Input.setValue, property isDefault is deprecated');
-            if(isDefault) this.setAttr('value', value);
-            this.getDom().value = value;
-
+        'setValue': function(value){
+            this.getComponent().getDom().value = value;
             return this.ref;
         },
         'getValue': function(value){
-            return this.getDom().value;
+            return this.getComponent().getDom().value;
         },
 
         'defaultValue': '',
         'setDefaultValue': function(value){
             this.set('defaultValue', value);
-            this.setAttr('value', value)
             this.setValue(value);
             return this.ref;
         },
         'resetValue': function(){
             return this.setValue(this.get('defaultValue'));
-        },
-
-        'setDisabled': function(value){
-            if(value)
-                this.setAttr('disabled', 'disabled');
-            else
-                this.removeAttr('disabled');
-
-            return this.ref;
         },
         'setRequired': function(value){
             if(value)
@@ -88,11 +83,6 @@ define(['../core/Utils', './iInput', './Element'], function(Utils, iInput, Eleme
                 this.removeAttr('required');
 
             return this.ref;
-        },
-
-        'focus': function(){
-            this.getDom().focus();
-            return this.ref;
         }
-    }).implement(iInput);
-});
+    }).implement(iComponent, iInput)
+})

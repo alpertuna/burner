@@ -31,27 +31,23 @@ define(['../core/Utils', './Document', './Element', './Group'], function(Utils, 
         'placed': false,
         'adjustPosition': function(){
             if(!this.get('placed')){
-                var parent = this.get('target').getParent();
-                if(parent.isInstanceOf(Group)) parent = parent.getParent();
-                parent.add(this);
+                this.get('target').add(this);
                 this.set('placed', true);
             }
 
-            /*switch(this.get('direction')){
-                case 'TOP':this.addClass('jb-popup-top');break;
-                case 'BOTTOM':this.addClass('jb-popup-bottom');break;
-                case 'LEFT':this.addClass('jb-popup-left');break;
-                case 'RIGHT':this.addClass('jb-popup-right');break;
-            }*/
+            var direction = this.get('direction');
+            var align = this.get('align');
+
+            switch(align){
+                //case 'BOTTOM':this.addClass('jb-popup-bottom');break;
+                case 'RIGHT':this.addClass('jb-popup-align-right');break;
+            }
 
             var targetRect = this.get('targetDom').getBoundingClientRect();
             var targetRectTop = this.get('targetDom').offsetTop;
             var targetRectLeft = this.get('targetDom').offsetLeft;
             var thisRect = this.getDom().getBoundingClientRect();
             var top, left;
-
-            var direction = this.get('direction');
-            var align = this.get('align');
 
             if(direction == 'BOTTOM'){
                 if(targetRect.top + targetRect.height + thisRect.height > window.innerHeight){
@@ -122,11 +118,11 @@ define(['../core/Utils', './Document', './Element', './Group'], function(Utils, 
             });
         },
         'putHideHandler': function(e){
-            this.get('window').on('click', this.hide);
+            this.get('window').getDom().addEventListener('click', this.hide);
             e.stopPropagation();
         },
         'removeHideHandler': function(e){
-            this.get('window').off('click', this.hide);
+            this.get('window').getDom().removeEventListener('click', this.hide);
         },
 
         'closeOtherPopup': function(){
@@ -155,24 +151,30 @@ define(['../core/Utils', './Document', './Element', './Group'], function(Utils, 
             //TODO Error
             if(this.get('bound')) throw 'Popup is already bound.';
             this.set('bound', true);
+            //TODO error
+            if(!element.hasClass('jb-com-container'))
+                throw 'To bind popup, component has to have container.';
+
+            var component = element.getComponent();
 
             if(Utils.isUnset(trigger)) trigger = 'FOCUS';
 
             this.set('target', element);
+            this.set('targetComponent', component);
             this.set('targetDom', element.getDom());
             this.set('trigger', trigger);
 
             if(trigger == 'NONE') return this;
 
             switch(trigger){
-                case 'FOCUS':
-                    element.on('focus', this.show);
-                    element.on('blur', this.hide);
+                /*case 'FOCUS':
+                    component.on('focus', this.show);
+                    component.on('blur', this.hide);
                     break;
                 case 'HOVER':
-                    element.on('mouseover', this.show);
-                    element.on('mouseout', this.hide);
-                    break;
+                    component.on('mouseover', this.show);
+                    component.on('mouseout', this.hide);
+                    break;*/
                 case 'CLICK':
                     this.on('show', this.closeOtherPopup);
                     this.on('hide', function(){shownPopup = null});
@@ -180,7 +182,7 @@ define(['../core/Utils', './Document', './Element', './Group'], function(Utils, 
                     element.on('click', targetClickedInClickMode.bind(this));
 
                     this.on('hide', this.removeHideHandler);
-                    this.on('click', function(e){e.stopPropagation()});
+                    this.getDom().addEventListener('click', function(e){e.stopPropagation()});
                     break;
             }
 

@@ -63,6 +63,20 @@ define(['./Utils'], function(Utils){
         if(!Utils.isSet(this.super)) return false;
         return isInstanceOf.call(this.super, Class);
     }
+    function isImplementedBy(Interface){
+        if(!Utils.isArray(Interface)) throw 'Parameter has to be an Interface';
+
+        var implemented = false;
+        Utils.each(this._implements, function(implement){
+            if(implement === Interface){
+                implemented = true;
+                return false;
+            }
+        }, this);
+        if(implemented) return true;
+        if(!Utils.isSet(this.super)) return false;
+        return isImplementedBy.call(this.super, Interface);
+    }
     function get(name){
         return this._properties[name];
     }
@@ -95,7 +109,9 @@ define(['./Utils'], function(Utils){
             instance,
             {
                 '_classId': Class._id,
+                '_implements': Class._implements,
                 'isInstanceOf': isInstanceOf,
+                'isImplementedBy': isImplementedBy,
                 'get': get.bind(base),
                 'set': set.bind(base),
                 'unset': unset.bind(base),
@@ -139,18 +155,23 @@ define(['./Utils'], function(Utils){
             {
                 '_methods': Extension._methods,
                 '_properties': Utils.clone(this._properties, Extension._properties),
-                '_super': this
+                '_super': this,
+                '_implements': []
             }
         )
     }
-    function implement(methods){
-        for(var i in methods){
-            var method = methods[i];
-            if(!findMethod(method, this))
-                //TODO Error
-                console.error('"' + method + '" method is not defined according to implemented interface.');
-                //throw '"' + method + '" method is not defined according to implemented interface.';
-        }
+    function implement(){
+        Utils.each(arguments, function(methods){
+            this._implements.push(methods);
+
+            for(var i in methods){
+                var method = methods[i];
+                if(!findMethod(method, this))
+                    //TODO Error
+                    console.error('"' + method + '" method is not defined according to implemented interface.');
+                    //throw '"' + method + '" method is not defined according to implemented interface.';
+            }
+        }, this);
 
         return this;
     }

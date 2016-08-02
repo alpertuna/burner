@@ -3,8 +3,6 @@
 
 .jb-dropdown{
     &-popup{
-        padding: @com-space 0;
-
         LI{
             margin: 0;
             padding: 0;
@@ -18,9 +16,10 @@
 
         &-content{
             .border-radius(@com-border-radius);
-            .box-shadow(0 0 .3em fade(#000, 80%));
+            .box-shadow(0 0 .3em fade(#000, 20%));
 
             background: #FFF;
+            border: @onepx solid @com-border-color;
             list-style: none;
             margin: 0;
             padding: .3em 0;

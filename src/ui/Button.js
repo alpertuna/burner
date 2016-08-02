@@ -6,20 +6,33 @@
 
 'use strict';
 
-define(['../core/Utils', './Element', './Icon'], function(Utils, Element, Icon){
-    return Element.extend({
+define([
+    '../core/Utils',
+    './ComponentContainer', './Element', './Icon',
+    './utils/setTheme',
+    './interfaces/iComponent'
+], function(
+    Utils,
+    ComponentContainer, Element, Icon,
+    setTheme,
+    iComponent
+){
+    return ComponentContainer.extend({
         'init': function(caption){
-            this.super('button');
-            this.setAttr('type', 'button');
+            var component = Element.new('button')
+                .setAttr('type', 'button')
+                .addClass('jb-button');
+            this.super(component);
 
-            if(!Utils.isSet(caption)) caption = '';
+            this.handle('click');
+            component.getDom().addEventListener('click', this.trigger.bind(this, 'click'));
 
             var captionElement = Element.new()
-            .addClass('jb-button-caption');
-
+                .addClass('jb-button-caption');
+            component.add(captionElement);
             this.set('captionElement', captionElement);
-            this.add(captionElement);
-            this.addClass('jb-button');
+
+            if(!Utils.isSet(caption)) caption = '';
             this.setCaption(caption);
         },
 
@@ -31,62 +44,39 @@ define(['../core/Utils', './Element', './Icon'], function(Utils, Element, Icon){
             return this.ref;
         },
 
-        //NORMAL, PRIMARY, DANGER, WARNING, INFO, DARK
-        'setTheme': function(theme){
-            this.removeClass('jb-primary jb-danger jb-warning jb-info jb-dark');
-
-            switch(theme){
-                case 'PRIMARY':
-                    this.addClass('jb-primary');
-                    break;
-                case 'SUCCESS':
-                    this.addClass('jb-success');
-                    break;
-                case 'DANGER':
-                    this.addClass('jb-danger');
-                    break;
-                case 'WARNING':
-                    this.addClass('jb-warning');
-                    break;
-                case 'INFO':
-                    this.addClass('jb-info');
-                    break;
-                case 'DARK':
-                    this.addClass('jb-dark');
-                    break;
-            }
-
-            return this.ref;
-        },
-
         'setIcon': function(name){
+            var component = this.getComponent();
+
             var iconElement = this.get('iconElement');
             if(iconElement){
                 if(name == this.get('iconName')) return this.ref;
-                this.remove(iconElement);
+                iconElement.remove();
             }
 
             iconElement = Icon.new(name).addClass('jb-button-icon');
-            this.prepend(iconElement);
+            component.prepend(iconElement);
 
             this.set('iconElement', iconElement);
             this.set('iconName', name);
 
             return this.ref;
         },
+
+        'setTheme': setTheme,
+
         'setDisabled': function(value){
             if(value)
-                this.setAttr('disabled', 'disabled');
+                this.getComponent().setAttr('disabled', 'disabled');
             else
-                this.removeAttr('disabled');
+                this.getComponent().removeAttr('disabled');
 
             return this.ref;
         },
 
         'focus': function(){
-            this.getDom().focus();
+            this.getComponent().getDom().focus();
 
             return this.ref;
         }
-    });
-});
+    }).implement(iComponent)
+})
