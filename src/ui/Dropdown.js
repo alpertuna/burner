@@ -38,8 +38,21 @@ define([
 
             return this.ref;
         },
+        'setDefaultValue': function(value){
+            this.set('defaultValue', value);
+            this.setValue(value);
+            return this.ref;
+        },
+        'resetValue': function(){
+            var defaultValue = this.get('defaultValue');
+            if(Utils.isUnset(defaultValue))
+                defaultValue = this.get('popup').get('firstValue');
+
+            this.setValue(defaultValue);
+            return this.ref;
+        },
         'getTitle': function(){
             return this.get('popup').get('selectedItem').title;
         }
-    })//.implement(iInput);
+    }).implement(iInput);
 });

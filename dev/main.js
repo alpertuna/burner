@@ -13,6 +13,8 @@ require.config({
 });
 
 require([
+    'burner/core/createClass',
+    'burner/core/EventHandler',
     'burner/core/Utils',
     'burner/ui/Document',
     'burner/ui/Element',
@@ -20,25 +22,26 @@ require([
     'burner/ui/Button',
     'burner/ui/Input',
     'burner/ui/Group',
+    'burner/ui/Breadcrumb',
     'burner/ui/Spinner',
     'burner/ui/Check',
     'burner/ui/CheckGroup',
     'burner/ui/RadioGroup',
     'burner/ui/Switch',
     'burner/ui/Dropdown',
-    /*'burner/ui/Tip',
-    'burner/ui/DatePicker',
-    'burner/ui/TimePicker',
-    'burner/ui/Notifier',
-    'burner/ui/Breadcrumb',
     'burner/ui/Message',
+    'burner/ui/Notifier',
+    'burner/ui/Popup',
+    'burner/ui/Tip',
+    /*'burner/ui/DatePicker',
+    'burner/ui/TimePicker',
     'burner/ui/Tree',
-    'burner/core/createClass',
-    'burner/core/EventHandler',
     'burner/core/Ajax',
-    'burner/core/AjaxGroup',*/
-    'burner/third/date.format'
+    'burner/core/AjaxGroup',
+    'burner/third/date.format'*/
 ], function(
+    createClass,
+    EventHandler,
     Utils,
     Document,
     Element,
@@ -46,21 +49,20 @@ require([
     Button,
     Input,
     Group,
+    Breadcrumb,
     Spinner,
     Check,
     CheckGroup,
     RadioGroup,
     Switch,
     Dropdown,
+    Message,
+    Notifier,
+    Popup,
     Tip,
     DatePicker,
     TimePicker,
-    Notifier,
-    Breadcrumb,
-    Message,
     Tree,
-    createClass,
-    EventHandler,
     Ajax,
     AjaxGroup
 ){
@@ -79,9 +81,9 @@ require([
     var rg = RadioGroup.new().on('change', function(e){
         console.log(e.value);
     });
-    var i, c, s;
+    var i, c, s, dd, tb1, tb2, tb3, tb4, pb1, pb2, pb3, pb4;
     Document.new().add(
-        //Labels
+        /*//Labels
         Element.new('h2').add('Labels'),
         Group.new('SPACED').add(
             Label.new('Label'),
@@ -361,7 +363,7 @@ require([
         Element.new('h2').add('Dropdown'),
         Group.new('SPACED').add(
             Label.new('Dropdown'),
-            Dropdown.new([
+            dd = Dropdown.new([
                 {
                     'title': 'Record 1',
                     'value': 1
@@ -370,7 +372,129 @@ require([
                     'title': 'Record 2',
                     'value': 2
                 }
-            ])
+            ]).on('change', function(e){
+                console.log(e.value);
+            }),
+            Button.new('Set Value to 2').on('click', function(){
+                dd.setValue(2);
+            }),
+            Button.new('Set Default Value to 2').on('click', function(){
+                dd.setDefaultValue(2);
+            }),
+            Button.new('Reset Value').on('click', function(){
+                dd.resetValue();
+            })
+        ),
+
+        //Breadcrumb
+        Element.new('h2').add('Breadcrumb'),
+        Group.new('SPACED').add(
+            Label.new('Breadcrumb'),
+            Breadcrumb.new().add(
+                Label.new('Label'),
+                Button.new('A Button'),
+                Button.new('Another Button'),
+                Button.new('Another Button More')
+            )
+        ),
+        genSpace(),
+        Group.new('SPACED').add(
+            Label.new('Spaced Breadcrumb'),
+            Breadcrumb.new('SPACED').add(
+                Label.new('Label'),
+                Button.new('A Button'),
+                Button.new('Another Button'),
+                Button.new('Another Button More')
+            )
+        ),
+
+        //Breadcrumb
+        Element.new('h2').add('Breadcrumb'),
+        Group.new('SPACED').add(
+            Label.new('Breadcrumb'),
+            Breadcrumb.new().add(
+                Label.new('Label'),
+                Button.new('A Button'),
+                Button.new('Another Button'),
+                Button.new('Another Button More')
+            )
+        ),
+
+        //Message
+        Element.new('h2').add('Message'),
+        Group.new('SPACED').add(
+            Message.new('Default Message'),
+            genSpace(),
+            Message.new('Primary Message', 'PRIMARY'),
+            genSpace(),
+            Message.new('Success Message', 'SUCCESS'),
+            genSpace(),
+            Message.new('Warning Message', 'WARNING'),
+            genSpace(),
+            Message.new('Danger Message', 'DANGER'),
+            genSpace(),
+            Message.new('Info Message', 'INFO')
+        ),
+
+        //Notifier
+        Element.new('h2').add('Notifier'),
+        Group.new('SPACED').add(
+            Button.new('Notify Message').on('click', function(){
+                Notifier.new('Message')
+            }),
+            Button.new('Notify Primary Message').on('click', function(){
+                Notifier.new('Primary Message', 'PRIMARY')
+            }),
+            Button.new('Notify Warning Message').on('click', function(){
+                Notifier.new('Warning Message', 'WARNING')
+            }),
+            Button.new('Notify Danger Message').on('click', function(){
+                Notifier.new('Danger Message', 'DANGER')
+            }),
+            Button.new('Notify Success Message').on('click', function(){
+                Notifier.new('Success Message', 'SUCCESS')
+            }),
+            Button.new('Notify Info Message').on('click', function(){
+                Notifier.new('Info Message', 'INFO')
+            })
+        ),*/
+
+        //Tip
+        Element.new('h2').add('Tip'),
+        Group.new('SPACED').add(
+            tb1 = Button.new('Button'),
+            tb2 = Button.new('Button'),
+            tb3 = Button.new('Button'),
+            tb4 = Button.new('Button')
+        ),
+
+        //Popup
+        Element.new('h2').add('Popup'),
+        Group.new('SPACED').add(
+            pb1 = Button.new('Button with Popup opens with Click')
+        )
+    );
+
+    Popup.new().add(
+        Element.new().setStyle({
+            'width': '320px',
+            'height': '300px',
+            'line-height': '300px',
+            'text-align': 'center',
+            'background': '#EEE',
+            'border': '1px solid #999'
+        }).add(
+            'Popup'
         )
     )
+        .bind(pb1, 'CLICK')
+        .setDirection('RIGHT', 'TOP');
+
+        window.pb1 = pb1;
+
+
+    Tip.new('Tip at right with this message').bind(tb1, 'HOVER').setDirection('RIGHT');
+    Tip.new('Tip at top with this message').bind(tb2, 'HOVER').setDirection('TOP');
+    Tip.new('Tip at bottom with this message').bind(tb3, 'HOVER').setDirection('BOTTOM');
+    Tip.new('Tip at left with this message').bind(tb4, 'HOVER').setDirection('LEFT');
 })

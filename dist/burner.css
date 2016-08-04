@@ -829,9 +829,6 @@ BODY {
   -ms-transform: skewX(20deg);
   -webkit-transform: skewX(20deg);
 }
-.jb-breadcrumb:not(.jb-group) > * + * {
-  margin-left: .5em;
-}
 .jb-tree UL,
 .jb-tree LI {
   margin: 0;
@@ -1029,29 +1026,17 @@ BODY {
 .jb-popup-align-top {
   padding-top: 0;
 }
-.jb-popup-align-bottom {
-  padding-bottom: 0;
-}
-.jb-popup-align-right {
-  padding-right: 0;
-}
 .jb-popup-align-left {
   padding-left: 0;
 }
+.jb-popup-align-bottom {
+  padding-top: 0.75em;
+}
+.jb-popup-align-right {
+  padding-left: 0.75em;
+}
 .jb-tip {
-  z-index: 3;
-}
-.jb-tip.jb-popup-top {
-  padding-bottom: 0.375em;
-}
-.jb-tip.jb-popup-bottom {
-  padding-top: 0.375em;
-}
-.jb-tip.jb-popup-left {
-  padding-right: 0.375em;
-}
-.jb-tip.jb-popup-right {
-  padding-left: 0.375em;
+  pointer-events: none;
 }
 .jb-tip-content {
   border-radius: 0.1875em;
@@ -1077,6 +1062,9 @@ BODY {
   box-shadow: 0 0 0.2em #E6E6E6;
   border: 0.0625em solid;
   padding: .5em .8em;
+}
+.jb-message-icon {
+  margin-right: .6em;
 }
 .jb-message.jb-primary {
   background: #f7fbff;

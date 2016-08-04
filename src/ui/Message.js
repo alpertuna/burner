@@ -6,7 +6,13 @@
 
 'use strict';
 
-define(['./Element', './Icon'], function(Element, Icon){
+define([
+    './Element', './Icon',
+    './utils/setTheme'
+], function(
+    Element, Icon,
+    setTheme
+){
     return Element.extend({
         'init': function(message, theme){
             this.super();
@@ -38,8 +44,7 @@ define(['./Element', './Icon'], function(Element, Icon){
 
             this.addClass('jb-message ' + className)
             this.add(
-                Icon.new(iconName),
-                '&nbsp; ',
+                Icon.new(iconName + ' jb-message-icon'),
                 message
             );
         }

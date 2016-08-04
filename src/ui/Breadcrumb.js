@@ -8,18 +8,10 @@
 
 define(['./Group'], function(Group){
     return Group.extend({
-        'init': function(){
-            this.super();
+        'init': function(mod){
+            this.super(mod);
+
             this.addClass('jb-breadcrumb')
-        },
-
-        'setSpace': function(value){
-            if(value)
-                this.removeClass('jb-group');
-            else
-                this.addClass('jb-group');
-
-            return this.ref;
         }
     })
 })

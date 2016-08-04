@@ -16,7 +16,8 @@ define(['../core/Utils', './Popup', './Element'], function(Utils, Popup, Element
             this.addClass('jb-dropdown-popup');
             this.add(content);
 
-            var options = {}
+            var firstValue; // To use in resetValue method of Dropdown
+            var options = {} // To use in setValue method of Dropdown
             this.set('options', options);
 
             Utils.each(items, function(item){
@@ -43,8 +44,10 @@ define(['../core/Utils', './Popup', './Element'], function(Utils, Popup, Element
 
                     item.element = itemElement;
 
-                    if(Utils.isSet(item.value))
+                    if(Utils.isSet(item.value)){
                         options[item.value] = item;
+                        if(Utils.isUnset(firstValue)) firstValue = item.value;
+                    }
                 }
 
                 content.add(
@@ -53,6 +56,8 @@ define(['../core/Utils', './Popup', './Element'], function(Utils, Popup, Element
                     )
                 );
             }, this);
+
+            this.set('firstValue', firstValue);
         },
 
         'selectDefault': function(){
@@ -73,7 +78,10 @@ define(['../core/Utils', './Popup', './Element'], function(Utils, Popup, Element
             this.set('selectedItem', item);
 
             if(triggerChange && selectedItem != item)
-                this.get('target').trigger('change');
+                this.get('target').trigger('change', {
+                    'value': item.value,
+                    'title': item.title
+                });
             return this.ref;
         }
     });
