@@ -6,15 +6,67 @@
 
 'use strict';
 
-define(['../core/Utils', './Document', './Element', './Group'], function(Utils, Document, Element, Group){
+define([
+    '../core/Utils',
+    './Element', './Group',
+    './utils/SpaceFinder'
+], function(
+    Utils,
+    Element, Group,
+    SpaceFinder
+){
     var shownPopup;
 
     function targetClickedInClickMode(e){
         if(this.hasClass('jb-hidden')){
             this.show();
-            this.putHideHandler(e);
         }else
             this.hide();
+        e.stopPropagation();
+    }
+    function popupOnShowInClickMode(){
+        //Close Other Popup
+        if(shownPopup && shownPopup !== this) shownPopup.hide();
+        shownPopup = this;
+
+        //Put hide trigger
+        window.addEventListener('click', this.hide);
+    }
+    function popupOnHideInClickMode(){
+        shownPopup = null;
+
+        //Remove hide trigger
+        window.removeEventListener('click', this.hide);
+    }
+    function stopPropagation(e){
+        e.stopPropagation();
+    }
+    function adjustPosition(){
+        if(!this.getParent())
+            this.get('target').add(this);
+
+        //Remove prev styles affects position to avoid incorrect rect
+        this.removeClass('jb-popup-top jb-popup-bottom jb-popup-left jb-popup-right');
+
+        var targetRect = this.get('targetDom').getBoundingClientRect();
+        targetRect.relativeTop = this.get('targetDom').offsetTop;
+        targetRect.relativeLeft = this.get('targetDom').offsetLeft;
+
+        var result = SpaceFinder.find(
+            targetRect,
+            this.getDom().getBoundingClientRect(),
+            this.get('direction'),
+            this.get('align')
+        );
+
+        if(result.popupClass)
+            this.addClass(result.popupClass);
+
+        //Result
+        this.setStyle({
+            'top': result.top,
+            'left': result.left
+        });
     }
 
     return Element.extend({
@@ -22,122 +74,35 @@ define(['../core/Utils', './Document', './Element', './Group'], function(Utils, 
             this.super();
             this.addClass('jb-popup');
             this.hide();
-            this.set('window', Element.new(window));
-            this.on('show', this.adjustPosition);
-
-            //Document.new().add(this);
-        },
-
-        'placed': false,
-        'adjustPosition': function(){
-            if(!this.get('placed')){
-                this.get('target').add(this);
-                this.set('placed', true);
-            }
-
-            var direction = this.get('direction');
-            var align = this.get('align');
-
-            switch(align){
-                //case 'BOTTOM':this.addClass('jb-popup-bottom');break;
-                case 'RIGHT':this.addClass('jb-popup-align-right');break;
-            }
-
-            var targetRect = this.get('targetDom').getBoundingClientRect();
-            var targetRectTop = this.get('targetDom').offsetTop;
-            var targetRectLeft = this.get('targetDom').offsetLeft;
-            var thisRect = this.getDom().getBoundingClientRect();
-            var top, left;
-
-            if(direction == 'BOTTOM'){
-                if(targetRect.top + targetRect.height + thisRect.height > window.innerHeight){
-                    if(targetRect.top - thisRect.height >= 0){
-                        direction = 'TOP';
-                    }else if(targetRect.left + targetRect.width + thisRect.width <= window.innerWidth){
-                        direction = 'RIGHT';
-
-                        if(window.innerHeight - targetRect.top > thisRect.height){
-                            align = 'TOP';
-                        }else if(window.innerHeight - thisRect.height < 0)
-                            align = 'PAGE_TOP';
-                        else
-                            align = 'PAGE_BOTTOM';
-                    }
-                }
-            }
-
-            switch(direction){
-                case 'TOP':
-                    top = targetRectTop - thisRect.height;
-                    break;
-                case 'BOTTOM':
-                    top = targetRectTop + targetRect.height;
-                    break;
-                case 'LEFT':
-                    left = targetRectLeft - thisRect.width;
-                    break;
-                case 'RIGHT':
-                    left = targetRectLeft + targetRect.width;
-                    break;
-            }
-            this.removeClass('jb-popup-align-top jb-popup-align-bottom jb-popup-align-left jb-popup-align-right');
-            switch(align){
-                case 'CENTER':
-                    if(Utils.isSet(left))
-                        top = targetRectTop + (targetRect.height - thisRect.height)/2;
-                    else
-                        left = targetRectLeft + (targetRect.width - thisRect.width)/2;
-                break;
-                case 'LEFT':
-                    left = targetRectLeft;
-                    this.addClass('jb-popup-align-left');
-                    break;
-                case 'RIGHT':
-                    left = targetRectLeft + targetRect.width - thisRect.width;
-                    this.addClass('jb-popup-align-right');
-                    break;
-                case 'TOP':
-                    top = targetRectTop;
-                    this.addClass('jb-popup-align-top');
-                    break;
-                case 'BOTTOM':
-                    top = targetRectTop + targetRect.height - thisRect.height;
-                    this.addClass('jb-popup-align-bottom');
-                    break;
-                case 'PAGE_TOP':
-                    toap = targetRectTop - targetRect.top;
-                    break;
-                case 'PAGE_BOTTOM':
-                    top = targetRectTop - targetRect.top + window.innerHeight - thisRect.height;
-                    break;
-            }
-
-            this.setStyle({
-                'top': top,
-                'left': left
-            });
-        },
-        'putHideHandler': function(e){
-            this.get('window').getDom().addEventListener('click', this.hide);
-            e.stopPropagation();
-        },
-        'removeHideHandler': function(e){
-            this.get('window').getDom().removeEventListener('click', this.hide);
-        },
-
-        'closeOtherPopup': function(){
-            if(shownPopup && shownPopup !== this) shownPopup.hide();
-            shownPopup = this;
+            this.on('show', adjustPosition.bind(this));
         },
 
         /**
          * Directions: TOP, BOTTOM, RIGHT, LEFT
-         * Aligns: CENTER, TOP, BOTTOM, RIGHT, LEFT
+         * Aligns: CENTER, MIDDLE, TOP, BOTTOM, RIGHT, LEFT
          */
         'direction': 'TOP',
         'align': 'CENTER',
         'setDirection': function(direction, align){
-            if(Utils.isUnset(align)) align = 'CENTER';
+            //TODO error (also include default align value)
+            switch(direction){
+                case 'TOP':
+                case 'BOTTOM':
+                    if(Utils.isUnset(align))
+                        align = 'CENTER';
+                    else if(align != 'LEFT' && align != 'RIGHT' &&  align != 'CENTER')
+                        throw 'Align have to be LEFT, RIGHT or CENTER for direction ' + direction;
+                    break;
+                case 'LEFT':
+                case 'RIGHT':
+                    if(Utils.isUnset(align))
+                        align = 'MIDDLE';
+                    else if(align != 'TOP' && align != 'BOTTOM' &&  align != 'MIDDLE')
+                        throw 'Align have to be TOP, BOTTOM or MIDDLE for direction ' + direction;
+                    break;
+                default:
+                    throw 'Direction have to be one of TOP, BOTTOM, LEFT and RIGHT';
+            }
 
             this.set('direction', direction);
             this.set('align', align);
@@ -147,42 +112,38 @@ define(['../core/Utils', './Document', './Element', './Group'], function(Utils, 
 
         'bound': false,
         //FOCUS, HOVER, CLICK, NONE
-        'bind': function(element, trigger){
+        'bind': function(target, trigger){
             //TODO Error
             if(this.get('bound')) throw 'Popup is already bound.';
             this.set('bound', true);
             //TODO error
-            if(!element.hasClass('jb-com-container'))
+            if(!target.hasClass('jb-com-container'))
                 throw 'To bind popup, component has to have container.';
 
-            var component = element.getComponent();
+            var targetComponent = target.getComponent();
+            var targetComponentDom = targetComponent.getDom();
 
-            if(Utils.isUnset(trigger)) trigger = 'FOCUS';
-
-            this.set('target', element);
-            this.set('targetComponent', component);
-            this.set('targetDom', element.getDom());
-            this.set('trigger', trigger);
+            this.set('target', target);
+            this.set('targetComponent', targetComponent);
+            this.set('targetDom', targetComponent.getDom());
 
             if(trigger == 'NONE') return this;
 
             switch(trigger){
-                /*case 'FOCUS':
-                    component.on('focus', this.show);
-                    component.on('blur', this.hide);
+                case 'FOCUS':
+                    targetComponentDom.addEventListener('focus', this.show);
+                    targetComponentDom.addEventListener('blur', this.hide);
+                    break;
+                case 'CLICK':
+                    target.on('click', targetClickedInClickMode.bind(this));
+                    this.on('show', popupOnShowInClickMode.bind(this));
+                    this.on('hide', popupOnHideInClickMode.bind(this));
+                    this.getDom().addEventListener('click', stopPropagation.bind(this));
                     break;
                 case 'HOVER':
-                    component.on('mouseover', this.show);
-                    component.on('mouseout', this.hide);
-                    break;*/
-                case 'CLICK':
-                    this.on('show', this.closeOtherPopup);
-                    this.on('hide', function(){shownPopup = null});
-
-                    element.on('click', targetClickedInClickMode.bind(this));
-
-                    this.on('hide', this.removeHideHandler);
-                    this.getDom().addEventListener('click', function(e){e.stopPropagation()});
+                default:
+                    targetComponentDom.addEventListener('mouseover', this.show);
+                    targetComponentDom.addEventListener('mouseout', this.hide);
                     break;
             }
 
