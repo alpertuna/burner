@@ -1,12 +1,29 @@
 @import 'common/utils';
 
 .jb-breadcrumb{
-    .transform(skewX(-20deg));
-
     padding-left: .5em;
 
-    .jb-button > *,
-    .jb-label > *{
-        .transform(skewX(20deg));
+    > .jb-com-container{
+        > .jb-button,
+        > .jb-label,
+        > .jb-check,//Also for Switch
+        > .jb-spinner{
+            .transform(skewX(-20deg));
+        }
+
+        > .jb-button > *,
+        > .jb-label > *,
+        > .jb-check .fa{//Also for Switch
+            .transform(skewX(20deg));
+        }
+    }
+
+    &.jb-spaced-group{
+        > .jb-com-container{
+            > .jb-radio,
+            > .jb-radio .fa{
+                .transform(skewX(0));
+            }
+        }
     }
 }

@@ -103,10 +103,11 @@ define([
         },
 
         'setDisabled': function(value){
+            var component = this.getComponent();
             if(value)
-                this.setAttr('disabled', 'disabled');
+                component.setAttr('disabled', 'disabled');
             else
-                this.removeAttr('disabled');
+                component.removeAttr('disabled');
 
             return this.ref;
         },
