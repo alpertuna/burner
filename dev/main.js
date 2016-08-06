@@ -33,12 +33,10 @@ require([
     'burner/ui/Notifier',
     'burner/ui/Popup',
     'burner/ui/Tip',
-    /*'burner/ui/DatePicker',
-    'burner/ui/TimePicker',
-    'burner/ui/Tree',
+    'burner/ui/Icon',
     'burner/core/Ajax',
-    'burner/core/AjaxGroup',
-    'burner/third/date.format'*/
+    'burner/core/AjaxGroup'
+    //'burner/ui/Tree',
 ], function(
     createClass,
     EventHandler,
@@ -60,11 +58,10 @@ require([
     Notifier,
     Popup,
     Tip,
-    DatePicker,
-    TimePicker,
-    Tree,
+    Icon,
     Ajax,
-    AjaxGroup
+    AjaxGroup,
+    Tree
 ){
     /*window.Document = Document;
     window.Button = Button;
@@ -81,7 +78,21 @@ require([
     var rg = RadioGroup.new().on('change', function(e){
         console.log(e.value);
     });
-    var i, c, s, dd, tb1, tb2, tb3, tb4, pb1, pb2, pb3, pb4;
+    var a = Ajax.new('ajaxtest.php').on('success', function(d){
+        console.log(d);
+    }).on('always', function(respond){
+        ai.hide();
+        ab1.setDisabled(false);
+        ab2.setDisabled(false);
+    });
+    var ag = AjaxGroup.new().setMaxConnection(3).on('change', function(){
+        agl.setCaption(this.countConnections());
+    }).on('openedFirstConnection', function(){
+        agi.show();
+    }).on('closedLastConnection', function(){
+        agi.hide();
+    });
+    var i, c, s, dd, tb1, tb2, tb3, tb4, pb1, pb2, pb3, pb4, ab1, ab2, ai, agb, agl, agi;
     Document.new().add(
         /*//Labels
         Element.new('h2').add('Labels'),
@@ -386,6 +397,59 @@ require([
             })
         ),
 
+        //Group
+        Element.new('h2').add('Group'),
+        Group.new('SPACED').add(
+            Group.new().add(
+                Label.new('Label'),
+                Button.new('Button'),
+                Dropdown.new([
+                    {'title': 'Dropdown', 'value': 1},
+                    {'title': 'Another Item', 'value': 2}
+                ]),
+                Check.new(),
+                Check.new('x1').bind(rg),
+                Switch.new(),
+                Spinner.new(),
+                Input.new()
+            )
+        ),
+        genSpace(),
+        Group.new('SPACED').add(
+            Group.new().add(
+                Label.new('Label'),
+                Button.new('Button'),
+                Dropdown.new([
+                    {'title': 'Dropdown', 'value': 1},
+                    {'title': 'Another Item', 'value': 2}
+                ]),
+                Check.new(),
+                Check.new('x2').bind(rg),
+                Switch.new(),
+                Spinner.new(),
+                Input.new()
+            )
+        ).setDisabled(true),
+        Element.new('h2').add('Block Group'),
+        Group.new('BLOCK').add(
+            Label.new('Label'),
+            Button.new('Button'),
+            Dropdown.new([
+                {'title': 'Dropdown', 'value': 1},
+                {'title': 'Another Item', 'value': 2}
+            ]),
+            Check.new(),
+            Check.new('x2').bind(rg),
+            Switch.new(),
+            Spinner.new(),
+            Input.new()
+        ),
+        genSpace(),
+        Group.new('BLOCK').add(
+            Button.new('Button'),
+            Input.new()
+        ),
+
         //Breadcrumb
         Element.new('h2').add('Breadcrumb'),
         Group.new('SPACED').add(
@@ -407,17 +471,31 @@ require([
                 Button.new('Another Button More')
             )
         ),
-
-        //Breadcrumb
-        Element.new('h2').add('Breadcrumb'),
-        Group.new('SPACED').add(
-            Label.new('Breadcrumb'),
-            Breadcrumb.new().add(
-                Label.new('Label'),
-                Button.new('A Button'),
-                Button.new('Another Button'),
-                Button.new('Another Button More')
-            )
+        genSpace(),
+        Breadcrumb.new().add(
+            Label.new('Label'),
+            b = Button.new('Button'),
+            Dropdown.new([
+                {'title': 'Dropdown', 'value': 1},
+                {'title': 'Another Item', 'value': 2}
+            ]),
+            Check.new(),
+            Check.new('x3').bind(rg),
+            Switch.new(),
+            Spinner.new()
+        ),
+        genSpace(),
+        Breadcrumb.new('SPACED').add(
+            Label.new('Label'),
+            b = Button.new('Button'),
+            Dropdown.new([
+                {'title': 'Dropdown', 'value': 1},
+                {'title': 'Another Item', 'value': 2}
+            ]),
+            Check.new(),
+            Check.new('x3').bind(rg),
+            Switch.new(),
+            Spinner.new()
         ),
 
         //Message
@@ -457,7 +535,7 @@ require([
             Button.new('Notify Info Message').on('click', function(){
                 Notifier.new('Info Message', 'INFO')
             })
-        ),*/
+        ),
 
         //Tip
         Element.new('h2').add('Tip'),
@@ -472,10 +550,55 @@ require([
         Element.new('h2').add('Popup'),
         Group.new('SPACED').add(
             pb1 = Button.new('Button with Popup opens with Click')
+        ),*/
+
+        //Ajax
+        Element.new('h2').add('Ajax'),
+        Group.new('SPACED').add(
+            ab1 = Button.new('GET Request').on('click', function(){
+                ai.show();
+                ab1.setDisabled(true);
+                ab2.setDisabled(true);
+                a.setMethod('GET').send({
+                    'action': 'select',
+                    'recordId': 2
+                });
+            }),
+            ab2 = Button.new('POST Request').on('click', function(){
+                ai.show();
+                ab1.setDisabled(true);
+                ab2.setDisabled(true);
+                a.setMethod('POST').send({
+                    'action': 'insert',
+                    'record': {
+                        'name': 'H.Alper Tuna',
+                        'email': 'halpertuna@gmail.com'
+                    }
+                });
+            }),
+            ai = Label.new().setIcon('cog fa-spin').hide()
+        ),
+
+        //Ajax Group
+        Element.new('h2').add('Ajax Group'),
+        Group.new('SPACED').add(
+            Label.new('Limited Connection'),
+            agb = Button.new('A Request').on('click', function(){
+                Ajax.new('ajaxtest.php')
+                    .on('success', function(d){
+                        console.log(d);
+                    })
+                    .bind(ag)
+                    .send({
+                        'action': 'a_request'
+                    });
+            }),
+            agl = Label.new('0').setBoxed(true),
+            agi = Label.new().setIcon('cog fa-spin').hide()
         )
     );
 
-    Popup.new().add(
+    /*Popup.new().add(
         Element.new().setStyle({
             'width': '320px',
             'height': '300px',
@@ -496,5 +619,5 @@ require([
     Tip.new('Tip at right with this message').bind(tb1, 'HOVER').setDirection('RIGHT');
     Tip.new('Tip at top with this message').bind(tb2, 'HOVER').setDirection('TOP');
     Tip.new('Tip at bottom with this message').bind(tb3, 'HOVER').setDirection('BOTTOM');
-    Tip.new('Tip at left with this message').bind(tb4, 'HOVER').setDirection('LEFT');
+    Tip.new('Tip at left with this message').bind(tb4, 'HOVER').setDirection('LEFT');*/
 })
