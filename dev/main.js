@@ -28,6 +28,7 @@ require([
     'burner/ui/CheckGroup',
     'burner/ui/RadioGroup',
     'burner/ui/Switch',
+    'burner/ui/List',
     'burner/ui/Dropdown',
     'burner/ui/Message',
     'burner/ui/Notifier',
@@ -53,6 +54,7 @@ require([
     CheckGroup,
     RadioGroup,
     Switch,
+    List,
     Dropdown,
     Message,
     Notifier,
@@ -368,12 +370,48 @@ require([
             Button.new('Focus').on('click', function(){
                 rg.focus();
             })
-        ),
+        ),*/
 
-        //Dropdown
+        //List
+        Element.new('h2').add('List'),
+        Group.new('SPACED').add(
+            Label.new('List'),
+            List.new([
+                {
+                    'title': 'Record 1',
+                    'value': 1
+                },
+                {
+                    'title': 'Record 2',
+                    'value': 2
+                },
+                {
+                    'title': 'A Long Named Record',
+                    'value': 3
+                }
+            ])
+        ),
+        genSpace(),
+        Label.new('Block List'),
+        List.new([
+            {
+                'title': 'Record 1',
+                'value': 1
+            },
+            {
+                'title': 'Record 2',
+                'value': 2
+            },
+            {
+                'title': 'A Long Named Record',
+                'value': 3
+            }
+        ]).setBlock(true)//,
+
+        /*//Dropdown
         Element.new('h2').add('Dropdown'),
         Group.new('SPACED').add(
-            Label.new('Dropdown'),
+            Label.new('Dropdown w Event'),
             dd = Dropdown.new([
                 {
                     'title': 'Record 1',
@@ -395,6 +433,51 @@ require([
             Button.new('Reset Value').on('click', function(){
                 dd.resetValue();
             })
+        ),
+        genSpace(),
+        Group.new('SPACED').add(
+            Label.new('Dropdown w Separator'),
+            dd = Dropdown.new([
+                {
+                    'title': 'Record 1',
+                    'value': 1
+                },
+                {
+                    'title': 'Record 2',
+                    'value': 2
+                },
+                {
+                    'type': 'SEPARATOR',
+                    'title': 'Separator w Title'
+                },
+                {
+                    'title': 'Record 3',
+                    'value': 3
+                },
+                {
+                    'type': 'SEPARATOR'
+                },
+                {
+                    'title': 'Record 4',
+                    'value': 4
+                }
+            ]).on('change', function(e){
+                console.log(e.value);
+            })
+        ),
+        genSpace(),
+        Group.new('SPACED').add(
+            Label.new('Dropdown w Long Record'),
+            dd = Dropdown.new((function(){
+                var records = [];
+                for(var i = 0; i < 20; i++){
+                    records.push({
+                        'title': 'Record ' + i,
+                        'value': i
+                    });
+                }
+                return records;
+            })())
         ),
 
         //Group
@@ -550,7 +633,7 @@ require([
         Element.new('h2').add('Popup'),
         Group.new('SPACED').add(
             pb1 = Button.new('Button with Popup opens with Click')
-        ),*/
+        ),
 
         //Ajax
         Element.new('h2').add('Ajax'),
@@ -595,7 +678,7 @@ require([
             }),
             agl = Label.new('0').setBoxed(true),
             agi = Label.new().setIcon('cog fa-spin').hide()
-        )
+        ),*/
     );
 
     /*Popup.new().add(

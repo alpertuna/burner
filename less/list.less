@@ -1,0 +1,30 @@
+@import 'common/component';
+@import 'common/utils';
+@import 'input';
+
+.jb-list-container{
+    padding-right: (@onepx + @l-horizontal-padding) * 2;
+
+    > .jb-list{
+        width: 100%;
+    }
+}
+.jb-list{
+    .jb-input();
+
+    list-style: none;
+    margin: 0;
+    padding: @com-space;
+
+    LI{
+        margin: 0;
+        padding: 0;
+    }
+    A{
+        .border-radius(@com-border-radius);
+        .com-selectable-cell-setup();
+
+        display: block;
+        padding: 0 1em;
+    }
+}
