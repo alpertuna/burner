@@ -224,6 +224,18 @@ define(['../core/EventHandler', '../core/Utils', './TextElement'], function(Even
         /*
          * Event Handling
          *===========================================================*/
+        'onDom': function(action, func){
+            this.getDom().addEventListener(action, func);
+            return this.ref;
+        },
+        'offDom': function(action, func){
+            this.getDom().removeEventListener(action, func);
+            return this.ref;
+        },
+        'triggerDom': function(action){
+            this.getDom().dispatchEvent(new Event(action));
+            return this.ref;
+        },
         /*'on': function(action, func){
             try{
                 this.super.on(action, func);
