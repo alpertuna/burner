@@ -6,11 +6,15 @@
 
 'use strict';
 
-define(['./EventHandler'], function(EventHandler){
+define([
+    './Utils', './EventHandler'
+], function(
+    Utils, EventHandler
+){
     function readyStateChange(){
         var xhttp = this.get('xhttp');
         if(xhttp.readyState == 4){
-            //TODO here, if there is ajax group, there can be trigger instead of using onalways bellow
+            //"always" closes connection and "success" may open new connection, so to prevent excessing maxConnection, always is at top of other triggers
             this.trigger('always', xhttp.responseText);
 
             var fail = false;
@@ -32,21 +36,49 @@ define(['./EventHandler'], function(EventHandler){
         }
     }
 
+    function parse(key, value, result){
+        if(Utils.isArray(value)){
+            key += '[]';
+            for(var i in value)
+                parse(key, value[i], result);
+        }else if(Utils.isObject(value)){
+            for(var i in value)
+                parse(key + '[' + i + ']', value[i], result);
+        }else
+            result.push(encodeURIComponent(key) + '=' + encodeURIComponent(value));
+    }
+
+    function toParam(object){
+        var result = [];
+
+        for(var key in object){
+            var value = object[key];
+            parse(key, value, result)
+        }
+
+        return result.join('&');
+    }
+
     return EventHandler.extend({
-        'method': 'POST',
+        'connectionIsOpen': false,
         'init': function(url){
+            this.handle('send');
             this.handle('success');
             this.handle('fail');
             this.handle('always');
-            this.handle('maxconnection');
+            this.handle('maxConnection');
+
+            this.on('send', this.set.bind(this, 'connectionIsOpen', true));
+            this.on('always', this.set.bind(this, 'connectionIsOpen', false));
+
             //TODO debug tool
             this.on('fail', function(c){
                 console.warn('Response for ajax has fail: "' + c + '"');
             });
             //TODO debug tool
-            /*this.on('maxconnection', function(c){
+            this.on('maxConnection', function(c){
                 console.warn('Reached max connection.');
-            });*/
+            });
 
             var xhttp;
             if(window.XMLHttpRequest)
@@ -58,38 +90,59 @@ define(['./EventHandler'], function(EventHandler){
             if(url)
                 this.setUrl(url);
         },
+        'method': 'POST',
+        'setMethod': function(method){
+            this.set('method', method);
+            return this.ref;
+        },
         'setUrl': function(url){
             this.set('url', url);
             return this.ref;
         },
-        /*'setMethod': function(method){
-            this.set('method', method);
-            return this.ref;
-        },*/
         'send': function(object){
+            if(this.get('connectionIsOpen')){
+                console.warn('Last connection hasn\'t closed yet.');
+
+                return this.ref;
+            }
+
             var ajaxGroup = this.get('ajaxGroup');
             if(ajaxGroup){
                 if(!ajaxGroup.hasRoom()){
-                    this.trigger('maxconnection');
-                    ajaxGroup.trigger('maxconnection');
-                    //this.trigger('always'); //Always closedconnectiona bağlı olduğundan çalışmamalı
+                    this.trigger('maxConnection');
+                    ajaxGroup.trigger('maxConnection');
                     return this.ref;
                 }
-                ajaxGroup.trigger('openedconnection');
+                ajaxGroup.trigger('openedConnection');
             }
 
             var xhttp = this.get('xhttp');
-            xhttp.open(this.get('method'), this.get('url'), true);
+            var params = toParam(object);
+            var method = this.get('method');
+            var url = this.get('url');
+            if(method == 'GET') url += '?' + params;
+            xhttp.open(method, url, true);
             xhttp.setRequestHeader('Content-type', 'application/x-www-form-urlencoded');
             xhttp.onreadystatechange = readyStateChange.bind(this);
-            if(!object) xhttp.send();
-            else xhttp.send('data=' + JSON.stringify(object));
+            if(!object || method == 'GET') xhttp.send();
+            else xhttp.send(params);
+
+            this.trigger('send');
+
             return this.ref;
         },
 
+        'bound': false,
         'bind': function(ajaxGroup){
+            if(this.get('bound')){
+                //TODO error
+                throw 'This ajax instance is already bound a group.';
+                return this.ref;
+            }
+
+            this.set('bound', true);
             this.set('ajaxGroup', ajaxGroup);
-            this.on('always', ajaxGroup.trigger.bind(ajaxGroup, 'closedconnection'));
+            this.on('always', ajaxGroup.trigger.bind(ajaxGroup, 'closedConnection'));
             return this.ref;
         }
     })

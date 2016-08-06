@@ -9,13 +9,15 @@
 define(['./EventHandler'], function(EventHandler){
     function onOpenedConnection(){
         if(this.get('connections') == 0)
-            this.trigger('openedfirstconnection');
+            this.trigger('openedFirstConnection');
         this.inc('connections');
+        this.trigger('change');
     }
     function onClosedConnection(){
         this.inc('connections', -1);
         if(this.get('connections') == 0)
-            this.trigger('closedlastconnection');
+            this.trigger('closedLastConnection');
+        this.trigger('change');
     }
 
     return EventHandler.extend({
@@ -23,13 +25,14 @@ define(['./EventHandler'], function(EventHandler){
         'maxConnection': 0,
 
         'init': function(){
-            this.handle('openedconnection');
-            this.handle('closedconnection');
-            this.handle('openedfirstconnection');
-            this.handle('closedlastconnection');
-            this.handle('maxconnection');
-            this.on('openedconnection', onOpenedConnection.bind(this));
-            this.on('closedconnection', onClosedConnection.bind(this));
+            this.handle('change');
+            this.handle('openedConnection');
+            this.handle('closedConnection');
+            this.handle('openedFirstConnection');
+            this.handle('closedLastConnection');
+            this.handle('maxConnection');
+            this.on('openedConnection', onOpenedConnection.bind(this));
+            this.on('closedConnection', onClosedConnection.bind(this));
         },
 
         'setMaxConnection': function(value){
@@ -40,7 +43,10 @@ define(['./EventHandler'], function(EventHandler){
         'hasRoom': function(){
             var maxConnection = this.get('maxConnection');
             if(maxConnection == 0) return true;
-            return this.get('connections') < maxConnection;
+            return this.countConnections() < maxConnection;
+        },
+        'countConnections': function(){
+            return this.get('connections');
         }
     })
 })
