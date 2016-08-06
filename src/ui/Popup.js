@@ -46,7 +46,7 @@ define([
             this.get('target').add(this);
 
         //Remove prev styles affects position to avoid incorrect rect
-        this.removeClass('jb-popup-top jb-popup-bottom jb-popup-left jb-popup-right');
+        this.removeClass('jb-popup-align-top jb-popup-align-bottom jb-popup-align-left jb-popup-align-right');
 
         var targetRect = this.get('targetDom').getBoundingClientRect();
         targetRect.relativeTop = this.get('targetDom').offsetTop;

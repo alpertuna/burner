@@ -127,7 +127,7 @@ define([
             ){
                 if(calculatedAlign < 0)
                     align = 'PAGE_LEFT';
-                else if(calculatedAlign + this.thisRect.width > document.documentElement.clientHeight){
+                else if(calculatedAlign + this.thisRect.width > document.documentElement.clientWidht){
                     align = this.calculateAlign('PAGE_RIGHT') < 0 ?
                         'PAGE_LEFT' :
                         'PAGE_RIGHT';
