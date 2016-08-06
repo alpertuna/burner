@@ -37,28 +37,41 @@
     outline: 0;
     text-decoration: none;
 
-    &.jb-selected{
+    /*&.jb-selected{
         background: #DEF;
         color: #369;
-        font-weight: 600;
-    }
+        //font-weight: 600;
+    }*/
 
+    &:focus,
     &:hover{
-        background: #F2F2F2;
-    }
-    &:focus{
-        background: @com-border-color-focus;
-        color: #FFF;
+        background: darken(#FFF, 5%);
     }
     &:active{
+        .box-shadow(0 .1em .4em darken(@com-border-color-focus, 20%) inset);
+
         background: darken(@com-border-color-focus, 10%);
-        .box-shadow(0 2px 6px darken(@com-border-color-focus, 20%) inset);
+        color: #FFF;
+    }
+
+    &.jb-selected{
+        background: @com-border-color-focus;
+        color: #FFF;
+
+        &:focus,
+        &:hover{
+            background: darken(@com-border-color-focus, 5%);
+        }
     }
 }
 
 .jb-com-container{
     display: inline-block;
     vertical-align: top;
+
+    &-block{
+        display: block;
+    }
 }
 .jb-com-message{
     padding: @com-space 0 0 @com-space;

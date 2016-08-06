@@ -29,6 +29,13 @@
     }
 }
 
+.jb-input-container{
+    padding-right: (@onepx + @l-horizontal-padding) * 2;
+
+    > .jb-input{
+        width: 100%;
+    }
+}
 .jb-input{
     @l-box-shadow: 0 .07em .15em #DDD inset;
 
@@ -45,10 +52,12 @@
     &:hover{
         border-color: @com-border-color-hover;
     }
+    &.jb-focus,
     &:focus{
         .box-shadow(@l-box-shadow, @com-box-shadow-focus);
         border-color: @com-border-color-focus;
     }
+    &.jb-disabled,
     &:disabled{
         .box-shadow(none);
 
@@ -70,12 +79,5 @@
     }
     &.jb-info{
         .jb-input-colored(@com-color-info);
-    }
-}
-.jb-input-container{
-    padding-right: (@onepx + @l-horizontal-padding) * 2;
-
-    > .jb-input{
-        width: 100%;
     }
 }

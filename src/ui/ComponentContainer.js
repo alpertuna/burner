@@ -27,6 +27,11 @@ define([
             return this.get('component');
         },
 
+        'setBlock': function(value){
+            this.setClass('jb-com-container-block', value);
+            return this.ref;
+        },
+
         'setMessage': function(text, theme){
             var message = this.get('message')
                 .clear()
