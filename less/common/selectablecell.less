@@ -1,0 +1,54 @@
+@import 'component';
+
+.selectable-cell-colored(@color){
+    &:focus,
+    &:hover{
+        background: darken(#FFF, 5%);
+    }
+    &:active{
+        .box-shadow(0 .1em .4em darken(@color, 20%) inset);
+
+        background: darken(@color, 10%);
+        color: #FFF;
+    }
+    &:disabled{
+        background: none;
+    }
+
+    &.jb-selected{
+        background: @color;
+        color: #FFF;
+
+        &:focus,
+        &:hover{
+            background: darken(@color, 5%);
+        }
+        &:disabled{
+            background: @color;
+        }
+    }
+}
+
+.selectable-cell-setup(){
+    color: #555;
+    outline: 0;
+    text-decoration: none;
+
+    .selectable-cell-colored(@com-color-primary);
+
+    /*.jb-primary & {
+        .selectable-cell-colored(@com-color-primary);
+    }
+    .jb-success & {
+        .selectable-cell-colored(@com-color-success);
+    }
+    .jb-danger & {
+        .selectable-cell-colored(@com-color-danger);
+    }
+    .jb-warning & {
+        .selectable-cell-colored(@com-color-warning);
+    }
+    .jb-info & {
+        .selectable-cell-colored(@com-color-info);
+    }*/
+}
