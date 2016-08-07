@@ -94,7 +94,7 @@ require([
     }).on('closedLastConnection', function(){
         agi.hide();
     });
-    var i, c, s, dd, tb1, tb2, tb3, tb4, pb1, pb2, pb3, pb4, ab1, ab2, ai, agb, agl, agi;
+    var i, c, s, l, dd, tb1, tb2, tb3, tb4, pb1, pb2, pb3, pb4, ab1, ab2, ai, agb, agl, agi;
     Document.new().add(
         /*//Labels
         Element.new('h2').add('Labels'),
@@ -279,6 +279,16 @@ require([
                 alert(c.getValue());
             })
         ),
+        genSpace(),
+        Group.new('SPACED').add(
+            Label.new('Check Themes'),
+            Check.new(),
+            Check.new().setTheme('PRIMARY'),
+            Check.new().setTheme('WARNING'),
+            Check.new().setTheme('INFO'),
+            Check.new().setTheme('DANGER'),
+            Check.new().setTheme('SUCCESS')
+        ),
 
         //Switches
         Element.new('h2').add('Switches'),
@@ -370,12 +380,52 @@ require([
             Button.new('Focus').on('click', function(){
                 rg.focus();
             })
-        ),*/
+        ),
 
         //List
         Element.new('h2').add('List'),
         Group.new('SPACED').add(
-            Label.new('List'),
+            Label.new('List w Events'),
+            l = List.new([
+                {
+                    'title': 'Record 1',
+                    'value': 1
+                },
+                {
+                    'title': 'Record 2',
+                    'value': 2
+                },
+                {
+                    'title': 'A Long Named Record',
+                    'value': 3
+                }
+            ]).on('change', function(e){
+                console.log(e.value);
+            }),
+            Button.new('Set Value to 2').on('click', function(){
+                l.setValue(2);
+            }),
+            Button.new('Set Default Value to 2').on('click', function(){
+                l.setDefaultValue(2);
+            }),
+            Button.new('Reset Value').on('click', function(){
+                l.resetValue();
+            })
+        ),
+        genSpace(),
+        Group.new('SPACED').add(
+            Label.new('List w Scrollbar'),
+            List.new((function(){
+                var records = [];
+                for(var i = 0; i < 20; i++){
+                    records.push({
+                        'title': 'Record ' + i,
+                        'value': i
+                    });
+                }
+                return records;
+            })()).setHeight('164px'),
+            Label.new('Disabled List'),
             List.new([
                 {
                     'title': 'Record 1',
@@ -389,7 +439,42 @@ require([
                     'title': 'A Long Named Record',
                     'value': 3
                 }
+            ]).setValue(2).setDisabled(true),
+            Label.new('List w Separator'),
+            List.new([
+                {
+                    'title': 'Record 1',
+                    'value': 1
+                },
+                {
+                    'title': 'Record 2',
+                    'value': 2
+                },
+                {
+                    'type': 'SEPARATOR',
+                    'title': 'Separator w Title'
+                },
+                {
+                    'title': 'A Long Named Record',
+                    'value': 3
+                },
+                {
+                    'type': 'SEPARATOR'
+                },
+                {
+                    'title': 'Last Record',
+                    'value': 4
+                }
             ])
+        ),
+        genSpace(),
+        Group.new('SPACED').add(
+            Label.new('List Theme'),
+            List.new([{'title': 'Record 1','value': 1},{'title': 'Record 2','value': 2},{'title': 'A Long Named Record','value': 3}]).setValue(2).setTheme('PRIMARY'),
+            List.new([{'title': 'Record 1','value': 1},{'title': 'Record 2','value': 2},{'title': 'A Long Named Record','value': 3}]).setValue(2).setTheme('SUCCESS'),
+            List.new([{'title': 'Record 1','value': 1},{'title': 'Record 2','value': 2},{'title': 'A Long Named Record','value': 3}]).setValue(2).setTheme('DANGER'),
+            List.new([{'title': 'Record 1','value': 1},{'title': 'Record 2','value': 2},{'title': 'A Long Named Record','value': 3}]).setValue(2).setTheme('WARNING'),
+            List.new([{'title': 'Record 1','value': 1},{'title': 'Record 2','value': 2},{'title': 'A Long Named Record','value': 3}]).setValue(2).setTheme('INFO')
         ),
         genSpace(),
         Label.new('Block List'),
@@ -406,9 +491,9 @@ require([
                 'title': 'A Long Named Record',
                 'value': 3
             }
-        ]).setBlock(true)//,
+        ]).setBlock(true),
 
-        /*//Dropdown
+        //Dropdown
         Element.new('h2').add('Dropdown'),
         Group.new('SPACED').add(
             Label.new('Dropdown w Event'),
@@ -437,7 +522,7 @@ require([
         genSpace(),
         Group.new('SPACED').add(
             Label.new('Dropdown w Separator'),
-            dd = Dropdown.new([
+            Dropdown.new([
                 {
                     'title': 'Record 1',
                     'value': 1
@@ -468,7 +553,7 @@ require([
         genSpace(),
         Group.new('SPACED').add(
             Label.new('Dropdown w Long Record'),
-            dd = Dropdown.new((function(){
+            Dropdown.new((function(){
                 var records = [];
                 for(var i = 0; i < 20; i++){
                     records.push({
@@ -583,19 +668,17 @@ require([
 
         //Message
         Element.new('h2').add('Message'),
-        Group.new('SPACED').add(
-            Message.new('Default Message'),
-            genSpace(),
-            Message.new('Primary Message', 'PRIMARY'),
-            genSpace(),
-            Message.new('Success Message', 'SUCCESS'),
-            genSpace(),
-            Message.new('Warning Message', 'WARNING'),
-            genSpace(),
-            Message.new('Danger Message', 'DANGER'),
-            genSpace(),
-            Message.new('Info Message', 'INFO')
-        ),
+        Message.new('Default Message'),
+        genSpace(),
+        Message.new('Primary Message', 'PRIMARY'),
+        genSpace(),
+        Message.new('Success Message', 'SUCCESS'),
+        genSpace(),
+        Message.new('Warning Message', 'WARNING'),
+        genSpace(),
+        Message.new('Danger Message', 'DANGER'),
+        genSpace(),
+        Message.new('Info Message', 'INFO'),
 
         //Notifier
         Element.new('h2').add('Notifier'),
@@ -678,7 +761,7 @@ require([
             }),
             agl = Label.new('0').setBoxed(true),
             agi = Label.new().setIcon('cog fa-spin').hide()
-        ),*/
+        )*/
     );
 
     /*Popup.new().add(
