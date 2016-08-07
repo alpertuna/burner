@@ -194,9 +194,11 @@ define([
 
         'setTheme': function(theme){
             this.getComponent().setTheme(theme);
+            return this.ref;
         },
         'setDisabled': function(value){
             this.getComponent().setDisabled(value);
+            return this.ref;
         }
     }).implement(iComponent, iInput)
 })
