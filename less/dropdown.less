@@ -1,40 +1,8 @@
 @import 'common/utils';
 @import 'common/component';
 
-.jb-dropdown{
-    &-popup{
-        LI{
-            margin: 0;
-            padding: 0;
-        }
-        A{
-            .com-selectable-cell-setup();
+.jb-dropdown-list .jb-list{
+    .box-shadow(0 0 .3em fade(#000, 20%));
 
-            display: block;
-            padding: .4em .8em;
-        }
-
-        &-content{
-            .border-radius(@com-border-radius);
-            .box-shadow(0 0 .3em fade(#000, 20%));
-
-            background: #FFF;
-            border: @onepx solid @com-border-color;
-            list-style: none;
-            margin: 0;
-            padding: .3em 0;
-        }
-
-        &-separator{
-            border-top: @com-separator-border;
-            margin: .3em 0;
-
-            &-title{
-                color: #999;
-                font-size: .8em;
-                padding: .2em .8em;
-                text-align: center;
-            }
-        }
-    }
+    border-color: @com-border-color;
 }

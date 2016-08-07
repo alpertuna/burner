@@ -6,13 +6,21 @@
 
 define([
     '../core/Utils',
-    './Button', './DropdownPopup', './Element', './Icon',
+    './Button', './Element', './Icon', './List', './Popup',
     './interfaces/iInput'
 ], function(
     Utils,
-    Button, DropdownPopup, Element, Icon,
+    Button, Element, Icon, List, Popup,
     iInput
 ){
+    function change(e){
+        this.trigger('change', e);
+    }
+    function listSelectedInternally(){
+        this.setCaption(this.getTitle());
+        this.get('popup').hide();
+    }
+
     return Button.extend({
         'init': function(items){
             this.super();
@@ -21,38 +29,37 @@ define([
 
             this.getComponent().add(Icon.new('caret-down jb-button-icon'));
 
-            var popup = DropdownPopup.new(items);
-            popup.bind(this, 'CLICK');
-            popup.selectDefault();
+            var list = List.new(items)
+                .addClass('jb-dropdown-list')
+                .on('selectedInternally', listSelectedInternally.bind(this))
+                .on('change', change.bind(this))
+            this.set('list', list);
+
+            var popup = Popup.new(list)
+                .bind(this, 'CLICK')
+                .setDirection('BOTTOM', 'RIGHT');
             this.set('popup', popup);
+
+            this.setCaption(list.getTitle());
         },
 
         'getValue': function(){
-            return this.get('popup').get('selectedItem').value;
+            return this.get('list').getValue();
+        },
+        'getTitle': function(){
+            return this.get('list').getTitle();
         },
         'setValue': function(value){
-            var popup = this.get('popup');
-            var item = popup.get('options')[value];
-            if(item)
-                popup.select(item);
-
+            this.get('list').setValue(value);
             return this.ref;
         },
         'setDefaultValue': function(value){
-            this.set('defaultValue', value);
-            this.setValue(value);
+            this.get('list').setDefaultValue(value);
             return this.ref;
         },
         'resetValue': function(){
-            var defaultValue = this.get('defaultValue');
-            if(Utils.isUnset(defaultValue))
-                defaultValue = this.get('popup').get('firstValue');
-
-            this.setValue(defaultValue);
+            this.get('list').resetValue();
             return this.ref;
-        },
-        'getTitle': function(){
-            return this.get('popup').get('selectedItem').title;
         }
     }).implement(iInput);
-});
+})
