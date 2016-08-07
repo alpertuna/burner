@@ -27,6 +27,14 @@ define(['../core/EventHandler', '../core/Utils', './TextElement'], function(Even
             return this.getDom().getAttribute(attr);
         },
         'setAttr':  function(attr, value){
+            if(Utils.isBoolean(value)){
+                if(!value){
+                    this.removeAttr(attr);
+                    return this.ref;
+                }
+                value = attr;
+            }
+
             this.getDom().setAttribute(attr, value);
             return this.ref;
         },
@@ -76,6 +84,30 @@ define(['../core/EventHandler', '../core/Utils', './TextElement'], function(Even
 
             return this.ref;
         },
+        'removeStyle': function(key){
+            var oldStyles = this.getAttr('style');
+            var styles = {}
+            if(oldStyles != null){
+                oldStyles = oldStyles.split(';');
+                for(var i in oldStyles){
+                    if(oldStyles[i] == '') continue;
+                    var style = oldStyles[i].split(':');
+                    if(style[0] == key) continue;
+                    styles[style[0]] = style[1];
+                }
+            }
+
+            var stylesAttr = '';
+            for(var i in styles){
+                if(Utils.isNumber(styles[i])) styles[i] += 'px';
+                stylesAttr += i + ':' + styles[i] + ';';
+            }
+
+            this.setAttr('style', stylesAttr);
+
+            return this.ref;
+        },
+
         'addClass': function(newClasses){
             var classList = this.getDom().classList;
             newClasses = newClasses.split(' ');
@@ -114,84 +146,61 @@ define(['../core/EventHandler', '../core/Utils', './TextElement'], function(Even
             this.getDom().innerHTML = '';
             return this.ref;
         },
+        'addAt': function(element, index){
+            var children = this.get('children');
+
+            if(Utils.isUnset(element)) return;
+            if(Utils.isNumber(element)) element = Utils.toString(element);
+            if(!Utils.isString(element) && !element.getDom)
+                //TODO Error
+                throw 'Child has to be an Element, string or number. (' + element + ')';
+
+            if(Utils.isString(element))
+                element = TextElement.new(element);
+
+            var thisDom = this.getDom();
+            var elementDom = element.getDom();
+            if(Utils.isUnset(index) || index == children.length){
+                thisDom.appendChild(elementDom);
+                children.push(element);
+            }else{
+                thisDom.insertBefore(elementDom, children[index].getDom());
+                children.splice(index, 0, element);
+            }
+
+            element.set('parent', this.ref);
+
+            return this.ref;
+        },
         'add': function(){
             Utils.each(arguments, function(element){
-                if(Utils.isUnset(element)) return;
-                if(Utils.isNumber(element)) element = Utils.toString(element);
-                if(!Utils.isString(element) && (!element || !element.getDom))
-                    //TODO Error
-                    throw 'Child has to be an Element, string or number. (' + element + ')';
-
-                if(Utils.isString(element))
-                    element = TextElement.new(element);
-
-                var dom = this.get('dom');
-                dom.appendChild(element.getDom());
-
-                element.set('parent', this.ref);
-                this.get('children').push(element);
+                this.addAt(element);
             }, this);
-
             return this.ref;
         },
         'prepend': function(){
-            Utils.each(arguments, function(element){
-                if(Utils.isUnset(element)) return;
-                if(Utils.isNumber(element)) element = Utils.toString(element);
-                if(!Utils.isString(element) && (!element || !element.getDom))
-                    //TODO Error
-                    throw 'Child has to be an Element, string or number. (' + element + ')';
-
-                if(Utils.isString(element))
-                    element = TextElement.new(element);
-
-                var dom = this.getDom();
-                dom.insertBefore(element.getDom(), dom.firstChild);
-
-                element.set('parent', this.ref);
-                this.get('children').unshift(element);
+            Utils.each(arguments, function(element, i){
+                this.addAt(element, i);
             }, this);
-
             return this.ref;
         },
-        'addAt': function(element, index){
-            var children = this.get('children');
-            if(index == children.length) return this.add(element);
+        'addNear': function(element, targetElement, nextToIt){
+            if(targetElement.getParent() != this){
+                //TODO error
+                throw 'Target element\'s parent and parent which will be added into must be the same element';
+                return;
+            }
 
-            if(Utils.isUnset(element)) return;
-            if(Utils.isNumber(element)) element = Utils.toString(element);
-            if(!Utils.isString(element) && (!element || !element.getDom))
-                //TODO Error
-                throw 'Child has to be an Element, string or number. (' + element + ')';
+            var index = this.getChildren().indexOf(targetElement);
+            if(nextToIt) index++;
 
-            if(Utils.isString(element))
-                element = TextElement.new(element);
-
-            var dom = this.getDom();
-            dom.insertBefore(element.getDom(), children[index]);
-
-            element.set('parent', this.ref);
-            children.splice(index, 0, element);
-
-            return this.ref;
+            return this.addAt(element, index);
         },
         'addAfter': function(element, targetElement){
-            if(Utils.isUnset(element)) return;
-            if(Utils.isNumber(element)) element = Utils.toString(element);
-            if(!Utils.isString(element) && (!element || !element.getDom))
-                //TODO Error
-                throw 'Child has to be an Element, string or number. (' + element + ')';
-
-            if(Utils.isString(element))
-                element = TextElement.new(element);
-
-            var dom = this.getDom();
-            dom.insertBefore(element.getDom(), targetElement.getDom().nextSibling);
-
-            element.set('parent', this.ref);
-            this.get('children').unshift(element);
-
-            return this.ref;
+            return this.addNear(element, targetElement, true);
+        },
+        'addBefore': function(element, targetElement){
+            return this.addNear(element, targetElement);
         },
         'remove': function(element){
             //Remove element
@@ -200,7 +209,7 @@ define(['../core/EventHandler', '../core/Utils', './TextElement'], function(Even
 
                 element.unset('parent');
                 var children = this.get('children');
-                children.splice(children.indexOf(element), -1);
+                children.splice(children.indexOf(element) - 1, 1);
                 return this.ref;
             }
 
