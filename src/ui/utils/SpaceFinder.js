@@ -106,19 +106,23 @@ define([
                 }
             }, this);
 
-            //If aligning fails, specify alternative aligns
+            //If aligning fails, specify alternative aligns. If doesn't fit, offers size
             var calculatedAlign = this.calculateAlign(align);
+            var height = false;
+            var width = false;
             if(
                 align == 'TOP' ||
                 align == 'BOTTOM' ||
                 align == 'MIDDLE'
             ){
-                if(calculatedAlign < 0)
+                var fitsScreen = this.thisRect.height <= document.documentElement.clientHeight;
+                if(!fitsScreen){
+                    align = 'PAGE_TOP';
+                    height = document.documentElement.clientHeight;
+                }else if(calculatedAlign < 0)
                     align = 'PAGE_TOP';
                 else if(calculatedAlign + this.thisRect.height > document.documentElement.clientHeight){
-                    align = this.calculateAlign('PAGE_BOTTOM') < 0 ?
-                        'PAGE_TOP' :
-                        'PAGE_BOTTOM';
+                    align = 'PAGE_BOTTOM';
                 }
             }else if(
                 align == 'LEFT' ||
@@ -186,7 +190,8 @@ define([
             return {
                 'popupClass': popupClass,
                 'top': top,
-                'left': left
+                'left': left,
+                'height': height
             }
         }
     }

@@ -47,14 +47,16 @@ define([
 
         //Remove prev styles affects position to avoid incorrect rect
         this.removeClass('jb-popup-align-top jb-popup-align-bottom jb-popup-align-left jb-popup-align-right');
+        this.removeStyle('height'); //Full client height cases
 
         var targetRect = this.get('targetDom').getBoundingClientRect();
         targetRect.relativeTop = this.get('targetDom').offsetTop;
         targetRect.relativeLeft = this.get('targetDom').offsetLeft;
+        var thisRect = this.getDom().getBoundingClientRect();
 
         var result = SpaceFinder.find(
             targetRect,
-            this.getDom().getBoundingClientRect(),
+            thisRect,
             this.get('direction'),
             this.get('align')
         );
@@ -67,14 +69,33 @@ define([
             'top': result.top,
             'left': result.left
         });
+
+        //Calculate overflow for full client height
+        //TODO This control is designed for Dropdown List, it has to be ready for other components
+        if(result.height !== false){
+            if(!this.getChildAt(0).getComponent) return;
+
+            var computedStylesComponent = window.getComputedStyle(this.getChildAt(0).getComponent().getDom(), null);
+            var computedStylesPopup = window.getComputedStyle(this.getDom(), null);
+            result.height -= (
+                parseInt(computedStylesComponent.getPropertyValue('padding-top')) +
+                parseInt(computedStylesComponent.getPropertyValue('border-top-width'))
+            ) * 2 +
+            parseInt(computedStylesPopup.getPropertyValue('padding-top')) * 2;
+
+            this.setStyle('height', result.height);
+        }
     }
 
     return Element.extend({
-        'init': function(){
+        'init': function(content){
             this.super();
             this.addClass('jb-popup');
             this.hide();
             this.on('show', adjustPosition.bind(this));
+
+            if(content)
+                this.add(content);
         },
 
         /**

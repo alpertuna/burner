@@ -18,7 +18,7 @@ define([
             this.add(component);
             this.set('component', component);
 
-            var message = Element.new().addClass('jb-com-message');
+            var message = Element.new().addClass('jb-com-message').hide();
             this.add(message);
             this.set('message', message);
         },
@@ -36,7 +36,8 @@ define([
             var message = this.get('message')
                 .clear()
                 .add(text)
-                .removeClass('jb-text-primary jb-text-success jb-text-danger jb-text-warning jb-text-info');
+                .removeClass('jb-text-primary jb-text-success jb-text-danger jb-text-warning jb-text-info')
+                .show();
 
             switch(theme){
                 case 'PRIMARY':
@@ -57,6 +58,9 @@ define([
             }
 
             return this.ref;
+        },
+        'clearMessage': function(){
+            this.get('message').hide();
         }
     })
 })
