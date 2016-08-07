@@ -36,18 +36,18 @@ define([
         var newValue = this.get('value');
 
         if(oldValue != newValue){
-            this.trigger('change',{
+            this.emit('change',{
                 'value': newValue
             });
 
             if(group){
                 if(isRadioGroup) Utils.each(group.get('options'), function(option){
                     if(option.get('groupValue') == oldGroupValue){
-                        option.trigger('change', {'value': false});
+                        option.emit('change', {'value': false});
                         return false;
                     }
                 });
-                group.trigger('change', {
+                group.emit('change', {
                     'value': group.getValue()
                 });
             }

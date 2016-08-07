@@ -33,18 +33,18 @@ define([
         var newValue = this.get('value');
 
         if(oldValue != newValue){
-            this.trigger('change',{
+            this.emit('change',{
                 'value': newValue
             });
 
             if(group){
                 if(isRadioGroup) Utils.each(group.get('options'), function(option){
                     if(option.get('groupValue') == oldGroupValue){
-                        option.trigger('change', {'value': false});
+                        option.emit('change', {'value': false});
                         return false;
                     }
                 });
-                group.trigger('change', {
+                group.emit('change', {
                     'value': group.getValue()
                 });
             }
@@ -63,7 +63,7 @@ define([
             this.on('click', toggle.bind(this));
             this.set('groupValue', groupValue);
             component.addClass('jb-switch');
-            component.getDom().addEventListener('click', this.trigger.bind(this, 'click'));
+            component.getDom().addEventListener('click', this.emit.bind(this, 'click'));
 
             var left = Element.new()
             .addClass('jb-switch-left')

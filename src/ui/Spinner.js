@@ -54,7 +54,7 @@ define([
         var input = this.get('input');
         input.setValue(value);
         validate.call(this);
-        triggerChange.call(this);
+        emitChange.call(this);
         return this.ref;
     }
     function validate(){
@@ -74,8 +74,8 @@ define([
         repaint.call(this);
         return this.ref;
     }
-    function triggerChange(){
-        this.trigger('change', {
+    function emitChange(){
+        this.emit('change', {
             'value': this.getValue()
         });
     }
@@ -97,7 +97,7 @@ define([
 
             var input = Input.new()
                 .on('change', validate.bind(this))
-                .on('change', triggerChange.bind(this));
+                .on('change', emitChange.bind(this));
             var buttonDown = Button.new()
                 .setIcon('angle-down');
             buttonDown.getDom().addEventListener('mousedown', waitToCount.bind(this, -1));

@@ -14,7 +14,7 @@ define([
     iInput
 ){
     function change(e){
-        this.trigger('change', e);
+        this.emit('change', e);
     }
     function listSelectedInternally(){
         this.setCaption(this.getTitle());

@@ -15,7 +15,7 @@ define([
         var xhttp = this.get('xhttp');
         if(xhttp.readyState == 4){
             //"always" closes connection and "success" may open new connection, so to prevent excessing maxConnection, always is at top of other triggers
-            this.trigger('always', xhttp.responseText);
+            this.emit('always', xhttp.responseText);
 
             var fail = false;
             if(xhttp.status == 200){
@@ -27,12 +27,12 @@ define([
                         fail = true;
                     }
                     if(!fail)
-                        this.trigger('success', json);
+                        this.emit('success', json);
                 }
             }else fail = true;
 
             if(fail)
-                this.trigger('fail', xhttp.responseText);
+                this.emit('fail', xhttp.responseText);
         }
     }
 
@@ -109,11 +109,11 @@ define([
             var ajaxGroup = this.get('ajaxGroup');
             if(ajaxGroup){
                 if(!ajaxGroup.hasRoom()){
-                    this.trigger('maxConnection');
-                    ajaxGroup.trigger('maxConnection');
+                    this.emit('maxConnection');
+                    ajaxGroup.emit('maxConnection');
                     return this.ref;
                 }
-                ajaxGroup.trigger('openedConnection');
+                ajaxGroup.emit('openedConnection');
             }
 
             var xhttp = this.get('xhttp');
@@ -127,7 +127,7 @@ define([
             if(!object || method == 'GET') xhttp.send();
             else xhttp.send(params);
 
-            this.trigger('send');
+            this.emit('send');
 
             return this.ref;
         },
@@ -142,7 +142,7 @@ define([
 
             this.set('bound', true);
             this.set('ajaxGroup', ajaxGroup);
-            this.on('always', ajaxGroup.trigger.bind(ajaxGroup, 'closedConnection'));
+            this.on('always', ajaxGroup.emit.bind(ajaxGroup, 'closedConnection'));
             return this.ref;
         }
     })

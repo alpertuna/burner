@@ -25,7 +25,7 @@ define([
             this.super(component);
 
             this.handle('click');
-            component.getDom().addEventListener('click', this.trigger.bind(this, 'click'));
+            component.getDom().addEventListener('click', this.emit.bind(this, 'click'));
 
             var captionElement = Element.new()
                 .addClass('jb-button-caption');

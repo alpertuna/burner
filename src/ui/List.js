@@ -34,12 +34,12 @@ define([
         this.set('selectedItem', item);
 
         if(callTrigger)
-            this.trigger('change', {
+            this.emit('change', {
                 'value': item.value,
                 'title': item.title
             });
 
-        this.trigger('selectedInternally');
+        this.emit('selectedInternally');
     }
     return ComponentContainer.extend({
         'init': function(items){
@@ -135,7 +135,7 @@ define([
             return this.ref;
         },
         'focus': function(){
-            this.get('firstItem').button.triggerDom('focus');
+            this.get('firstItem').button.emitDom('focus');
             return this.ref;
         }
     }).implement(iComponent, iInput)

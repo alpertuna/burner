@@ -18,7 +18,7 @@ define([
     iComponent, iInput
 ){
     function change(e){
-        this.trigger('change',{
+        this.emit('change',{
             value: e.target.value
         });
     }

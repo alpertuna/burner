@@ -9,15 +9,15 @@
 define(['./EventHandler'], function(EventHandler){
     function onOpenedConnection(){
         if(this.get('connections') == 0)
-            this.trigger('openedFirstConnection');
+            this.emit('openedFirstConnection');
         this.inc('connections');
-        this.trigger('change');
+        this.emit('change');
     }
     function onClosedConnection(){
         this.inc('connections', -1);
         if(this.get('connections') == 0)
-            this.trigger('closedLastConnection');
-        this.trigger('change');
+            this.emit('closedLastConnection');
+        this.emit('change');
     }
 
     return EventHandler.extend({
