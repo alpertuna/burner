@@ -130,7 +130,7 @@ define([
          * @param {string} items[].title - Title of an item
          * @param {string|number} items[].value - Value of an item
          * @param {string} items[].type - Type of an item
-         * @return Instance reference.
+         * @return {Object} Instance reference.
          */
         'setItems': function(items){
             var options = {};
@@ -180,7 +180,7 @@ define([
         /**
          * Sets height to fix.
          * @param {string|number} Css value for height.
-         * @return Instance reference.
+         * @return {Object} Instance reference.
          */
         'setHeight': function(height){
             this.getComponent().setStyle('height', height);

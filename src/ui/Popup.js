@@ -110,7 +110,7 @@ define([
          * Sets direction of popup to target component.
          * @param {string} direction - Direction name. Options are TOP, BOTTOM, RIGHT, LEFT.
          * @param {string} align - Align name. Options are CENTER, MIDDLE, TOP, BOTTOM, RIGHT, LEFT.
-         * @return Instance reference.
+         * @return {Object} Instance reference.
          */
         'setDirection': function(direction, align){
             //TODO error (also include default align value)
@@ -144,7 +144,7 @@ define([
          * Binds popup to a component.
          * @param {ui/ComponentContainer} target - Target component.
          * @param {string} [trigger=HOVER] - Trigger name. Options are CLICK, HOVER, FOCUS, NONE.
-         * @return Instance reference.
+         * @return {Object} Instance reference.
          */
         'bind': function(target, trigger){
             //TODO Error

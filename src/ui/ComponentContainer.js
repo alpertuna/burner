@@ -40,7 +40,7 @@ define([
         /**
          * Sets container style as block.
          * @param {boolean} value - Value.
-         * @return Instance reference.
+         * @return {Object} Instance reference.
          */
         'setBlock': function(value){
             this.setClass('jb-com-container-block', value);
@@ -51,7 +51,7 @@ define([
          * Prints message under component with given color theme.
          * @param {string} text - Message text.
          * @param {string} theme - Color theme of message.
-         * @return Instance reference.
+         * @return {Object} Instance reference.
          */
         'setMessage': function(text, theme){
             var message = this.get('message')
@@ -82,7 +82,7 @@ define([
         },
         /**
          * Clears message under component.
-         * @return Instance reference.
+         * @return {Object} Instance reference.
          */
         'clearMessage': function(){
             this.get('message').hide();

@@ -125,7 +125,7 @@ define([
         /**
          * Sets request method.
          * @param {string} method - Method name.
-         * @return Instance reference.
+         * @return {Object} Instance reference.
          */
         'setMethod': function(method){
             this.set('method', method);
@@ -134,7 +134,7 @@ define([
         /**
          * Sets url address.
          * @param {string} method - Url address.
-         * @return Instance reference.
+         * @return {Object} Instance reference.
          */
         'setUrl': function(url){
             this.set('url', url);
@@ -143,7 +143,7 @@ define([
         /**
          * Sends ajax request.
          * @param {Object} [object] - Request data.
-         * @return Instance reference.
+         * @return {Object} Instance reference.
          * @fires core/Ajax.core/Ajax:maxConnection
          * @fires core/AjaxGroup.core/AjaxGroup:maxConnection
          * @fires core/AjaxGroup.core/AjaxGroup:openedConnection
@@ -186,7 +186,7 @@ define([
         /**
          * Binds to an AjaxGroup to work with other Ajaxs.
          * @param {core/AjaxGroup} ajaxGroup - Ajax group to bind.
-         * @return Instance reference.
+         * @return {Object} Instance reference.
          */
         'bind': function(ajaxGroup){
             if(this.get('bound')){

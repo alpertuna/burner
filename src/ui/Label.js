@@ -69,7 +69,7 @@ define([
         /**
          * Sets bold text state.
          * @param {boolean} value - Bold state.
-         * @return Instance reference.
+         * @return {Object} Instance reference.
          */
         'setBold': function(value){
             this.get('component').setClass('jb-label-bold', value);
@@ -78,7 +78,7 @@ define([
         /**
          * Sets boxed state. If true, puts label in a box.
          * @param {boolean} value - Boxed state.
-         * @return Instance reference.
+         * @return {Object} Instance reference.
          */
         'setBoxed': function(value){
             this.get('component').setClass('jb-label-boxed', value);
@@ -88,7 +88,7 @@ define([
         /**
          * Sets caption of label.
          * @param {string} caption - Caption text of label.
-         * @return Instance reference.
+         * @return {Object} Instance reference.
          */
         'setCaption': function(caption){
             var captionElement = this.get('captionElement').clear();
@@ -101,7 +101,7 @@ define([
         /**
          * Puts icon at the beginning of label.
          * @param {string} name - Icon name.
-         * @return Instance reference.
+         * @return {Object} Instance reference.
          */
         'setIcon': function(name){
             var iconElement = this.get('iconElement');
@@ -119,7 +119,7 @@ define([
         /**
          * Binds label to a focusable component. It corresponds defining "for" attribute in html.
          * @param {iComponent} component - Component to bind.
-         * @return Instance reference.
+         * @return {Object} Instance reference.
          */
         'bind': function(component){
             if(component.isInstanceOf(Spinner)){

@@ -21,7 +21,7 @@ define(function(){
          * Sets value to default value.
          * @function
          * @name iInput#resetValue
-         * @return Instance reference.
+         * @return {Object} Instance reference.
          */
         'resetValue',
         /**
@@ -29,7 +29,7 @@ define(function(){
          * @function
          * @name iInput#setDefaultValue
          * @param {string|number} value - Default value.
-         * @return Instance reference.
+         * @return {Object} Instance reference.
          */
         'setDefaultValue',
         /**
@@ -37,7 +37,7 @@ define(function(){
          * @function
          * @name iInput#setValue
          * @param {string|number} value - Value.
-         * @return Instance reference.
+         * @return {Object} Instance reference.
          */
         'setValue'
     ]

@@ -1,6 +1,7 @@
 {
     "source": {
         "include": [
+            "src/core/createClass.js",
             "src/core/Ajax.js",
             "src/core/AjaxGroup.js",
             "src/core/EventHandler.js",

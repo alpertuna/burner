@@ -50,7 +50,7 @@ define([
         /**
          * Sets caption.
          * @param {string} caption - Caption of button.
-         * @return Instance reference.
+         * @return {Object} Instance reference.
          */
         'setCaption': function(caption){
             var captionElement = this.get('captionElement').clear();
@@ -63,7 +63,7 @@ define([
         /**
          * Sets icon.
          * @param {string} name - Icon name.
-         * @return Instance reference.
+         * @return {Object} Instance reference.
          */
         'setIcon': function(name){
             var component = this.getComponent();

@@ -67,7 +67,7 @@ define(['./EventHandler'], function(EventHandler){
         /**
          * Sets maximum connection waits respond at the same time.
          * @param {number} value - Connection number.
-         * @return Instance reference.
+         * @return {Object} Instance reference.
          */
         'setMaxConnection': function(value){
             this.set('maxConnection', value);

@@ -8,6 +8,7 @@ define(['./createClass'], function(createClass){
     /**
      * EventHandler class.
      * @class core/EventHandler
+     * @augments core/createClass
      */
     return createClass(/** @lends core/EventHandler# */{
         /*
@@ -16,7 +17,7 @@ define(['./createClass'], function(createClass){
         /**
          * Make action ready to use with .on() method.
          * @param {string} action - Action name.
-         * @return Instance reference.
+         * @return {Object} Instance reference.
          */
         'handle': function(action){
             var events = this.get('events');
@@ -31,7 +32,7 @@ define(['./createClass'], function(createClass){
          * Adds event listener to handled action.
          * @param {string} action - Action name.
          * @param {function} func - Listener function.
-         * @return Instance reference.
+         * @return {Object} Instance reference.
          */
         'on': function(action, func){
             var events = this.get('events');
@@ -49,7 +50,7 @@ define(['./createClass'], function(createClass){
          * Removes event listener from handled action.
          * @param {string} action - Action name.
          * @param {function} func - Listener function.
-         * @return Instance reference.
+         * @return {Object} Instance reference.
          */
         'off': function(action, func){
             var events = this.get('events');
@@ -74,7 +75,7 @@ define(['./createClass'], function(createClass){
          * Triggers event listener of handled action.
          * @param {string} action - Action name.
          * @param {Object} event - Event object.
-         * @return Instance reference.
+         * @return {Object} Instance reference.
          */
         'emit': function(action, event){
             var events = this.get('events');

@@ -107,15 +107,58 @@ define(['./Utils'], function(Utils){
 
         Utils.extend(
             instance,
+            /** @lends core/createClass# */
             {
                 '_classId': Class._id,
                 '_implements': Class._implements,
+                /**
+                 * To check is this an instance of given class or a class extends given class.
+                 * @function
+                 * @param {Class} Class - Class
+                 * @return {boolean} If it is instance of given class.
+                 */
                 'isInstanceOf': isInstanceOf,
+                /**
+                 * To check is this an instance implemented by given interface.
+                 * @function
+                 * @param {Interface} Interface - Interface
+                 * @return {boolean} If it is implemented by given interface.
+                 */
                 'isImplementedBy': isImplementedBy,
+                /**
+                 * Returns value of a property.
+                 * @function
+                 * @param {string} name - Property name.
+                 * @return {*} Value of property.
+                 */
                 'get': get.bind(base),
+                /**
+                 * Sets a value to a property.
+                 * @function
+                 * @param {string} name - Property name.
+                 * @param {*} value - Property value.
+                 * @return {Object} Instance reference.
+                 */
                 'set': set.bind(base),
+                /**
+                 * Unsets / deletes a property.
+                 * @function
+                 * @param {string} name - Property name.
+                 * @return {Object} Instance reference.
+                 */
                 'unset': unset.bind(base),
+                /**
+                 * Increments given number property as given value.
+                 * @function
+                 * @param {string} name - Property name.
+                 * @param {number} value - Value to increment.
+                 * @return {Object} Instance reference.
+                 */
                 'inc': inc.bind(base),
+                /**
+                 * Instance reference.
+                 * @type {Object}
+                 */
                 'ref': base
             }
         );
@@ -179,6 +222,10 @@ define(['./Utils'], function(Utils){
     /* =====
      * ENTRY
      * ===== */
+    /**
+     * Class Factory - Creates new class with core methods.
+     * @class core/createClass
+     */
     return function(proto){
         if(!proto.init) proto._init = function(){}
         return Utils.extend(

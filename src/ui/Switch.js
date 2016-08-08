@@ -169,21 +169,21 @@ define([
 
         /**
          * Toggles value.
-         * @return Instance reference.
+         * @return {Object} Instance reference.
          */
         'toggle': function(){
             return this.setValue(!this.get('value'));
         },
         /**
          * Sets value to true.
-         * @return Instance reference.
+         * @return {Object} Instance reference.
          */
         'check': function(){
             return this.setValue(true);
         },
         /**
          * Sets value to false.
-         * @return Instance reference.
+         * @return {Object} Instance reference.
          */
         'uncheck': function(){
             return this.setValue(false);
@@ -192,7 +192,7 @@ define([
         /**
          * Binds a CheckGroup or RadioGroup to work with other Checks and Switches.
          * @param {CheckGroup|RadioGroup} gruop - Group instance to bind.
-         * @return Instance reference.
+         * @return {Object} Instance reference.
          */
         'bind': function(group){
             this.set('group', group);
@@ -209,7 +209,7 @@ define([
         /**
          * Sets value to represent in a group.
          * @param {string|number} value - Value to represent in a group.
-         * @return Instance reference.
+         * @return {Object} Instance reference.
          */
         'setGroupValue': function(value){
             return this.set('groupValue', value);

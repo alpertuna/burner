@@ -12,6 +12,7 @@ define(['../core/createClass'], function(createClass){
         /**
          * TextElement component class.
          * @constructs
+         * @augments core/createClass
          * @param {string} text - Content text.
          */
         'init': function(text){

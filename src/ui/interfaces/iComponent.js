@@ -16,7 +16,7 @@ define(function(){
          * Focuses on button.
          * @function
          * @name iComponent#focus
-         * @return Instance reference.
+         * @return {Object} Instance reference.
          */
         'focus',
         /**
@@ -24,7 +24,7 @@ define(function(){
          * @function
          * @name iComponent#setDisabled
          * @param {boolean} value - Disabled status.
-         * @return Instance reference.
+         * @return {Object} Instance reference.
          */
         'setDisabled',
         /**
@@ -32,7 +32,7 @@ define(function(){
          * @function
          * @name iComponent#setTheme
          * @param {string} theme - Theme name.
-         * @return Instance reference.
+         * @return {Object} Instance reference.
          */
         'setTheme'
     ]

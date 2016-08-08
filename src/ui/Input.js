@@ -91,7 +91,7 @@ define([
         /**
          * Puts placeholder.
          * @param {string} value - Placeholder text.
-         * @return Instance reference.
+         * @return {Object} Instance reference.
          */
         'setPlaceholder': function(value){
             this.get('component').setAttr('placeholder', value);
@@ -101,7 +101,7 @@ define([
         /**
          * Sets required state.
          * @param {boolean} value - Required state.
-         * @return Instance reference.
+         * @return {Object} Instance reference.
          */
         'setRequired': function(value){
             if(value)

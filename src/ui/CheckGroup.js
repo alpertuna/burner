@@ -35,7 +35,7 @@ define([
         /**
          * Sets value.
          * @param {Array<string|number>} values - Value list to check.
-         * @return Instance reference.
+         * @return {Object} Instance reference.
          */
         'setValue': function(values){
             this.set('value', values);

@@ -50,7 +50,7 @@ define(['../core/EventHandler', '../core/Utils', './TextElement'], function(Even
          * Sets attribute.
          * @param {string} attr - Attribute name.
          * @param {string} value - Attribute value.
-         * @return Instance reference.
+         * @return {Object} Instance reference.
          */
         'setAttr':  function(attr, value){
             if(Utils.isBoolean(value)){
@@ -67,7 +67,7 @@ define(['../core/EventHandler', '../core/Utils', './TextElement'], function(Even
         /**
          * Removes attribute.
          * @param {string} attr - Attribute name.
-         * @return Instance reference.
+         * @return {Object} Instance reference.
          */
         'removeAttr': function(attr){
             this.getDom().removeAttribute(attr);
@@ -93,7 +93,7 @@ define(['../core/EventHandler', '../core/Utils', './TextElement'], function(Even
          * Sets styles.
          * @param {string|Array} key - Style key or key-value array.
          * @param {string} [value] - Style value. If first parameter is array, no need to pass arguments to value.
-         * @return Instance reference.
+         * @return {Object} Instance reference.
          */
         'setStyle': function(key, value){
             var newStyles;
@@ -129,7 +129,7 @@ define(['../core/EventHandler', '../core/Utils', './TextElement'], function(Even
         /**
          * Removes style.
          * @param {string} key - Style name.
-         * @return Instance reference.
+         * @return {Object} Instance reference.
          */
         'removeStyle': function(key){
             var oldStyles = this.getAttr('style');
@@ -158,7 +158,7 @@ define(['../core/EventHandler', '../core/Utils', './TextElement'], function(Even
         /**
          * Adds css classes.
          * @param {string} newClasses - Css class name or list separated with space.
-         * @return Instance reference.
+         * @return {Object} Instance reference.
          */
         'addClass': function(newClasses){
             var classList = this.getDom().classList;
@@ -171,7 +171,7 @@ define(['../core/EventHandler', '../core/Utils', './TextElement'], function(Even
         /**
          * Removes css classes.
          * @param {string} oldClasses - Css class name or list separated with space.
-         * @return Instance reference.
+         * @return {Object} Instance reference.
          */
         'removeClass': function(oldClasses){
             var classList = this.getDom().classList;
@@ -195,7 +195,7 @@ define(['../core/EventHandler', '../core/Utils', './TextElement'], function(Even
         /**
          * Toggles css class.
          * @param {string} className - Single css class name.
-         * @return Instance reference.
+         * @return {Object} Instance reference.
          */
         'toggleClass': function(className){
             return this.setClass(className, !this.hasClass(className));
@@ -204,7 +204,7 @@ define(['../core/EventHandler', '../core/Utils', './TextElement'], function(Even
          * Adds or removes classname according to second parameter.
          * @param {string} className - Css class name.
          * @param {boolean} value - If true, css class will be added, otherwise removed.
-         * @return Instance reference.
+         * @return {Object} Instance reference.
          */
         'setClass': function(className, value){
             if(value)
@@ -217,7 +217,7 @@ define(['../core/EventHandler', '../core/Utils', './TextElement'], function(Even
          *===========================================================*/
         /**
          * Clears content of element.
-         * @return Instance reference.
+         * @return {Object} Instance reference.
          */
         'clear': function(){
             this.getDom().innerHTML = '';
@@ -227,7 +227,7 @@ define(['../core/EventHandler', '../core/Utils', './TextElement'], function(Even
          * Adds given element as a child to a specified position.
          * @param {ui/Element} element - Child element.
          * @param {number} index - Position index.
-         * @return Instance reference.
+         * @return {Object} Instance reference.
          */
         'addAt': function(element, index){
             var children = this.get('children');
@@ -258,7 +258,7 @@ define(['../core/EventHandler', '../core/Utils', './TextElement'], function(Even
         /**
          * Adds given element as a child.
          * @param {...ui/Element} element - Child element.
-         * @return Instance reference.
+         * @return {Object} Instance reference.
          */
         'add': function(){
             Utils.each(arguments, function(element){
@@ -270,7 +270,7 @@ define(['../core/EventHandler', '../core/Utils', './TextElement'], function(Even
         /**
          * Adds given element as a child to the begginin of content.
          * @param {...ui/Element} element - Child element.
-         * @return Instance reference.
+         * @return {Object} Instance reference.
          */
         'prepend': function(){
             Utils.each(arguments, function(element, i){
@@ -283,7 +283,7 @@ define(['../core/EventHandler', '../core/Utils', './TextElement'], function(Even
          * @param {ui/Element} element - Child element.
          * @param {ui/Element} targetElement - Target element to put child near it.
          * @param {boolean} nextToIt - Direction of child to put it to after or before target element.
-         * @return Instance reference.
+         * @return {Object} Instance reference.
          *
          * @see #addAfter
          * @see #addBefore
@@ -304,7 +304,7 @@ define(['../core/EventHandler', '../core/Utils', './TextElement'], function(Even
          * Adds given element as a child after target element.
          * @param {ui/Element} element - Child element.
          * @param {ui/Element} targetElement - Target element to put child near it.
-         * @return Instance reference.
+         * @return {Object} Instance reference.
          */
         'addAfter': function(element, targetElement){
             return this.addNear(element, targetElement, true);
@@ -313,7 +313,7 @@ define(['../core/EventHandler', '../core/Utils', './TextElement'], function(Even
          * Adds given element as a child before target element.
          * @param {ui/Element} element - Child element.
          * @param {ui/Element} targetElement - Target element to put child near it.
-         * @return Instance reference.
+         * @return {Object} Instance reference.
          */
         'addBefore': function(element, targetElement){
             return this.addNear(element, targetElement);
@@ -321,7 +321,7 @@ define(['../core/EventHandler', '../core/Utils', './TextElement'], function(Even
         /**
          * Remove child. If parameter is given, given child removes from itself, otherwise instance is removed from parent.
          * @param {string} [element] - Child element.
-         * @return Instance reference.
+         * @return {Object} Instance reference.
          */
         'remove': function(element){
             //Remove element
@@ -371,7 +371,7 @@ define(['../core/EventHandler', '../core/Utils', './TextElement'], function(Even
          * Adds event listener to native dom element.
          * @param {string} action - Action name.
          * @param {function} func - Listener function.
-         * @return Instance reference.
+         * @return {Object} Instance reference.
          */
         'onDom': function(action, func){
             this.getDom().addEventListener(action, func);
@@ -381,7 +381,7 @@ define(['../core/EventHandler', '../core/Utils', './TextElement'], function(Even
          * Removes event listener from native dom element.
          * @param {string} action - Action name.
          * @param {function} func - Listener function.
-         * @return Instance reference.
+         * @return {Object} Instance reference.
          */
         'offDom': function(action, func){
             this.getDom().removeEventListener(action, func);
@@ -391,7 +391,7 @@ define(['../core/EventHandler', '../core/Utils', './TextElement'], function(Even
          * Triggers event listener of native dom element.
          * @param {string} action - Action name.
          * @param {function} func - Listener function.
-         * @return Instance reference.
+         * @return {Object} Instance reference.
          */
         'emitDom': function(action){
             this.getDom().dispatchEvent(new Event(action));
@@ -403,7 +403,7 @@ define(['../core/EventHandler', '../core/Utils', './TextElement'], function(Even
          *===========================================================*/
         /**
          * Hides element.
-         * @return Instance reference.
+         * @return {Object} Instance reference.
          * @fires ui/Element.ui/Element.hide
          */
         'hide': function(){
@@ -414,7 +414,7 @@ define(['../core/EventHandler', '../core/Utils', './TextElement'], function(Even
         },
         /**
          * Shows element.
-         * @return Instance reference.
+         * @return {Object} Instance reference.
          * @fires ui/Element.ui/Element.show
          */
         'show': function(){

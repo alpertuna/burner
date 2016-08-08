@@ -177,7 +177,7 @@ define([
         /**
          * Sets visibility state of increase / decrease buttons.
          * @param {boolean} value - Visibility state.
-         * @return Instance reference.
+         * @return {Object} Instance reference.
          */
         'showButtons': function(value){
             if(this.get('buttonsAreShown') == value) return this.ref;
@@ -198,7 +198,7 @@ define([
         /**
          * Sets maximum value of spinner.
          * @param {number} value - Maximum value.
-         * @return Instance reference.
+         * @return {Object} Instance reference.
          */
         'setMax': function(value){
             if(value === null) this.set('loop', false);
@@ -210,7 +210,7 @@ define([
         /**
          * Sets minimum value of spinner.
          * @param {number} value - Minimum value.
-         * @return Instance reference.
+         * @return {Object} Instance reference.
          */
         'setMin': function(value){
             if(value === null) this.set('loop', false);
@@ -222,7 +222,7 @@ define([
         /**
          * Sets loop state of spinner. If true, when it reach minimum or maximum limit, it returns other limit.
          * @param {bootlean} value - Loop state.
-         * @return Instance reference.
+         * @return {Object} Instance reference.
          */
         'setLoop': function(value){
             return this.set('loop', Utils.isSet(this.get('max'), this.get('min')) ? value : false);
@@ -230,7 +230,7 @@ define([
         /**
          * Sets pad length to put zero.
          * @param {number} value - Pad length.
-         * @return Instance reference.
+         * @return {Object} Instance reference.
          */
         'setPad': function(value){
             if(value === false)

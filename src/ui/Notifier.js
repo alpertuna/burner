@@ -23,6 +23,7 @@ define(['../core/createClass', './Document', './Element', './Icon'], function(cr
         /**
          * Notifier component class.
          * @constructs
+         * @augments core/createClass
          * @param {string} message - Content message text.
          * @param {string} theme - Color theme name.
          */
