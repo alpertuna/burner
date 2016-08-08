@@ -1,5 +1,5 @@
 /**
- * js/core/Class.js
+ * src/core/createClass.js
  * Author: H.Alper Tuna <halpertuna@gmail.com>
  * Date: 16.04.2016
  */

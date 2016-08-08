@@ -1,14 +1,23 @@
-/**
- * js/core/Utils.js
+/*
+ * src/core/Utils.js
  * Author: H.Alper Tuna <halpertuna@gmail.com>
- * Date: 17.04.2016
+ * Date: 08.08.2016
  */
 
 'use strict';
 
 define(function(){
-    return {
+    /**
+     * Utilities - helper tool set static class.
+     * @class core/Utils
+     */
+    return /** @lends core/Utils */ {
         //Checkers
+        /**
+         * Returns if given value is string.
+         * @param {*} value - Value to check.
+         * @return Result.
+         */
         'isString': function(value){
             return typeof value == 'string';
         },

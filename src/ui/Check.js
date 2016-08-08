@@ -1,7 +1,7 @@
-/**
- * js/./Check.js
+/*
+ * src/ui/Check.js
  * Author: H.Alper Tuna <halpertuna@gmail.com>
- * Date: 28.04.2016
+ * Date: 08.08.2016
  */
 
 'use strict';
@@ -54,9 +54,27 @@ define([
         }
     }
 
-    return ComponentContainer.extend({
+    return ComponentContainer.extend(/** @lends ui/Check# */{
         'value': false,
+
+        /**
+         * Check component class.
+         * @constructs
+         * @param {string|number} groupValue - Group value to use for CheckGroup or RadioGroup
+         * @augments ui/ComponentContainer
+         * @implements iInput
+         * @implements iComponent
+         */
         'init': function(groupValue){
+            /**
+             * Click event.
+             * @event ui/Check.ui/Check:change
+             */
+            /**
+             * Change event.
+             * @event ui/Check.ui/Check:click
+             * @param {boolean} value - Check state.
+             */
             var component = Element.new('button');
             component.addClass('jb-check');
             this.super(component);
@@ -69,44 +87,7 @@ define([
             component.getDom().addEventListener('click', toggle.bind(this));
         },
 
-        'bind': function(group){
-            this.set('group', group);
-            var options = group.get('options');
-            options.push(this);
-            if(group.get('type') == 'RADIO'){
-                this.getComponent().addClass('jb-radio');
-                this.setIcon('circle');
-                if(options.length == 1) this.check();
-            }
-            return this.ref;
-        },
-
-        'setIcon': function(name){
-            var icon = this.get('icon');
-            if(icon)
-                icon.remove();
-
-            icon = Icon.new(name+ ' jb-check-icon');
-            this.getComponent().add(icon);
-            this.set('icon', icon);
-            repaint.call(this);
-
-            return this.ref;
-        },
-        'setDisabled': function(value){
-            var component = this.getComponent();
-
-            if(value)
-                component.setAttr('disabled', 'disabled');
-            else
-                component.removeAttr('disabled');
-
-            return this.ref;
-        },
-
-        'setGroupValue': function(value){
-            return this.set('groupValue', value);
-        },
+        //Inherited from iInput interface
         'setValue': function(value, force){
             if(!force){
                 var group = this.get('group');
@@ -129,34 +110,106 @@ define([
             repaint.call(this);
             return this.ref;
         },
+        //Inherited from iInput interface
         'getValue': function(){
             return this.get('value');
         },
-        'toggle': function(){
-            return this.setValue(!this.get('value'));
-        },
-        'check': function(){
-            return this.setValue(true);
-        },
-        'uncheck': function(){
-            return this.setValue(false);
-        },
-
         'defaultValue': false,
+        //Inherited from iInput interface
         'setDefaultValue': function(value){
             this.set('defaultValue', value);
             this.setValue(value);
             return this.ref;
         },
+        //Inherited from iInput interface
         'resetValue': function(){
             this.setValue(this.get('defaultValue'));
             return this.ref;
         },
 
+        //Inherited from iComponent interface
         'setTheme': setTheme,
+        //Inherited from iComponent interface
+        'setDisabled': function(value){
+            var component = this.getComponent();
+
+            if(value)
+                component.setAttr('disabled', 'disabled');
+            else
+                component.removeAttr('disabled');
+
+            return this.ref;
+        },
+        //Inherited from iComponent interface
         'focus': function(){
             this.getComponent().getDom().focus();
             return this.ref;
+        },
+
+        /**
+         * Toggles value.
+         * @return Instance reference.
+         */
+        'toggle': function(){
+            return this.setValue(!this.get('value'));
+        },
+        /**
+         * Sets value to true.
+         * @return Instance reference.
+         */
+        'check': function(){
+            return this.setValue(true);
+        },
+        /**
+         * Sets value to false.
+         * @return Instance reference.
+         */
+        'uncheck': function(){
+            return this.setValue(false);
+        },
+
+        /**
+         * Binds a CheckGroup or RadioGroup to work with other Checks and Switches.
+         * @param {CheckGroup|RadioGroup} gruop - Group instance to bind.
+         * @return Instance reference.
+         */
+        'bind': function(group){
+            this.set('group', group);
+            var options = group.get('options');
+            options.push(this);
+            if(group.get('type') == 'RADIO'){
+                this.getComponent().addClass('jb-radio');
+                this.setIcon('circle');
+                if(options.length == 1) this.check();
+            }
+            return this.ref;
+        },
+
+        /**
+         * Sets check icon.
+         * @param {string} name - Icon name.
+         * @return Instance reference.
+         */
+        'setIcon': function(name){
+            var icon = this.get('icon');
+            if(icon)
+                icon.remove();
+
+            icon = Icon.new(name+ ' jb-check-icon');
+            this.getComponent().add(icon);
+            this.set('icon', icon);
+            repaint.call(this);
+
+            return this.ref;
+        },
+
+        /**
+         * Sets value to represent in a group.
+         * @param {string|number} value - Value to represent in a group.
+         * @return Instance reference.
+         */
+        'setGroupValue': function(value){
+            return this.set('groupValue', value);
         }
     }).implement(iComponent, iInput)
 })

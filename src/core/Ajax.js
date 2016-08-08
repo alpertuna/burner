@@ -1,7 +1,7 @@
-/**
- * js/core/Ajax.js
+/*
+ * src/core/Ajax.js
  * Author: H.Alper Tuna <halpertuna@gmail.com>
- * Date: 11.06.2016
+ * Date: 08.08.2016
  */
 
 'use strict';
@@ -59,9 +59,39 @@ define([
         return result.join('&');
     }
 
-    return EventHandler.extend({
+    return EventHandler.extend(/** @lends core/Ajax# */{
         'connectionIsOpen': false,
+
+        /**
+         * Ajax component class.
+         * @constructs
+         * @param {string} url - Url address.
+         * @augments ui/EventHandler
+         */
         'init': function(url){
+            /**
+             * On send event.
+             * @event core/Ajax.core/Ajax:send
+             */
+            /**
+             * On respond is successful event.
+             * @event core/Ajax.core/Ajax:success
+             * @param {Object} Responded json object
+             */
+            /**
+             * On respond is fail event.
+             * @event core/Ajax.core/Ajax:fail
+             * @param {string} Responded non-parsed text.
+             */
+            /**
+             * On respond is got event.
+             * @event core/Ajax.core/Ajax:always
+             * @param {string} Responded non-parsed text.
+             */
+            /**
+             * On reached maximum connection event.
+             * @event core/Ajax.core/Ajax:maxConnection
+             */
             this.handle('send');
             this.handle('success');
             this.handle('fail');
@@ -91,14 +121,34 @@ define([
                 this.setUrl(url);
         },
         'method': 'POST',
+
+        /**
+         * Sets request method.
+         * @param {string} method - Method name.
+         * @return Instance reference.
+         */
         'setMethod': function(method){
             this.set('method', method);
             return this.ref;
         },
+        /**
+         * Sets url address.
+         * @param {string} method - Url address.
+         * @return Instance reference.
+         */
         'setUrl': function(url){
             this.set('url', url);
             return this.ref;
         },
+        /**
+         * Sends ajax request.
+         * @param {Object} [object] - Request data.
+         * @return Instance reference.
+         * @fires core/Ajax.core/Ajax:maxConnection
+         * @fires core/AjaxGroup.core/AjaxGroup:maxConnection
+         * @fires core/AjaxGroup.core/AjaxGroup:openedConnection
+         * @fires core/Ajax.core/Ajax:send
+         */
         'send': function(object){
             if(this.get('connectionIsOpen')){
                 console.warn('Last connection hasn\'t closed yet.');
@@ -133,6 +183,11 @@ define([
         },
 
         'bound': false,
+        /**
+         * Binds to an AjaxGroup to work with other Ajaxs.
+         * @param {core/AjaxGroup} ajaxGroup - Ajax group to bind.
+         * @return Instance reference.
+         */
         'bind': function(ajaxGroup){
             if(this.get('bound')){
                 //TODO error

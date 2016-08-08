@@ -8,7 +8,8 @@
     "build-js": "r.js -o build.js out=dist/burner.js optimize=none",
     "build-css-min": "lessc --clean-css less/style.less dist/burner.min.css",
     "build-css": "lessc less/style.less dist/burner.css",
-    "build-all": "npm run build-js && npm run build-js-min && npm run build-css && npm run build-css-min",
+    "build-dist": "npm run build-js && npm run build-js-min && npm run build-css && npm run build-css-min",
+    "build-doc": "jsdoc -c jsdocconf.json",
     "less-watcher": "gulp less",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
@@ -36,6 +37,7 @@
     "gulp": "^3.9.1",
     "gulp-less": "^3.1.0",
     "gulp-rename": "^1.2.2",
+    "jsdoc": "^3.4.0",
     "less": "^2.7.1",
     "less-plugin-clean-css": "^1.5.1",
     "requirejs": "^2.2.0"

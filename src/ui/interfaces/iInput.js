@@ -5,11 +5,40 @@
  */
 
 define(function(){
+    /**
+     * Implements main component controller methods.
+     * @interface iInput
+     */
     return [
-        'setDisabled',
-        'setValue',
-        'setDefaultValue',
+        /**
+         * Returns value of component.
+         * @function
+         * @name iInput#getValue
+         * @return{string|number} Value.
+         */
+        'getValue',
+        /**
+         * Sets value to default value.
+         * @function
+         * @name iInput#resetValue
+         * @return Instance reference.
+         */
         'resetValue',
-        'getValue'
+        /**
+         * Sets default value.
+         * @function
+         * @name iInput#setDefaultValue
+         * @param {string|number} value - Default value.
+         * @return Instance reference.
+         */
+        'setDefaultValue',
+        /**
+         * Sets value.
+         * @function
+         * @name iInput#setValue
+         * @param {string|number} value - Value.
+         * @return Instance reference.
+         */
+        'setValue'
     ]
 });

@@ -1,7 +1,7 @@
-/**
- * js/com/./Button.js
+/*
+ * src/ui/Button.js
  * Author: H.Alper Tuna <halpertuna@gmail.com>
- * Date: 17.04.2016
+ * Date: 08.08.2016
  */
 
 'use strict';
@@ -17,8 +17,19 @@ define([
     setTheme,
     iComponent
 ){
-    return ComponentContainer.extend({
+    return ComponentContainer.extend(/** @lends ui/Button# */{
+        /**
+         * Button component class.
+         * @constructs
+         * @augments ui/ComponentContainer
+         * @implements iComponent
+         * @param {string} caption - Caption of button.
+         */
         'init': function(caption){
+            /**
+             * Click event.
+             * @event ui/Button.ui/Button:click
+             */
             var component = Element.new('button')
                 .setAttr('type', 'button')
                 .addClass('jb-button');
@@ -36,6 +47,11 @@ define([
             this.setCaption(caption);
         },
 
+        /**
+         * Sets caption.
+         * @param {string} caption - Caption of button.
+         * @return Instance reference.
+         */
         'setCaption': function(caption){
             var captionElement = this.get('captionElement').clear();
             if(caption == '') captionElement.hide();
@@ -44,6 +60,11 @@ define([
             return this.ref;
         },
 
+        /**
+         * Sets icon.
+         * @param {string} name - Icon name.
+         * @return Instance reference.
+         */
         'setIcon': function(name){
             var component = this.getComponent();
 
@@ -62,8 +83,10 @@ define([
             return this.ref;
         },
 
+        //Inherited from iComponent interface
         'setTheme': setTheme,
 
+        //Inherited from iComponent interface
         'setDisabled': function(value){
             if(value)
                 this.getComponent().setAttr('disabled', 'disabled');
@@ -72,7 +95,7 @@ define([
 
             return this.ref;
         },
-
+        //Inherited from iComponent interface
         'focus': function(){
             this.getComponent().getDom().focus();
 

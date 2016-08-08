@@ -1,7 +1,7 @@
-/**
+/*
  * src/ui/Message.js
  * Author: H.Alper Tuna <halpertuna@gmail.com>
- * Date: 30.06.2016
+ * Date: 08.08.2016
  */
 
 'use strict';
@@ -13,7 +13,14 @@ define([
     Element, Icon,
     setTheme
 ){
-    return Element.extend({
+    return Element.extend(/** @lends ui/Message# */{
+        /**
+         * Message component class.
+         * @constructs
+         * @param {string} message - Content message text.
+         * @param {string} theme - Color theme name.
+         * @augments ui/Element
+         */
         'init': function(message, theme){
             this.super();
 
