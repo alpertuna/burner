@@ -1,6 +1,8 @@
 {
     "source": {
         "include": [
+            "README.md",
+
             "src/core/createClass.js",
             "src/core/Ajax.js",
             "src/core/AjaxGroup.js",
