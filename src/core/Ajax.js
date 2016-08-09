@@ -1,7 +1,7 @@
-/**
- * js/core/Ajax.js
+/*
+ * src/core/Ajax.js
  * Author: H.Alper Tuna <halpertuna@gmail.com>
- * Date: 11.06.2016
+ * Date: 08.08.2016
  */
 
 'use strict';
@@ -15,7 +15,7 @@ define([
         var xhttp = this.get('xhttp');
         if(xhttp.readyState == 4){
             //"always" closes connection and "success" may open new connection, so to prevent excessing maxConnection, always is at top of other triggers
-            this.trigger('always', xhttp.responseText);
+            this.emit('always', xhttp.responseText);
 
             var fail = false;
             if(xhttp.status == 200){
@@ -27,12 +27,12 @@ define([
                         fail = true;
                     }
                     if(!fail)
-                        this.trigger('success', json);
+                        this.emit('success', json);
                 }
             }else fail = true;
 
             if(fail)
-                this.trigger('fail', xhttp.responseText);
+                this.emit('fail', xhttp.responseText);
         }
     }
 
@@ -59,9 +59,39 @@ define([
         return result.join('&');
     }
 
-    return EventHandler.extend({
+    return EventHandler.extend(/** @lends core/Ajax# */{
         'connectionIsOpen': false,
+
+        /**
+         * Ajax component class.
+         * @constructs
+         * @param {string} url - Url address.
+         * @augments ui/EventHandler
+         */
         'init': function(url){
+            /**
+             * On send event.
+             * @event core/Ajax.core/Ajax:send
+             */
+            /**
+             * On respond is successful event.
+             * @event core/Ajax.core/Ajax:success
+             * @param {Object} Responded json object
+             */
+            /**
+             * On respond is fail event.
+             * @event core/Ajax.core/Ajax:fail
+             * @param {string} Responded non-parsed text.
+             */
+            /**
+             * On respond is got event.
+             * @event core/Ajax.core/Ajax:always
+             * @param {string} Responded non-parsed text.
+             */
+            /**
+             * On reached maximum connection event.
+             * @event core/Ajax.core/Ajax:maxConnection
+             */
             this.handle('send');
             this.handle('success');
             this.handle('fail');
@@ -91,14 +121,34 @@ define([
                 this.setUrl(url);
         },
         'method': 'POST',
+
+        /**
+         * Sets request method.
+         * @param {string} method - Method name.
+         * @return {Object} Instance reference.
+         */
         'setMethod': function(method){
             this.set('method', method);
             return this.ref;
         },
+        /**
+         * Sets url address.
+         * @param {string} method - Url address.
+         * @return {Object} Instance reference.
+         */
         'setUrl': function(url){
             this.set('url', url);
             return this.ref;
         },
+        /**
+         * Sends ajax request.
+         * @param {Object} [object] - Request data.
+         * @return {Object} Instance reference.
+         * @fires core/Ajax.core/Ajax:maxConnection
+         * @fires core/AjaxGroup.core/AjaxGroup:maxConnection
+         * @fires core/AjaxGroup.core/AjaxGroup:openedConnection
+         * @fires core/Ajax.core/Ajax:send
+         */
         'send': function(object){
             if(this.get('connectionIsOpen')){
                 console.warn('Last connection hasn\'t closed yet.');
@@ -109,11 +159,11 @@ define([
             var ajaxGroup = this.get('ajaxGroup');
             if(ajaxGroup){
                 if(!ajaxGroup.hasRoom()){
-                    this.trigger('maxConnection');
-                    ajaxGroup.trigger('maxConnection');
+                    this.emit('maxConnection');
+                    ajaxGroup.emit('maxConnection');
                     return this.ref;
                 }
-                ajaxGroup.trigger('openedConnection');
+                ajaxGroup.emit('openedConnection');
             }
 
             var xhttp = this.get('xhttp');
@@ -127,12 +177,17 @@ define([
             if(!object || method == 'GET') xhttp.send();
             else xhttp.send(params);
 
-            this.trigger('send');
+            this.emit('send');
 
             return this.ref;
         },
 
         'bound': false,
+        /**
+         * Binds to an AjaxGroup to work with other Ajaxs.
+         * @param {core/AjaxGroup} ajaxGroup - Ajax group to bind.
+         * @return {Object} Instance reference.
+         */
         'bind': function(ajaxGroup){
             if(this.get('bound')){
                 //TODO error
@@ -142,7 +197,7 @@ define([
 
             this.set('bound', true);
             this.set('ajaxGroup', ajaxGroup);
-            this.on('always', ajaxGroup.trigger.bind(ajaxGroup, 'closedConnection'));
+            this.on('always', ajaxGroup.emit.bind(ajaxGroup, 'closedConnection'));
             return this.ref;
         }
     })

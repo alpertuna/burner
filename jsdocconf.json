@@ -1,0 +1,38 @@
+{
+    "source": {
+        "include": [
+            "README.md",
+
+            "src/core/createClass.js",
+            "src/core/Ajax.js",
+            "src/core/AjaxGroup.js",
+            "src/core/EventHandler.js",
+            "src/core/Utils.js",
+
+            "src/ui/Breadcrumb.js",
+            "src/ui/Button.js",
+            "src/ui/Check.js",
+            "src/ui/CheckGroup.js",
+            "src/ui/ComponentContainer.js",
+            "src/ui/Document.js",
+            "src/ui/Dropdown.js",
+            "src/ui/Element.js",
+            "src/ui/Group.js",
+            "src/ui/Icon.js",
+            "src/ui/Input.js",
+            "src/ui/Label.js",
+            "src/ui/List.js",
+            "src/ui/Message.js",
+            "src/ui/Notifier.js",
+            "src/ui/Popup.js",
+            "src/ui/RadioGroup.js",
+            "src/ui/Spinner.js",
+            "src/ui/Switch.js",
+            "src/ui/TextElement.js",
+            "src/ui/Tip.js",
+
+            "src/ui/interfaces/iComponent.js",
+            "src/ui/interfaces/iInput.js"
+        ]
+    }
+}

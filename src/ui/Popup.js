@@ -1,7 +1,7 @@
-/**
- * js/./Tip.js
+/*
+ * src/ui/Popup.js
  * Author: H.Alper Tuna <halpertuna@gmail.com>
- * Date: 23.04.2016
+ * Date: 08.08.2016
  */
 
 'use strict';
@@ -87,7 +87,13 @@ define([
         }
     }
 
-    return Element.extend({
+    return Element.extend(/** @lends ui/Popup# */{
+        /**
+         * Popup component class.
+         * @constructs
+         * @param {ui/Element} content - An element as content
+         * @augments ui/Element
+         */
         'init': function(content){
             this.super();
             this.addClass('jb-popup');
@@ -98,12 +104,14 @@ define([
                 this.add(content);
         },
 
-        /**
-         * Directions: TOP, BOTTOM, RIGHT, LEFT
-         * Aligns: CENTER, MIDDLE, TOP, BOTTOM, RIGHT, LEFT
-         */
         'direction': 'TOP',
         'align': 'CENTER',
+        /**
+         * Sets direction of popup to target component.
+         * @param {string} direction - Direction name. Options are TOP, BOTTOM, RIGHT, LEFT.
+         * @param {string} align - Align name. Options are CENTER, MIDDLE, TOP, BOTTOM, RIGHT, LEFT.
+         * @return {Object} Instance reference.
+         */
         'setDirection': function(direction, align){
             //TODO error (also include default align value)
             switch(direction){
@@ -132,7 +140,12 @@ define([
         },
 
         'bound': false,
-        //FOCUS, HOVER, CLICK, NONE
+        /**
+         * Binds popup to a component.
+         * @param {ui/ComponentContainer} target - Target component.
+         * @param {string} [trigger=HOVER] - Trigger name. Options are CLICK, HOVER, FOCUS, NONE.
+         * @return {Object} Instance reference.
+         */
         'bind': function(target, trigger){
             //TODO Error
             if(this.get('bound')) throw 'Popup is already bound.';

@@ -1,7 +1,7 @@
 /*
  * src/ui/ComponentContainer.js
  * Author: H.Alper Tuna <halpertuna@gmail.com>
- * Date: 02.08.2016
+ * Date: 08.08.2016
  */
 
 'use strict';
@@ -11,7 +11,13 @@ define([
 ], function(
     Element
 ){
-    return Element.extend({
+    return Element.extend(/** @lends ui/ComponentContainer# */{
+        /**
+         * ComponentContainer component class.
+         * @constructs
+         * @augments ui/Element
+         * @param {ui/Element} component - Component element to wrap it.
+         */
         'init': function(component){
             this.super();
             this.addClass('jb-com-container');
@@ -23,15 +29,30 @@ define([
             this.set('message', message);
         },
 
+        /**
+         * Returns component element.
+         * @return {ui/Element} Component element.
+         */
         'getComponent': function(){
             return this.get('component');
         },
 
+        /**
+         * Sets container style as block.
+         * @param {boolean} value - Value.
+         * @return {Object} Instance reference.
+         */
         'setBlock': function(value){
             this.setClass('jb-com-container-block', value);
             return this.ref;
         },
 
+        /**
+         * Prints message under component with given color theme.
+         * @param {string} text - Message text.
+         * @param {string} theme - Color theme of message.
+         * @return {Object} Instance reference.
+         */
         'setMessage': function(text, theme){
             var message = this.get('message')
                 .clear()
@@ -59,6 +80,10 @@ define([
 
             return this.ref;
         },
+        /**
+         * Clears message under component.
+         * @return {Object} Instance reference.
+         */
         'clearMessage': function(){
             this.get('message').hide();
         }

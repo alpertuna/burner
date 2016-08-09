@@ -1,12 +1,12 @@
-/**
- * js/ui/Notifier.js
+/*
+ * src/ui/Notifier.js
  * Author: H.Alper Tuna <halpertuna@gmail.com>
- * Date: 17.06.2016
+ * Date: 08.08.2016
  */
 
 'use strict';
 
-define(['./Document', './Element', './Icon'], function(Document, Element, Icon){
+define(['../core/createClass', './Document', './Element', './Icon'], function(createClass, Document, Element, Icon){
     var notificationKon;
 
     function hideNotification(){
@@ -19,10 +19,15 @@ define(['./Document', './Element', './Icon'], function(Document, Element, Icon){
         this.addClass('jb-notification-fadein');
     }
 
-    return Element.extend({
+    return createClass(/** @lends ui/Notifier# */{
+        /**
+         * Notifier component class.
+         * @constructs
+         * @augments core/createClass
+         * @param {string} message - Content message text.
+         * @param {string} theme - Color theme name.
+         */
         'init': function(message, theme){
-            this.super();
-
             if(!notificationKon){
                 Document.new().add(
                     notificationKon = Element.new()

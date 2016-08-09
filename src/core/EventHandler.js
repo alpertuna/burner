@@ -1,14 +1,24 @@
-/**
- * js/core/EventHandler.js
+/*
+ * src/core/EventHandler.js
  * Author: H.Alper Tuna <halpertuna@gmail.com>
- * Date: 12.05.2016
+ * Date: 07.08.2016
  */
 
 define(['./createClass'], function(createClass){
-    return createClass({
+    /**
+     * EventHandler class.
+     * @class core/EventHandler
+     * @augments core/createClass
+     */
+    return createClass(/** @lends core/EventHandler# */{
         /*
          * Event Handling
          *===========================================================*/
+        /**
+         * Make action ready to use with .on() method.
+         * @param {string} action - Action name.
+         * @return {Object} Instance reference.
+         */
         'handle': function(action){
             var events = this.get('events');
             if(!events){
@@ -18,6 +28,12 @@ define(['./createClass'], function(createClass){
             events[action] = [];
             return this.ref;
         },
+        /**
+         * Adds event listener to handled action.
+         * @param {string} action - Action name.
+         * @param {function} func - Listener function.
+         * @return {Object} Instance reference.
+         */
         'on': function(action, func){
             var events = this.get('events');
             if(!events || !events[action])
@@ -30,6 +46,12 @@ define(['./createClass'], function(createClass){
             events[action].push(func);
             return this.ref;
         },
+        /**
+         * Removes event listener from handled action.
+         * @param {string} action - Action name.
+         * @param {function} func - Listener function.
+         * @return {Object} Instance reference.
+         */
         'off': function(action, func){
             var events = this.get('events');
             //If there is no func, clear action
@@ -49,7 +71,13 @@ define(['./createClass'], function(createClass){
             if(index != -1) events[action].splice(index, 1);
             return this.ref;
         },
-        'trigger': function(action, event){
+        /**
+         * Triggers event listener of handled action.
+         * @param {string} action - Action name.
+         * @param {Object} event - Event object.
+         * @return {Object} Instance reference.
+         */
+        'emit': function(action, event){
             var events = this.get('events');
             if(!events || !events[action])
                 //TODO Error

@@ -1,7 +1,7 @@
-/**
- * js/./Spinner.js
+/*
+ * src/ui/Spinner.js
  * Author: H.Alper Tuna <halpertuna@gmail.com>
- * Date: 03.05.2016
+ * Date: 08.08.2016
  */
 
 define([
@@ -54,7 +54,7 @@ define([
         var input = this.get('input');
         input.setValue(value);
         validate.call(this);
-        triggerChange.call(this);
+        emitChange.call(this);
         return this.ref;
     }
     function validate(){
@@ -74,8 +74,8 @@ define([
         repaint.call(this);
         return this.ref;
     }
-    function triggerChange(){
-        this.trigger('change', {
+    function emitChange(){
+        this.emit('change', {
             'value': this.getValue()
         });
     }
@@ -89,15 +89,27 @@ define([
         return this.ref;
     }
 
-    return ComponentContainer.extend({
+    return ComponentContainer.extend(/** @lends ui/Spinner# */{
+        /**
+         * Spinner component class.
+         * @constructs
+         * @augments ui/ComponentContainer
+         * @implements iInput
+         * @implements iComponent
+         */
         'init': function(){
+            /**
+             * Change event.
+             * @event ui/Spinner.ui/Spinner:change
+             * @param {number} value - New value of spinner.
+             */
             var group = Group.new();
             this.super(group);
             this.handle('change');
 
             var input = Input.new()
                 .on('change', validate.bind(this))
-                .on('change', triggerChange.bind(this));
+                .on('change', emitChange.bind(this));
             var buttonDown = Button.new()
                 .setIcon('angle-down');
             buttonDown.getDom().addEventListener('mousedown', waitToCount.bind(this, -1));
@@ -126,7 +138,47 @@ define([
             //this.setDefaultValue(0);
         },
 
+        //Inherited from iInput interface
+        'getValue': function(){
+            return this.get('value');
+        },
+        //Inherited from iInput interface
+        'setValue': function(value){
+            this.get('input').setValue(value);
+            validate.call(this);
+            return this.ref;
+        },
+        //TODO have to check
+        'defaultValue': 0,
+        //Inherited from iInput interface
+        'setDefaultValue': function(value){
+            this.setValue(value);
+            this.set('defaultValue', this.getValue());
+            return this.ref;
+        },
+        //Inherited from iInput interface
+        'resetValue': function(){
+            return this.setValue(this.get('defaultValue'));
+        },
+        //Inherited from iComponent interface
+        'focus': function(){
+            return this.get('input').focus();
+        },
+        //Inherited from iComponent interface
+        'setTheme': function(theme){
+            this.getComponent().setTheme(theme);
+        },
+        //Inherited from iComponent interface
+        'setDisabled': function(value){
+            this.getComponent().setDisabled(value);
+        },
+
         'buttonsAreShown': true,
+        /**
+         * Sets visibility state of increase / decrease buttons.
+         * @param {boolean} value - Visibility state.
+         * @return {Object} Instance reference.
+         */
         'showButtons': function(value){
             if(this.get('buttonsAreShown') == value) return this.ref;
 
@@ -143,6 +195,11 @@ define([
             return this.ref;
         },
 
+        /**
+         * Sets maximum value of spinner.
+         * @param {number} value - Maximum value.
+         * @return {Object} Instance reference.
+         */
         'setMax': function(value){
             if(value === null) this.set('loop', false);
             this.set('max', value);
@@ -150,6 +207,11 @@ define([
             return this.ref;
         },
         'min': 0,
+        /**
+         * Sets minimum value of spinner.
+         * @param {number} value - Minimum value.
+         * @return {Object} Instance reference.
+         */
         'setMin': function(value){
             if(value === null) this.set('loop', false);
             this.set('min', value);
@@ -157,47 +219,25 @@ define([
             return this.ref;
         },
         'loop': false,
+        /**
+         * Sets loop state of spinner. If true, when it reach minimum or maximum limit, it returns other limit.
+         * @param {bootlean} value - Loop state.
+         * @return {Object} Instance reference.
+         */
         'setLoop': function(value){
             return this.set('loop', Utils.isSet(this.get('max'), this.get('min')) ? value : false);
         },
+        /**
+         * Sets pad length to put zero.
+         * @param {number} value - Pad length.
+         * @return {Object} Instance reference.
+         */
         'setPad': function(value){
             if(value === false)
                 this.unset('pad');
             else
                 this.set('pad', value);
             repaint.call(this);
-            return this.ref;
-        },
-
-        'getValue': function(){
-            return this.get('value');
-        },
-        'setValue': function(value){
-            this.get('input').setValue(value);
-            validate.call(this);
-            return this.ref;
-        },
-
-        //TODO have to check
-        'defaultValue': 0,
-        'setDefaultValue': function(value){
-            this.setValue(value);
-            this.set('defaultValue', this.getValue());
-            return this.ref;
-        },
-        'resetValue': function(){
-            return this.setValue(this.get('defaultValue'));
-        },
-        'focus': function(){
-            return this.get('input').focus();
-        },
-
-        'setTheme': function(theme){
-            this.getComponent().setTheme(theme);
-            return this.ref;
-        },
-        'setDisabled': function(value){
-            this.getComponent().setDisabled(value);
             return this.ref;
         }
     }).implement(iComponent, iInput)

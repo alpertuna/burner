@@ -24,44 +24,93 @@
 ;
 define("license", function(){});
 
-/**
- * js/core/Utils.js
+/*
+ * src/core/Utils.js
  * Author: H.Alper Tuna <halpertuna@gmail.com>
- * Date: 17.04.2016
+ * Date: 08.08.2016
  */
 
 
 
 define('burner/core/Utils',[],function(){
-    return {
+    /**
+     * Utilities - helper tool set static class.
+     * @class core/Utils
+     */
+    return /** @lends core/Utils */ {
         //Checkers
+        /**
+         * Returns if given value is string.
+         * @param {*} value - Value to check.
+         * @return {boolean} Result.
+         */
         'isString': function(value){
             return typeof value == 'string';
         },
+        /**
+         * Returns if given value is boolean.
+         * @param {*} value - Value to check.
+         * @return {boolean} Result.
+         */
         'isBoolean': function(value){
             return typeof value == 'boolean';
         },
+        /**
+         * Returns if given value is number.
+         * @param {*} value - Value to check.
+         * @return {boolean} Result.
+         */
         'isNumber': function(value){
             return typeof value == 'number';
         },
+        /**
+         * Returns if given value is an Object.
+         * @param {*} value - Value to check.
+         * @return {boolean} Result.
+         */
         'isObject': function(value){
             return typeof value == 'object';
         },
+        /**
+         * Returns if given value is an Array.
+         * @param {*} value - Value to check.
+         * @return {boolean} Result.
+         */
         'isArray': function(value){
             return value instanceof Array;
         },
 
+        /**
+         * Returns if given value is a function.
+         * @param {*} value - Value to check.
+         * @return {boolean} Result.
+         */
         'isFunction': function(value){
             return typeof value == 'function';
         },
 
+        /**
+         * Returns if given value is undefined.
+         * @param {*} value - Value to check.
+         * @return {boolean} Result.
+         */
         'isUndefined': function(value){
             return typeof value == 'undefined';
         },
+        /**
+         * Returns if given value is null.
+         * @param {*} value - Value to check.
+         * @return {boolean} Result.
+         */
         'isNull': function(value){
             return value === null;
         },
 
+        /**
+         * Returns if given value is set - not null and undefined.
+         * @param {*} value - Value to check.
+         * @return {boolean} Result.
+         */
         'isSet': function(value){
             if(arguments.length > 1){
                 for(var i in arguments)
@@ -71,6 +120,11 @@ define('burner/core/Utils',[],function(){
 
             return !this.isUndefined(value) && !this.isNull(value);
         },
+        /**
+         * Returns if given value is unset - null or undefined.
+         * @param {*} value - Value to check.
+         * @return {boolean} Result.
+         */
         'isUnset': function(value){
             if(arguments.length > 1){
                 for(var i in arguments)
@@ -80,6 +134,11 @@ define('burner/core/Utils',[],function(){
 
             return this.isUndefined(value) || this.isNull(value);
         },
+        /**
+         * Returns if given value is empty. Empty values are; empty string, zero number, false, undefined, zero length arrays/objects.
+         * @param {*} value - Value to check.
+         * @return {boolean} Result.
+         */
         'isEmpty': function(value){
             if(arguments.length > 1){
                 for(var i in arguments)
@@ -101,19 +160,41 @@ define('burner/core/Utils',[],function(){
         },
 
         //Converters
+        /**
+         * Converts given any value to string.
+         * @param {*} value - Value to convert.
+         * @return {string} Result.
+         */
         'toString': function(value){
             return value.toString();
         },
+        /**
+         * Converts given any value to number.
+         * @param {*} value - Value to convert.
+         * @return {number} Result.
+         */
         'toFloat': function(value){
             value = Number.parseFloat(value);
             if(isNaN(value)) return 0;
             return value;
         },
+        /**
+         * Converts given argument list to array.
+         * @param {Arguments} value - Value to convert.
+         * @return {Array} Result.
+         */
         'argToArr': function(args){
             return [].slice.call(args);
         },
 
         //String Operations
+        /**
+         * Adds pads to given string.
+         * @param {string} n - String to pad.
+         * @param {number} width - Pad width.
+         * @param {string} z - Padding character.
+         * @return {string} Padded string.
+         */
         'pad': function(n, width, z) {
             z = z || '0';
             n = n + '';
@@ -121,12 +202,25 @@ define('burner/core/Utils',[],function(){
         },
 
         //Array Operations
+        /**
+         * Calls callback for each item of given array.
+         * @param {Array} arr - Item list.
+         * @param {function} callback - Callback function.
+         * @param {Object} reference - Reference to pass into callback.
+         */
         'each': function(arr, callback, reference){
             if(!reference) reference = this;
             for(var i in arr)
                 if(callback.call(reference, arr[i], i) === false)
                     break;
         },
+        /**
+         * Creates new array using given array with calls callback for each item.
+         * @param {Array} arr - Item list.
+         * @param {function} callback - Callback function.
+         * @param {Object} reference - Reference to pass into callback.
+         * @return {Array} Result array.
+         */
         'map': function(arr, callback, reference){
             if(!reference) reference = this;
             var result = [];
@@ -135,17 +229,38 @@ define('burner/core/Utils',[],function(){
             });
             return result;
         },
+        /**
+         * Returns if array has search item.
+         * @param {Array} arr - Item list.
+         * @param {*} item - Search item.
+         * @return {boolean} If array has search item.
+         */
         'inArray': function(arr, item){
             return arr.indexOf(item) != -1;
         },
+        /**
+         * Clones an array and returns new reference.
+         * @param {Array} arr - Array to clone.
+         * @return {Array} New cloned array.
+         */
         'cloneArray': function(arr){
             return arr.slice();
         },
 
         //Object Operations
+        /**
+         * Extends object given at first parameter with objects at other parameters.
+         * @param {...Object} objects - Object list.
+         * @return {Object} Extended first object at arguments.
+         */
         'extend': function(){
             return Object.assign.apply(null, arguments);
         },
+        /**
+         * Creates new object and extends with all objects given as arguments.
+         * @param {...Object} objects - Object list.
+         * @return {Object} Extended new object.
+         */
         'clone': function(){
             var args = this.argToArr(arguments);
             args.unshift({});
@@ -168,7 +283,7 @@ define('burner/core/Utils',[],function(){
 });
 
 /**
- * js/core/Class.js
+ * src/core/createClass.js
  * Author: H.Alper Tuna <halpertuna@gmail.com>
  * Date: 16.04.2016
  */
@@ -276,15 +391,58 @@ define('burner/core/createClass',['./Utils'], function(Utils){
 
         Utils.extend(
             instance,
+            /** @lends core/createClass# */
             {
                 '_classId': Class._id,
                 '_implements': Class._implements,
+                /**
+                 * To check is this an instance of given class or a class extends given class.
+                 * @function
+                 * @param {Class} Class - Class
+                 * @return {boolean} If it is instance of given class.
+                 */
                 'isInstanceOf': isInstanceOf,
+                /**
+                 * To check is this an instance implemented by given interface.
+                 * @function
+                 * @param {Interface} Interface - Interface
+                 * @return {boolean} If it is implemented by given interface.
+                 */
                 'isImplementedBy': isImplementedBy,
+                /**
+                 * Returns value of a property.
+                 * @function
+                 * @param {string} name - Property name.
+                 * @return {*} Value of property.
+                 */
                 'get': get.bind(base),
+                /**
+                 * Sets a value to a property.
+                 * @function
+                 * @param {string} name - Property name.
+                 * @param {*} value - Property value.
+                 * @return {Object} Instance reference.
+                 */
                 'set': set.bind(base),
+                /**
+                 * Unsets / deletes a property.
+                 * @function
+                 * @param {string} name - Property name.
+                 * @return {Object} Instance reference.
+                 */
                 'unset': unset.bind(base),
+                /**
+                 * Increments given number property as given value.
+                 * @function
+                 * @param {string} name - Property name.
+                 * @param {number} value - Value to increment.
+                 * @return {Object} Instance reference.
+                 */
                 'inc': inc.bind(base),
+                /**
+                 * Instance reference.
+                 * @type {Object}
+                 */
                 'ref': base
             }
         );
@@ -348,6 +506,10 @@ define('burner/core/createClass',['./Utils'], function(Utils){
     /* =====
      * ENTRY
      * ===== */
+    /**
+     * Class Factory - Creates new class with core methods.
+     * @class core/createClass
+     */
     return function(proto){
         if(!proto.init) proto._init = function(){}
         return Utils.extend(
@@ -357,17 +519,27 @@ define('burner/core/createClass',['./Utils'], function(Utils){
     }
 });
 
-/**
- * js/core/EventHandler.js
+/*
+ * src/core/EventHandler.js
  * Author: H.Alper Tuna <halpertuna@gmail.com>
- * Date: 12.05.2016
+ * Date: 07.08.2016
  */
 
 define('burner/core/EventHandler',['./createClass'], function(createClass){
-    return createClass({
+    /**
+     * EventHandler class.
+     * @class core/EventHandler
+     * @augments core/createClass
+     */
+    return createClass(/** @lends core/EventHandler# */{
         /*
          * Event Handling
          *===========================================================*/
+        /**
+         * Make action ready to use with .on() method.
+         * @param {string} action - Action name.
+         * @return {Object} Instance reference.
+         */
         'handle': function(action){
             var events = this.get('events');
             if(!events){
@@ -377,6 +549,12 @@ define('burner/core/EventHandler',['./createClass'], function(createClass){
             events[action] = [];
             return this.ref;
         },
+        /**
+         * Adds event listener to handled action.
+         * @param {string} action - Action name.
+         * @param {function} func - Listener function.
+         * @return {Object} Instance reference.
+         */
         'on': function(action, func){
             var events = this.get('events');
             if(!events || !events[action])
@@ -389,6 +567,12 @@ define('burner/core/EventHandler',['./createClass'], function(createClass){
             events[action].push(func);
             return this.ref;
         },
+        /**
+         * Removes event listener from handled action.
+         * @param {string} action - Action name.
+         * @param {function} func - Listener function.
+         * @return {Object} Instance reference.
+         */
         'off': function(action, func){
             var events = this.get('events');
             //If there is no func, clear action
@@ -408,7 +592,13 @@ define('burner/core/EventHandler',['./createClass'], function(createClass){
             if(index != -1) events[action].splice(index, 1);
             return this.ref;
         },
-        'trigger': function(action, event){
+        /**
+         * Triggers event listener of handled action.
+         * @param {string} action - Action name.
+         * @param {Object} event - Event object.
+         * @return {Object} Instance reference.
+         */
+        'emit': function(action, event){
             var events = this.get('events');
             if(!events || !events[action])
                 //TODO Error
@@ -425,10 +615,10 @@ define('burner/core/EventHandler',['./createClass'], function(createClass){
     })
 })
 ;
-/**
- * js/core/Ajax.js
+/*
+ * src/core/Ajax.js
  * Author: H.Alper Tuna <halpertuna@gmail.com>
- * Date: 11.06.2016
+ * Date: 08.08.2016
  */
 
 
@@ -442,7 +632,7 @@ define('burner/core/Ajax',[
         var xhttp = this.get('xhttp');
         if(xhttp.readyState == 4){
             //"always" closes connection and "success" may open new connection, so to prevent excessing maxConnection, always is at top of other triggers
-            this.trigger('always', xhttp.responseText);
+            this.emit('always', xhttp.responseText);
 
             var fail = false;
             if(xhttp.status == 200){
@@ -454,12 +644,12 @@ define('burner/core/Ajax',[
                         fail = true;
                     }
                     if(!fail)
-                        this.trigger('success', json);
+                        this.emit('success', json);
                 }
             }else fail = true;
 
             if(fail)
-                this.trigger('fail', xhttp.responseText);
+                this.emit('fail', xhttp.responseText);
         }
     }
 
@@ -486,9 +676,39 @@ define('burner/core/Ajax',[
         return result.join('&');
     }
 
-    return EventHandler.extend({
+    return EventHandler.extend(/** @lends core/Ajax# */{
         'connectionIsOpen': false,
+
+        /**
+         * Ajax component class.
+         * @constructs
+         * @param {string} url - Url address.
+         * @augments ui/EventHandler
+         */
         'init': function(url){
+            /**
+             * On send event.
+             * @event core/Ajax.core/Ajax:send
+             */
+            /**
+             * On respond is successful event.
+             * @event core/Ajax.core/Ajax:success
+             * @param {Object} Responded json object
+             */
+            /**
+             * On respond is fail event.
+             * @event core/Ajax.core/Ajax:fail
+             * @param {string} Responded non-parsed text.
+             */
+            /**
+             * On respond is got event.
+             * @event core/Ajax.core/Ajax:always
+             * @param {string} Responded non-parsed text.
+             */
+            /**
+             * On reached maximum connection event.
+             * @event core/Ajax.core/Ajax:maxConnection
+             */
             this.handle('send');
             this.handle('success');
             this.handle('fail');
@@ -518,14 +738,34 @@ define('burner/core/Ajax',[
                 this.setUrl(url);
         },
         'method': 'POST',
+
+        /**
+         * Sets request method.
+         * @param {string} method - Method name.
+         * @return {Object} Instance reference.
+         */
         'setMethod': function(method){
             this.set('method', method);
             return this.ref;
         },
+        /**
+         * Sets url address.
+         * @param {string} method - Url address.
+         * @return {Object} Instance reference.
+         */
         'setUrl': function(url){
             this.set('url', url);
             return this.ref;
         },
+        /**
+         * Sends ajax request.
+         * @param {Object} [object] - Request data.
+         * @return {Object} Instance reference.
+         * @fires core/Ajax.core/Ajax:maxConnection
+         * @fires core/AjaxGroup.core/AjaxGroup:maxConnection
+         * @fires core/AjaxGroup.core/AjaxGroup:openedConnection
+         * @fires core/Ajax.core/Ajax:send
+         */
         'send': function(object){
             if(this.get('connectionIsOpen')){
                 console.warn('Last connection hasn\'t closed yet.');
@@ -536,11 +776,11 @@ define('burner/core/Ajax',[
             var ajaxGroup = this.get('ajaxGroup');
             if(ajaxGroup){
                 if(!ajaxGroup.hasRoom()){
-                    this.trigger('maxConnection');
-                    ajaxGroup.trigger('maxConnection');
+                    this.emit('maxConnection');
+                    ajaxGroup.emit('maxConnection');
                     return this.ref;
                 }
-                ajaxGroup.trigger('openedConnection');
+                ajaxGroup.emit('openedConnection');
             }
 
             var xhttp = this.get('xhttp');
@@ -554,12 +794,17 @@ define('burner/core/Ajax',[
             if(!object || method == 'GET') xhttp.send();
             else xhttp.send(params);
 
-            this.trigger('send');
+            this.emit('send');
 
             return this.ref;
         },
 
         'bound': false,
+        /**
+         * Binds to an AjaxGroup to work with other Ajaxs.
+         * @param {core/AjaxGroup} ajaxGroup - Ajax group to bind.
+         * @return {Object} Instance reference.
+         */
         'bind': function(ajaxGroup){
             if(this.get('bound')){
                 //TODO error
@@ -569,16 +814,16 @@ define('burner/core/Ajax',[
 
             this.set('bound', true);
             this.set('ajaxGroup', ajaxGroup);
-            this.on('always', ajaxGroup.trigger.bind(ajaxGroup, 'closedConnection'));
+            this.on('always', ajaxGroup.emit.bind(ajaxGroup, 'closedConnection'));
             return this.ref;
         }
     })
 })
 ;
-/**
- * js/core/AjaxGroup.js
+/*
+ * src/core/AjaxGroup.js
  * Author: H.Alper Tuna <halpertuna@gmail.com>
- * Date: 15.06.2016
+ * Date: 08.08.2016
  */
 
 
@@ -586,22 +831,51 @@ define('burner/core/Ajax',[
 define('burner/core/AjaxGroup',['./EventHandler'], function(EventHandler){
     function onOpenedConnection(){
         if(this.get('connections') == 0)
-            this.trigger('openedFirstConnection');
+            this.emit('openedFirstConnection');
         this.inc('connections');
-        this.trigger('change');
+        this.emit('change');
     }
     function onClosedConnection(){
         this.inc('connections', -1);
         if(this.get('connections') == 0)
-            this.trigger('closedLastConnection');
-        this.trigger('change');
+            this.emit('closedLastConnection');
+        this.emit('change');
     }
 
-    return EventHandler.extend({
+    return EventHandler.extend(/** @lends core/AjaxGroup# */{
         'connections': 0,
         'maxConnection': 0,
 
+        /**
+         * AjaxGroup component class.
+         * @constructs
+         * @augments ui/EventHandler
+         */
         'init': function(){
+            /**
+             * On any connection is closed or opened event.
+             * @event core/AjaxGroup.core/AjaxGroup:change
+             */
+            /**
+             * On any connection is opened event.
+             * @event core/AjaxGroup.core/AjaxGroup:openedConnection
+             */
+            /**
+             * On any connection is closed event.
+             * @event core/AjaxGroup.core/AjaxGroup:closedConnection
+             */
+            /**
+             * On opened first active connection event.
+             * @event core/AjaxGroup.core/AjaxGroup:openedFirstConnection
+             */
+            /**
+             * On closed last active connection event.
+             * @event core/AjaxGroup.core/AjaxGroup:closedLastConnection
+             */
+            /**
+             * On reached maximum connection event.
+             * @event core/AjaxGroup.core/AjaxGroup:maxConnection
+             */
             this.handle('change');
             this.handle('openedConnection');
             this.handle('closedConnection');
@@ -612,73 +886,122 @@ define('burner/core/AjaxGroup',['./EventHandler'], function(EventHandler){
             this.on('closedConnection', onClosedConnection.bind(this));
         },
 
+        /**
+         * Sets maximum connection waits respond at the same time.
+         * @param {number} value - Connection number.
+         * @return {Object} Instance reference.
+         */
         'setMaxConnection': function(value){
             this.set('maxConnection', value);
             return this.ref;
         },
 
+        /**
+         * Returns if there is room for new connection.
+         * @return {boolean} If there is room for new connection.
+         */
         'hasRoom': function(){
             var maxConnection = this.get('maxConnection');
             if(maxConnection == 0) return true;
             return this.countConnections() < maxConnection;
         },
+        /**
+         * Returns number of active connections.
+         * @return {number} Number of active connections.
+         */
         'countConnections': function(){
             return this.get('connections');
         }
     })
 })
 ;
-/**
- * js/com/ui/TextElement.js
+/*
+ * src/ui/TextElement.js
  * Author: H.Alper Tuna <halpertuna@gmail.com>
- * Date: 17.04.2016
+ * Date: 08.08.2016
  */
 
 
 
 //To avoid loop and unnecessary ElementCore class, this is Element likely class
 define('burner/ui/TextElement',['../core/createClass'], function(createClass){
-    return createClass({
+    return createClass(/** @lends ui/TextElement# */{
+        /**
+         * TextElement component class.
+         * @constructs
+         * @augments core/createClass
+         * @param {string} text - Content text.
+         */
         'init': function(text){
             /*this.set('dom', document.createElement('span'));
             this.get('dom').innerHTML = text;*/
            if(text == '&nbsp;') text = '\u00A0';
             this.set('dom', document.createTextNode(text));
         },
+        /**
+         * Returns dom object.
+         * @return {dom} Element dom object.
+         */
         'getDom': function(){
             return this.get('dom');
         }
     })
 })
 ;
-/**
- * js/com/Element.js
+/*
+ * src/ui/Element.js
  * Author: H.Alper Tuna <halpertuna@gmail.com>
- * Date: 12.04.2016
+ * Date: 07.08.2016
  */
 
 
 
 define('burner/ui/Element',['../core/EventHandler', '../core/Utils', './TextElement'], function(EventHandler, Utils, TextElement){
-    return EventHandler.extend({
+
+    return EventHandler.extend(/** @lends ui/Element# */{
+        /**
+         * Element component class.
+         * @constructs
+         * @augments core/EventHandler
+         * @param {string} [tag=div] - Html dom tag name.
+         */
         'init': function(tag){
+            /**
+             * Show event.
+             * @event ui/Element.ui/Element:show
+             */
+            /**
+             * Hide event.
+             * @event ui/Element.ui/Element:hide
+             */
             if(!tag) tag = 'div';
 
             this.set('dom', Utils.isString(tag) ? document.createElement(tag) : tag);
             this.set('children', []);
             this.handle('show');
             this.handle('hide');
-            this.on('show', function(){this.removeClass('jb-hidden')});
-            this.on('hide', function(){this.addClass('jb-hidden')});
+            this.on('show', this.removeClass.bind(this, 'jb-hidden'));
+            this.on('hide', this.addClass.bind(this, 'jb-hidden'));
         },
 
 
         /*
          * Attribute Managing
          *===========================================================*/
+        /**
+         * Returns attribute value.
+         * @param {string} attr - Attribute name.
+         * @return {string} Attribute value.
+         */
         'getAttr': function(attr){
             return this.getDom().getAttribute(attr);
         },
+        /**
+         * Sets attribute.
+         * @param {string} attr - Attribute name.
+         * @param {string} value - Attribute value.
+         * @return {Object} Instance reference.
+         */
         'setAttr':  function(attr, value){
             if(Utils.isBoolean(value)){
                 if(!value){
@@ -691,10 +1014,20 @@ define('burner/ui/Element',['../core/EventHandler', '../core/Utils', './TextElem
             this.getDom().setAttribute(attr, value);
             return this.ref;
         },
+        /**
+         * Removes attribute.
+         * @param {string} attr - Attribute name.
+         * @return {Object} Instance reference.
+         */
         'removeAttr': function(attr){
             this.getDom().removeAttribute(attr);
             return this.ref;
         },
+        /**
+         * Returns style value.
+         * @param {string} key - Style name.
+         * @return {string} Style value.
+         */
         'getStyle': function(key){
             var styles = this.getAttr('style');
             if(styles == null) return;
@@ -706,6 +1039,12 @@ define('burner/ui/Element',['../core/EventHandler', '../core/Utils', './TextElem
                 if(style[0] == key) return style[1];
             }
         },
+        /**
+         * Sets styles.
+         * @param {string|Array} key - Style key or key-value array.
+         * @param {string} [value] - Style value. If first parameter is array, no need to pass arguments to value.
+         * @return {Object} Instance reference.
+         */
         'setStyle': function(key, value){
             var newStyles;
             if(Utils.isSet(value)){
@@ -737,6 +1076,11 @@ define('burner/ui/Element',['../core/EventHandler', '../core/Utils', './TextElem
 
             return this.ref;
         },
+        /**
+         * Removes style.
+         * @param {string} key - Style name.
+         * @return {Object} Instance reference.
+         */
         'removeStyle': function(key){
             var oldStyles = this.getAttr('style');
             var styles = {}
@@ -761,6 +1105,11 @@ define('burner/ui/Element',['../core/EventHandler', '../core/Utils', './TextElem
             return this.ref;
         },
 
+        /**
+         * Adds css classes.
+         * @param {string} newClasses - Css class name or list separated with space.
+         * @return {Object} Instance reference.
+         */
         'addClass': function(newClasses){
             var classList = this.getDom().classList;
             newClasses = newClasses.split(' ');
@@ -769,6 +1118,11 @@ define('burner/ui/Element',['../core/EventHandler', '../core/Utils', './TextElem
 
             return this.ref;
         },
+        /**
+         * Removes css classes.
+         * @param {string} oldClasses - Css class name or list separated with space.
+         * @return {Object} Instance reference.
+         */
         'removeClass': function(oldClasses){
             var classList = this.getDom().classList;
             if(classList.length == 0)
@@ -780,12 +1134,28 @@ define('burner/ui/Element',['../core/EventHandler', '../core/Utils', './TextElem
 
             return this.ref;
         },
+        /**
+         * Returns if element has given css class.
+         * @param {string} className - Single css class name.
+         * @return {boolean} If element has given class.
+         */
         'hasClass': function(className){
             return this.getDom().classList.contains(className);
         },
+        /**
+         * Toggles css class.
+         * @param {string} className - Single css class name.
+         * @return {Object} Instance reference.
+         */
         'toggleClass': function(className){
             return this.setClass(className, !this.hasClass(className));
         },
+        /**
+         * Adds or removes classname according to second parameter.
+         * @param {string} className - Css class name.
+         * @param {boolean} value - If true, css class will be added, otherwise removed.
+         * @return {Object} Instance reference.
+         */
         'setClass': function(className, value){
             if(value)
                 return this.addClass(className);
@@ -795,10 +1165,20 @@ define('burner/ui/Element',['../core/EventHandler', '../core/Utils', './TextElem
         /*
          * Content Managing
          *===========================================================*/
+        /**
+         * Clears content of element.
+         * @return {Object} Instance reference.
+         */
         'clear': function(){
             this.getDom().innerHTML = '';
             return this.ref;
         },
+        /**
+         * Adds given element as a child to a specified position.
+         * @param {ui/Element} element - Child element.
+         * @param {number} index - Position index.
+         * @return {Object} Instance reference.
+         */
         'addAt': function(element, index){
             var children = this.get('children');
 
@@ -825,18 +1205,39 @@ define('burner/ui/Element',['../core/EventHandler', '../core/Utils', './TextElem
 
             return this.ref;
         },
+        /**
+         * Adds given element as a child.
+         * @param {...ui/Element} element - Child element.
+         * @return {Object} Instance reference.
+         */
         'add': function(){
             Utils.each(arguments, function(element){
                 this.addAt(element);
             }, this);
             return this.ref;
         },
+
+        /**
+         * Adds given element as a child to the begginin of content.
+         * @param {...ui/Element} element - Child element.
+         * @return {Object} Instance reference.
+         */
         'prepend': function(){
             Utils.each(arguments, function(element, i){
                 this.addAt(element, i);
             }, this);
             return this.ref;
         },
+        /**
+         * Adds given element as a child to near target element. This is core method of addAfter and addBefore.
+         * @param {ui/Element} element - Child element.
+         * @param {ui/Element} targetElement - Target element to put child near it.
+         * @param {boolean} nextToIt - Direction of child to put it to after or before target element.
+         * @return {Object} Instance reference.
+         *
+         * @see #addAfter
+         * @see #addBefore
+         */
         'addNear': function(element, targetElement, nextToIt){
             if(targetElement.getParent() != this){
                 //TODO error
@@ -849,12 +1250,29 @@ define('burner/ui/Element',['../core/EventHandler', '../core/Utils', './TextElem
 
             return this.addAt(element, index);
         },
+        /**
+         * Adds given element as a child after target element.
+         * @param {ui/Element} element - Child element.
+         * @param {ui/Element} targetElement - Target element to put child near it.
+         * @return {Object} Instance reference.
+         */
         'addAfter': function(element, targetElement){
             return this.addNear(element, targetElement, true);
         },
+        /**
+         * Adds given element as a child before target element.
+         * @param {ui/Element} element - Child element.
+         * @param {ui/Element} targetElement - Target element to put child near it.
+         * @return {Object} Instance reference.
+         */
         'addBefore': function(element, targetElement){
             return this.addNear(element, targetElement);
         },
+        /**
+         * Remove child. If parameter is given, given child removes from itself, otherwise instance is removed from parent.
+         * @param {string} [element] - Child element.
+         * @return {Object} Instance reference.
+         */
         'remove': function(element){
             //Remove element
             if(element){
@@ -873,12 +1291,25 @@ define('burner/ui/Element',['../core/EventHandler', '../core/Utils', './TextElem
             return this.ref;
         },
 
+        /**
+         * Returns parent.
+         * @return {ui/Element} Parent element.
+         */
         'getParent': function(){
             return this.get('parent');
         },
+        /**
+         * Returns children.
+         * @return {ui/Element[]} Child elements.
+         */
         'getChildren': function(){
             return this.get('children');
         },
+        /**
+         * Returns child at specified position.
+         * @param {number} index - Position of child.
+         * @return {ui/Element} Child element.
+         */
         'getChildAt': function(index){
             return this.getChildren()[index];
         },
@@ -886,68 +1317,66 @@ define('burner/ui/Element',['../core/EventHandler', '../core/Utils', './TextElem
         /*
          * Event Handling
          *===========================================================*/
+        /**
+         * Adds event listener to native dom element.
+         * @param {string} action - Action name.
+         * @param {function} func - Listener function.
+         * @return {Object} Instance reference.
+         */
         'onDom': function(action, func){
             this.getDom().addEventListener(action, func);
             return this.ref;
         },
+        /**
+         * Removes event listener from native dom element.
+         * @param {string} action - Action name.
+         * @param {function} func - Listener function.
+         * @return {Object} Instance reference.
+         */
         'offDom': function(action, func){
             this.getDom().removeEventListener(action, func);
             return this.ref;
         },
-        'triggerDom': function(action){
+        /**
+         * Triggers event listener of native dom element.
+         * @param {string} action - Action name.
+         * @param {function} func - Listener function.
+         * @return {Object} Instance reference.
+         */
+        'emitDom': function(action){
             this.getDom().dispatchEvent(new Event(action));
             return this.ref;
         },
-        /*'on': function(action, func){
-            try{
-                this.super.on(action, func);
-            }catch(e){
-                if(e[0] == 'NO_ACTION')
-                    this.getDom().addEventListener(action, func);
-                else
-                    throw e;
-            }
-
-            return this.ref;
-        },
-        'off': function(action, func){
-            try{
-                this.super.off(action, func);
-            }catch(e){
-                if(e[0] == 'NO_ACTION')
-                    this.getDom().removeEventListener(action, func);
-                else
-                    throw e;
-            }
-            return this.ref;
-        },
-        'trigger': function(action, event){
-            try{
-                this.super.trigger(action, event);
-            }catch(e){
-                if(e[0] == 'NO_ACTION')
-                    this.getDom().dispatchEvent(new Event(action));
-                else
-                    throw e;
-            }
-            return this.ref;
-        },*/
 
         /*
          * Ready-to-use handled events
          *===========================================================*/
+        /**
+         * Hides element.
+         * @return {Object} Instance reference.
+         * @fires ui/Element.ui/Element.hide
+         */
         'hide': function(){
             if(this.hasClass('jb-hidden'))
                 return this.ref;
 
-            return this.trigger('hide');
+            return this.emit('hide');
         },
+        /**
+         * Shows element.
+         * @return {Object} Instance reference.
+         * @fires ui/Element.ui/Element.show
+         */
         'show': function(){
             if(!this.hasClass('jb-hidden'))
                 return this.ref;
 
-            return this.trigger('show');
+            return this.emit('show');
         },
+        /**
+         * Returns element visibility status.
+         * @return {boolean} Visibility status.
+         */
         'isShown': function(){
             return !this.hasClass('jb-hidden');
         },
@@ -984,6 +1413,10 @@ define('burner/ui/Element',['../core/EventHandler', '../core/Utils', './TextElem
         /*
          * Dom returner
          *===========================================================*/
+        /**
+         * Returns dom object.
+         * @return {dom} Element dom object.
+         */
         'getDom': function(){
             return this.get('dom');
         }
@@ -993,23 +1426,47 @@ define('burner/ui/Element',['../core/EventHandler', '../core/Utils', './TextElem
 /*
  * src/ui/interfaces/iComponent.js
  * Author: H.Alper Tuna <halpertuna@gmail.com>
- * Date: 02.08.2016
+ * Date: 08.08.2016
  */
 
 
 
 define('burner/ui/interfaces/iComponent',[],function(){
+    /**
+     * Implements visiual component methods.
+     * @interface iComponent
+     */
     return [
+        /**
+         * Focuses on button.
+         * @function
+         * @name iComponent#focus
+         * @return {Object} Instance reference.
+         */
         'focus',
+        /**
+         * Sets disabled status.
+         * @function
+         * @name iComponent#setDisabled
+         * @param {boolean} value - Disabled status.
+         * @return {Object} Instance reference.
+         */
         'setDisabled',
+        /**
+         * Sets color theme.
+         * @function
+         * @name iComponent#setTheme
+         * @param {string} theme - Theme name.
+         * @return {Object} Instance reference.
+         */
         'setTheme'
     ]
 })
 ;
-/**
- * js/./Group.js
+/*
+ * src/ui/Group.js
  * Author: H.Alper Tuna <halpertuna@gmail.com>
- * Date: 22.04.2016
+ * Date: 08.08.2016
  */
 
 
@@ -1019,7 +1476,14 @@ define('burner/ui/Group',[
     './Element',
     './interfaces/iComponent'
 ], function(Utils, Element, iComponent){
-    return Element.extend({
+    return Element.extend(/** @lends ui/Group# */{
+        /**
+         * Group component class.
+         * @constructs
+         * @augments ui/Element
+         * @param {string} mod - Mod name to present children.
+         * @implements iComponent
+         */
         'init': function(mod){
             this.super();
 
@@ -1041,6 +1505,7 @@ define('burner/ui/Group',[
             this.addClass(className);
         },
 
+        //Inherited from iInput interface
         'setDisabled': function(value){
             Utils.each(this.get('children'), function(child){
                 child.setDisabled(value);
@@ -1048,6 +1513,7 @@ define('burner/ui/Group',[
 
             return this.ref;
         },
+        //Inherited from iInput interface
         'setTheme': function(value){
             Utils.each(this.get('children'), function(child){
                 child.setTheme(value);
@@ -1055,6 +1521,7 @@ define('burner/ui/Group',[
 
             return this.ref;
         },
+        //Inherited from iInput interface
         'focus': function(){
             this.getChildAt(0).focus();
             return this.ref;
@@ -1062,16 +1529,22 @@ define('burner/ui/Group',[
     }).implement(iComponent)
 });
 
-/**
+/*
  * src/ui/Breadcrumb.js
  * Author: H.Alper Tuna <halpertuna@gmail.com>
- * Date: 25.06.2016
+ * Date: 08.08.2016
  */
 
 
 
 define('burner/ui/Breadcrumb',['./Group'], function(Group){
-    return Group.extend({
+    return Group.extend(/** @lends ui/Breadcrumb# */{
+        /**
+         * Breadcrumb component class.
+         * @constructs
+         * @augments ui/Group
+         * @param {string} mod - Mod name to present children.
+         */
         'init': function(mod){
             this.super(mod);
 
@@ -1083,7 +1556,7 @@ define('burner/ui/Breadcrumb',['./Group'], function(Group){
 /*
  * src/ui/ComponentContainer.js
  * Author: H.Alper Tuna <halpertuna@gmail.com>
- * Date: 02.08.2016
+ * Date: 08.08.2016
  */
 
 
@@ -1093,7 +1566,13 @@ define('burner/ui/ComponentContainer',[
 ], function(
     Element
 ){
-    return Element.extend({
+    return Element.extend(/** @lends ui/ComponentContainer# */{
+        /**
+         * ComponentContainer component class.
+         * @constructs
+         * @augments ui/Element
+         * @param {ui/Element} component - Component element to wrap it.
+         */
         'init': function(component){
             this.super();
             this.addClass('jb-com-container');
@@ -1105,15 +1584,30 @@ define('burner/ui/ComponentContainer',[
             this.set('message', message);
         },
 
+        /**
+         * Returns component element.
+         * @return {ui/Element} Component element.
+         */
         'getComponent': function(){
             return this.get('component');
         },
 
+        /**
+         * Sets container style as block.
+         * @param {boolean} value - Value.
+         * @return {Object} Instance reference.
+         */
         'setBlock': function(value){
             this.setClass('jb-com-container-block', value);
             return this.ref;
         },
 
+        /**
+         * Prints message under component with given color theme.
+         * @param {string} text - Message text.
+         * @param {string} theme - Color theme of message.
+         * @return {Object} Instance reference.
+         */
         'setMessage': function(text, theme){
             var message = this.get('message')
                 .clear()
@@ -1141,22 +1635,32 @@ define('burner/ui/ComponentContainer',[
 
             return this.ref;
         },
+        /**
+         * Clears message under component.
+         * @return {Object} Instance reference.
+         */
         'clearMessage': function(){
             this.get('message').hide();
         }
     })
 })
 ;
-/**
- * js/com/./Icon.js
+/*
+ * src/ui/Icon.js
  * Author: H.Alper Tuna <halpertuna@gmail.com>
- * Date: 17.04.2016
+ * Date: 08.08.2016
  */
 
 
 
 define('burner/ui/Icon',['../core/Utils', './Element'], function(Utils, Element){
-    return Element.extend({
+    return Element.extend(/** @lends ui/Icon# */{
+        /**
+         * Icon component class.
+         * @constructs
+         * @param {string} name - Icon name
+         * @augments ui/Element
+         */
         'init': function(name){
             this.super('i');
 
@@ -1207,10 +1711,10 @@ define('burner/ui/utils/setTheme',['../../core/Utils'], function(Utils){
     }
 })
 ;
-/**
- * js/com/./Button.js
+/*
+ * src/ui/Button.js
  * Author: H.Alper Tuna <halpertuna@gmail.com>
- * Date: 17.04.2016
+ * Date: 08.08.2016
  */
 
 
@@ -1226,15 +1730,26 @@ define('burner/ui/Button',[
     setTheme,
     iComponent
 ){
-    return ComponentContainer.extend({
+    return ComponentContainer.extend(/** @lends ui/Button# */{
+        /**
+         * Button component class.
+         * @constructs
+         * @augments ui/ComponentContainer
+         * @implements iComponent
+         * @param {string} caption - Caption of button.
+         */
         'init': function(caption){
+            /**
+             * Click event.
+             * @event ui/Button.ui/Button:click
+             */
             var component = Element.new('button')
                 .setAttr('type', 'button')
                 .addClass('jb-button');
             this.super(component);
 
             this.handle('click');
-            component.getDom().addEventListener('click', this.trigger.bind(this, 'click'));
+            component.getDom().addEventListener('click', this.emit.bind(this, 'click'));
 
             var captionElement = Element.new()
                 .addClass('jb-button-caption');
@@ -1245,6 +1760,11 @@ define('burner/ui/Button',[
             this.setCaption(caption);
         },
 
+        /**
+         * Sets caption.
+         * @param {string} caption - Caption of button.
+         * @return {Object} Instance reference.
+         */
         'setCaption': function(caption){
             var captionElement = this.get('captionElement').clear();
             if(caption == '') captionElement.hide();
@@ -1253,6 +1773,11 @@ define('burner/ui/Button',[
             return this.ref;
         },
 
+        /**
+         * Sets icon.
+         * @param {string} name - Icon name.
+         * @return {Object} Instance reference.
+         */
         'setIcon': function(name){
             var component = this.getComponent();
 
@@ -1271,8 +1796,10 @@ define('burner/ui/Button',[
             return this.ref;
         },
 
+        //Inherited from iComponent interface
         'setTheme': setTheme,
 
+        //Inherited from iComponent interface
         'setDisabled': function(value){
             if(value)
                 this.getComponent().setAttr('disabled', 'disabled');
@@ -1281,7 +1808,7 @@ define('burner/ui/Button',[
 
             return this.ref;
         },
-
+        //Inherited from iComponent interface
         'focus': function(){
             this.getComponent().getDom().focus();
 
@@ -1297,19 +1824,48 @@ define('burner/ui/Button',[
  */
 
 define('burner/ui/interfaces/iInput',[],function(){
+    /**
+     * Implements main component controller methods.
+     * @interface iInput
+     */
     return [
-        'setDisabled',
-        'setValue',
-        'setDefaultValue',
+        /**
+         * Returns value of component.
+         * @function
+         * @name iInput#getValue
+         * @return{string|number} Value.
+         */
+        'getValue',
+        /**
+         * Sets value to default value.
+         * @function
+         * @name iInput#resetValue
+         * @return {Object} Instance reference.
+         */
         'resetValue',
-        'getValue'
+        /**
+         * Sets default value.
+         * @function
+         * @name iInput#setDefaultValue
+         * @param {string|number} value - Default value.
+         * @return {Object} Instance reference.
+         */
+        'setDefaultValue',
+        /**
+         * Sets value.
+         * @function
+         * @name iInput#setValue
+         * @param {string|number} value - Value.
+         * @return {Object} Instance reference.
+         */
+        'setValue'
     ]
 });
 
-/**
- * js/./Check.js
+/*
+ * src/ui/Check.js
  * Author: H.Alper Tuna <halpertuna@gmail.com>
- * Date: 28.04.2016
+ * Date: 08.08.2016
  */
 
 
@@ -1344,27 +1900,45 @@ define('burner/ui/Check',[
         var newValue = this.get('value');
 
         if(oldValue != newValue){
-            this.trigger('change',{
+            this.emit('change',{
                 'value': newValue
             });
 
             if(group){
                 if(isRadioGroup) Utils.each(group.get('options'), function(option){
                     if(option.get('groupValue') == oldGroupValue){
-                        option.trigger('change', {'value': false});
+                        option.emit('change', {'value': false});
                         return false;
                     }
                 });
-                group.trigger('change', {
+                group.emit('change', {
                     'value': group.getValue()
                 });
             }
         }
     }
 
-    return ComponentContainer.extend({
+    return ComponentContainer.extend(/** @lends ui/Check# */{
         'value': false,
+
+        /**
+         * Check component class.
+         * @constructs
+         * @param {string|number} groupValue - Group value to use for CheckGroup or RadioGroup
+         * @augments ui/ComponentContainer
+         * @implements iInput
+         * @implements iComponent
+         */
         'init': function(groupValue){
+            /**
+             * Click event.
+             * @event ui/Check.ui/Check:change
+             */
+            /**
+             * Change event.
+             * @event ui/Check.ui/Check:click
+             * @param {boolean} value - Check state.
+             */
             var component = Element.new('button');
             component.addClass('jb-check');
             this.super(component);
@@ -1377,44 +1951,7 @@ define('burner/ui/Check',[
             component.getDom().addEventListener('click', toggle.bind(this));
         },
 
-        'bind': function(group){
-            this.set('group', group);
-            var options = group.get('options');
-            options.push(this);
-            if(group.get('type') == 'RADIO'){
-                this.getComponent().addClass('jb-radio');
-                this.setIcon('circle');
-                if(options.length == 1) this.check();
-            }
-            return this.ref;
-        },
-
-        'setIcon': function(name){
-            var icon = this.get('icon');
-            if(icon)
-                icon.remove();
-
-            icon = Icon.new(name+ ' jb-check-icon');
-            this.getComponent().add(icon);
-            this.set('icon', icon);
-            repaint.call(this);
-
-            return this.ref;
-        },
-        'setDisabled': function(value){
-            var component = this.getComponent();
-
-            if(value)
-                component.setAttr('disabled', 'disabled');
-            else
-                component.removeAttr('disabled');
-
-            return this.ref;
-        },
-
-        'setGroupValue': function(value){
-            return this.set('groupValue', value);
-        },
+        //Inherited from iInput interface
         'setValue': function(value, force){
             if(!force){
                 var group = this.get('group');
@@ -1437,34 +1974,106 @@ define('burner/ui/Check',[
             repaint.call(this);
             return this.ref;
         },
+        //Inherited from iInput interface
         'getValue': function(){
             return this.get('value');
         },
-        'toggle': function(){
-            return this.setValue(!this.get('value'));
-        },
-        'check': function(){
-            return this.setValue(true);
-        },
-        'uncheck': function(){
-            return this.setValue(false);
-        },
-
         'defaultValue': false,
+        //Inherited from iInput interface
         'setDefaultValue': function(value){
             this.set('defaultValue', value);
             this.setValue(value);
             return this.ref;
         },
+        //Inherited from iInput interface
         'resetValue': function(){
             this.setValue(this.get('defaultValue'));
             return this.ref;
         },
 
+        //Inherited from iComponent interface
         'setTheme': setTheme,
+        //Inherited from iComponent interface
+        'setDisabled': function(value){
+            var component = this.getComponent();
+
+            if(value)
+                component.setAttr('disabled', 'disabled');
+            else
+                component.removeAttr('disabled');
+
+            return this.ref;
+        },
+        //Inherited from iComponent interface
         'focus': function(){
             this.getComponent().getDom().focus();
             return this.ref;
+        },
+
+        /**
+         * Toggles value.
+         * @return {Object} Instance reference.
+         */
+        'toggle': function(){
+            return this.setValue(!this.get('value'));
+        },
+        /**
+         * Sets value to true.
+         * @return {Object} Instance reference.
+         */
+        'check': function(){
+            return this.setValue(true);
+        },
+        /**
+         * Sets value to false.
+         * @return {Object} Instance reference.
+         */
+        'uncheck': function(){
+            return this.setValue(false);
+        },
+
+        /**
+         * Binds a CheckGroup or RadioGroup to work with other Checks and Switches.
+         * @param {CheckGroup|RadioGroup} gruop - Group instance to bind.
+         * @return {Object} Instance reference.
+         */
+        'bind': function(group){
+            this.set('group', group);
+            var options = group.get('options');
+            options.push(this);
+            if(group.get('type') == 'RADIO'){
+                this.getComponent().addClass('jb-radio');
+                this.setIcon('circle');
+                if(options.length == 1) this.check();
+            }
+            return this.ref;
+        },
+
+        /**
+         * Sets check icon.
+         * @param {string} name - Icon name.
+         * @return {Object} Instance reference.
+         */
+        'setIcon': function(name){
+            var icon = this.get('icon');
+            if(icon)
+                icon.remove();
+
+            icon = Icon.new(name+ ' jb-check-icon');
+            this.getComponent().add(icon);
+            this.set('icon', icon);
+            repaint.call(this);
+
+            return this.ref;
+        },
+
+        /**
+         * Sets value to represent in a group.
+         * @param {string|number} value - Value to represent in a group.
+         * @return {Object} Instance reference.
+         */
+        'setGroupValue': function(value){
+            return this.set('groupValue', value);
         }
     }).implement(iComponent, iInput)
 })
@@ -1482,15 +2091,32 @@ define('burner/ui/CheckGroup',[
     Utils, EventHandler,
     iComponent, iInput
 ){
-    return EventHandler.extend({
+    return EventHandler.extend(/** @lends ui/CheckGroup# */{
         'type': 'CHECK',
 
+        /**
+         * CheckGroup component class.
+         * @constructs
+         * @augments ui/EventHandler
+         * @implements iComponent
+         * @implements iInput
+         */
         'init': function(){
+            /**
+             * Change event.
+             * @event ui/CheckGroup.ui/CheckGroup:change
+             * @param {string|number} value - New value of component.
+             */
             this.set('options', []);
             this.set('value', []);
             this.set('defaultValue', []);
             this.handle('change');
         },
+        /**
+         * Sets value.
+         * @param {Array<string|number>} values - Value list to check.
+         * @return {Object} Instance reference.
+         */
         'setValue': function(values){
             this.set('value', values);
             Utils.each(this.get('options'), function(option){
@@ -1498,42 +2124,47 @@ define('burner/ui/CheckGroup',[
             });
             return this.ref;
         },
+        //Inherited from iInput interface
         'getValue': function(){
             return this.get('value');
         },
+        //Inherited from iInput interface
         'setDefaultValue': function(value){
             this.set('defaultValue', value);
             this.setValue(Utils.cloneArray(value));
             return this.ref;
         },
+        //Inherited from iInput interface
         'resetValue': function(){
             this.setValue(Utils.cloneArray(this.get('defaultValue')));
             return this.ref;
         },
 
+        //Inherited from iComponent interface
         'setDisabled': function(value){
             Utils.each(this.get('options'), function(option){
                 option.setDisabled(value);
             });
             return this.ref;
         },
+        //Inherited from iComponent interface
         'setTheme': function(theme){
             Utils.each(this.get('options'), function(option){
                 option.setTheme(theme);
             });
             return this.ref;
         },
-
+        //Inherited from iComponent interface
         'focus': function(){
             this.get('options')[0].focus();
         }
     }).implement(iComponent, iInput);
 })
 ;
-/**
- * com/ui/Document.js
+/*
+ * src/ui/Document.js
  * Author: H.Alper Tuna <halpertuna@gmail.com>
- * Date: 18.04.2016
+ * Date: 08.08.2016
  */
 
 
@@ -1541,7 +2172,12 @@ define('burner/ui/CheckGroup',[
 define('burner/ui/Document',['../core/Utils', './Element'], function(Utils, Element){
     var children = [];
 
-    return Element.extend({
+    return Element.extend(/** @lends ui/Document# */{
+        /**
+         * Document component class.
+         * @constructs
+         * @augments ui/Element
+         */
         'init': function(){
             this.set('dom', document.body);
             this.set('children', children)
@@ -1550,10 +2186,10 @@ define('burner/ui/Document',['../core/Utils', './Element'], function(Utils, Elem
 });
 
 
-/**
+/*
  * src/ui/List.js
  * Author: H.Alper Tuna <halpertuna@gmail.com>
- * Date: 06.08.2016
+ * Date: 08.08.2016
  */
 
 
@@ -1586,15 +2222,35 @@ define('burner/ui/List',[
         this.set('selectedItem', item);
 
         if(callTrigger)
-            this.trigger('change', {
+            this.emit('change', {
                 'value': item.value,
                 'title': item.title
             });
 
-        this.trigger('selectedInternally');
+        this.emit('selectedInternally');
     }
-    return ComponentContainer.extend({
+    return ComponentContainer.extend(/** @lends ui/List# */{
+        /**
+         * List component class.
+         * @constructs
+         * @param {Object[]} items - Item list
+         * @param {string} items[].title - Title of an item
+         * @param {string|number} items[].value - Value of an item
+         * @param {string} items[].type - Type of an item
+         * @augments ui/ComponentContainer
+         * @implements iInput
+         * @implements iComponent
+         */
         'init': function(items){
+            /**
+             * Change event.
+             * @event ui/List.ui/List:change
+             * @param {string|number} value - Selected items value.
+             */
+            /**
+             * Event of internally selection. It fired not only when user select an item, but also when set a value.
+             * @event ui/List.ui/List:selectedInternally
+             */
             var component = Element.new('ul')
                 .addClass('jb-list');
             this.super(component);
@@ -1605,6 +2261,65 @@ define('burner/ui/List',[
             this.addClass('jb-list-container');
             this.setItems(items);
         },
+
+        //Inherited from iComponent interface
+        'setDisabled': function(value){
+            this.getComponent().setClass('jb-disabled', value);
+            Utils.each(this.get('options'), function(item){
+                item.button.setAttr('disabled', value);
+            });
+            return this.ref;
+        },
+        //Inherited from iComponent interface
+        'setTheme': setTheme,
+        //Inherited from iComponent interface
+        'focus': function(){
+            this.get('firstItem').button.emitDom('focus');
+            return this.ref;
+        },
+
+        //Inherited from iInput interface
+        'getValue': function(){
+            return this.get('selectedItem').value;
+        },
+        /**
+         * Returns title of selected item.
+         * @return {string} Title of selected item.
+         */
+        'getTitle': function(){
+            return this.get('selectedItem').title;
+        },
+        //Inherited from iInput interface
+        'setValue': function(value){
+            var options = this.get('options');
+            if(Utils.isUnset(options[value])){
+                //TODO error
+                throw 'There is no option has "' + value + '" value';
+                return this.ref;
+            }
+            select.call(this, options[value]);
+            return this.ref;
+        },
+        //Inherited from iInput interface
+        'setDefaultValue': function(value){
+            this.set('defaultValue', value);
+            this.setValue(value);
+            return this.ref;
+        },
+        //Inherited from iInput interface
+        'resetValue': function(){
+            this.setValue(this.get('defaultValue'));
+            return this.ref;
+        },
+
+        /**
+         * Sets items of list.
+         * @param {Object[]} items - Item list
+         * @param {string} items[].title - Title of an item
+         * @param {string|number} items[].value - Value of an item
+         * @param {string} items[].type - Type of an item
+         * @return {Object} Instance reference.
+         */
         'setItems': function(items){
             var options = {};
             this.set('options', options);
@@ -1646,48 +2361,17 @@ define('burner/ui/List',[
 
             this.set('firstItem', firstItem);
             this.setDefaultValue(firstItem.value);
+
+            return this.ref;
         },
+
+        /**
+         * Sets height to fix.
+         * @param {string|number} Css value for height.
+         * @return {Object} Instance reference.
+         */
         'setHeight': function(height){
             this.getComponent().setStyle('height', height);
-            return this.ref;
-        },
-
-        'setDisabled': function(value){
-            this.getComponent().setClass('jb-disabled', value);
-            Utils.each(this.get('options'), function(item){
-                item.button.setAttr('disabled', value);
-            });
-            return this.ref;
-        },
-        'setTheme': setTheme,
-
-        'getValue': function(){
-            return this.get('selectedItem').value;
-        },
-        'getTitle': function(){
-            return this.get('selectedItem').title;
-        },
-        'setValue': function(value){
-            var options = this.get('options');
-            if(Utils.isUnset(options[value])){
-                //TODO error
-                throw 'There is no option has "' + value + '" value';
-                return this.ref;
-            }
-            select.call(this, options[value]);
-            return this.ref;
-        },
-        'setDefaultValue': function(value){
-            this.set('defaultValue', value);
-            this.setValue(value);
-            return this.ref;
-        },
-        'resetValue': function(){
-            this.setValue(this.get('defaultValue'));
-            return this.ref;
-        },
-        'focus': function(){
-            this.get('firstItem').button.triggerDom('focus');
             return this.ref;
         }
     }).implement(iComponent, iInput)
@@ -1892,10 +2576,10 @@ define('burner/ui/utils/SpaceFinder',[
     }
 })
 ;
-/**
- * js/./Tip.js
+/*
+ * src/ui/Popup.js
  * Author: H.Alper Tuna <halpertuna@gmail.com>
- * Date: 23.04.2016
+ * Date: 08.08.2016
  */
 
 
@@ -1981,7 +2665,13 @@ define('burner/ui/Popup',[
         }
     }
 
-    return Element.extend({
+    return Element.extend(/** @lends ui/Popup# */{
+        /**
+         * Popup component class.
+         * @constructs
+         * @param {ui/Element} content - An element as content
+         * @augments ui/Element
+         */
         'init': function(content){
             this.super();
             this.addClass('jb-popup');
@@ -1992,12 +2682,14 @@ define('burner/ui/Popup',[
                 this.add(content);
         },
 
-        /**
-         * Directions: TOP, BOTTOM, RIGHT, LEFT
-         * Aligns: CENTER, MIDDLE, TOP, BOTTOM, RIGHT, LEFT
-         */
         'direction': 'TOP',
         'align': 'CENTER',
+        /**
+         * Sets direction of popup to target component.
+         * @param {string} direction - Direction name. Options are TOP, BOTTOM, RIGHT, LEFT.
+         * @param {string} align - Align name. Options are CENTER, MIDDLE, TOP, BOTTOM, RIGHT, LEFT.
+         * @return {Object} Instance reference.
+         */
         'setDirection': function(direction, align){
             //TODO error (also include default align value)
             switch(direction){
@@ -2026,7 +2718,12 @@ define('burner/ui/Popup',[
         },
 
         'bound': false,
-        //FOCUS, HOVER, CLICK, NONE
+        /**
+         * Binds popup to a component.
+         * @param {ui/ComponentContainer} target - Target component.
+         * @param {string} [trigger=HOVER] - Trigger name. Options are CLICK, HOVER, FOCUS, NONE.
+         * @return {Object} Instance reference.
+         */
         'bind': function(target, trigger){
             //TODO Error
             if(this.get('bound')) throw 'Popup is already bound.';
@@ -2067,10 +2764,10 @@ define('burner/ui/Popup',[
     });
 });
 
-/**
- * js/./Dropbox.js
+/*
+ * src/ui/Dropdown.js
  * Author: H.Alper Tuna <halpertuna@gmail.com>
- * Date: 25.04.2016
+ * Date: 08.08.2016
  */
 
 define('burner/ui/Dropdown',[
@@ -2083,15 +2780,31 @@ define('burner/ui/Dropdown',[
     iInput
 ){
     function change(e){
-        this.trigger('change', e);
+        this.emit('change', e);
     }
     function listSelectedInternally(){
         this.setCaption(this.getTitle());
         this.get('popup').hide();
     }
 
-    return Button.extend({
+    return Button.extend(/** @lends ui/Dropdown# */{
+        /**
+         * Dropdown component class.
+         * @constructs
+         * @param {Object[]} items - Item list
+         * @param {string} items[].title - Title of an item
+         * @param {string|number} items[].value - Value of an item
+         * @param {string} items[].type - Type of an item
+         * @augments ui/Button
+         * @implements iInput
+         */
         'init': function(items){
+            /**
+             * Change event.
+             * @event ui/Dropdown.ui/Dropdown:change
+             * @param {string|number} value - Value of selected item.
+             * @param {string} title - Title of selected item.
+             */
             this.super();
             this.addClass('jb-dropdown');
             this.handle('change');
@@ -2112,20 +2825,28 @@ define('burner/ui/Dropdown',[
             this.setCaption(list.getTitle());
         },
 
+        //Inherited from iInput interface
         'getValue': function(){
             return this.get('list').getValue();
         },
+        /**
+         * Returns title of selected item.
+         * @return {string} Title of selected item.
+         */
         'getTitle': function(){
             return this.get('list').getTitle();
         },
+        //Inherited from iInput interface
         'setValue': function(value){
             this.get('list').setValue(value);
             return this.ref;
         },
+        //Inherited from iInput interface
         'setDefaultValue': function(value){
             this.get('list').setDefaultValue(value);
             return this.ref;
         },
+        //Inherited from iInput interface
         'resetValue': function(){
             this.get('list').resetValue();
             return this.ref;
@@ -2133,10 +2854,10 @@ define('burner/ui/Dropdown',[
     }).implement(iInput);
 })
 ;
-/**
- * js/./Input.js
+/*
+ * src/ui/Input.js
  * Author: H.Alper Tuna <halpertuna@gmail.com>
- * Date: 22.04.2016
+ * Date: 08.08.2016
  */
 
 
@@ -2153,13 +2874,25 @@ define('burner/ui/Input',[
     iComponent, iInput
 ){
     function change(e){
-        this.trigger('change',{
+        this.emit('change',{
             value: e.target.value
         });
     }
 
-    return ComponentContainer.extend({
+    return ComponentContainer.extend(/** @lends ui/Input# */{
+        /**
+         * Input component class.
+         * @constructs
+         * @augments ui/ComponentContainer
+         * @implements iInput
+         * @implements iComponent
+         */
         'init': function(){
+            /**
+             * Change event.
+             * @event ui/Input.ui/Input:change
+             * @param {string} value - Input value.
+             */
             var component = Element.new('input')
                 .setAttr('type', 'text')
                 .addClass('jb-input');
@@ -2171,13 +2904,9 @@ define('burner/ui/Input',[
             component.getDom().addEventListener('change', change.bind(this));
         },
 
-        'setPlaceholder': function(value){
-            this.get('component').setAttr('placeholder', value);
-            return this.ref;
-        },
-
+        //Inherited from iComponent interface
         'setTheme': setTheme,
-
+        //Inherited from iComponent interface
         'setDisabled': function(value){
             var component = this.getComponent();
 
@@ -2188,29 +2917,48 @@ define('burner/ui/Input',[
 
             return this.ref;
         },
-
+        //Inherited from iComponent interface
         'focus': function(){
             this.getComponent().getDom().focus();
             return this.ref;
         },
 
+        //Inherited from iInput interface
         'setValue': function(value){
             this.getComponent().getDom().value = value;
             return this.ref;
         },
+        //Inherited from iInput interface
         'getValue': function(value){
             return this.getComponent().getDom().value;
         },
-
         'defaultValue': '',
+        //Inherited from iInput interface
         'setDefaultValue': function(value){
             this.set('defaultValue', value);
             this.setValue(value);
             return this.ref;
         },
+        //Inherited from iInput interface
         'resetValue': function(){
             return this.setValue(this.get('defaultValue'));
         },
+
+        /**
+         * Puts placeholder.
+         * @param {string} value - Placeholder text.
+         * @return {Object} Instance reference.
+         */
+        'setPlaceholder': function(value){
+            this.get('component').setAttr('placeholder', value);
+            return this.ref;
+        },
+
+        /**
+         * Sets required state.
+         * @param {boolean} value - Required state.
+         * @return {Object} Instance reference.
+         */
         'setRequired': function(value){
             if(value)
                 this.setAttr('required', 'required');
@@ -2222,10 +2970,10 @@ define('burner/ui/Input',[
     }).implement(iComponent, iInput)
 })
 ;
-/**
- * js/./Spinner.js
+/*
+ * src/ui/Spinner.js
  * Author: H.Alper Tuna <halpertuna@gmail.com>
- * Date: 03.05.2016
+ * Date: 08.08.2016
  */
 
 define('burner/ui/Spinner',[
@@ -2278,7 +3026,7 @@ define('burner/ui/Spinner',[
         var input = this.get('input');
         input.setValue(value);
         validate.call(this);
-        triggerChange.call(this);
+        emitChange.call(this);
         return this.ref;
     }
     function validate(){
@@ -2298,8 +3046,8 @@ define('burner/ui/Spinner',[
         repaint.call(this);
         return this.ref;
     }
-    function triggerChange(){
-        this.trigger('change', {
+    function emitChange(){
+        this.emit('change', {
             'value': this.getValue()
         });
     }
@@ -2313,15 +3061,27 @@ define('burner/ui/Spinner',[
         return this.ref;
     }
 
-    return ComponentContainer.extend({
+    return ComponentContainer.extend(/** @lends ui/Spinner# */{
+        /**
+         * Spinner component class.
+         * @constructs
+         * @augments ui/ComponentContainer
+         * @implements iInput
+         * @implements iComponent
+         */
         'init': function(){
+            /**
+             * Change event.
+             * @event ui/Spinner.ui/Spinner:change
+             * @param {number} value - New value of spinner.
+             */
             var group = Group.new();
             this.super(group);
             this.handle('change');
 
             var input = Input.new()
                 .on('change', validate.bind(this))
-                .on('change', triggerChange.bind(this));
+                .on('change', emitChange.bind(this));
             var buttonDown = Button.new()
                 .setIcon('angle-down');
             buttonDown.getDom().addEventListener('mousedown', waitToCount.bind(this, -1));
@@ -2350,7 +3110,47 @@ define('burner/ui/Spinner',[
             //this.setDefaultValue(0);
         },
 
+        //Inherited from iInput interface
+        'getValue': function(){
+            return this.get('value');
+        },
+        //Inherited from iInput interface
+        'setValue': function(value){
+            this.get('input').setValue(value);
+            validate.call(this);
+            return this.ref;
+        },
+        //TODO have to check
+        'defaultValue': 0,
+        //Inherited from iInput interface
+        'setDefaultValue': function(value){
+            this.setValue(value);
+            this.set('defaultValue', this.getValue());
+            return this.ref;
+        },
+        //Inherited from iInput interface
+        'resetValue': function(){
+            return this.setValue(this.get('defaultValue'));
+        },
+        //Inherited from iComponent interface
+        'focus': function(){
+            return this.get('input').focus();
+        },
+        //Inherited from iComponent interface
+        'setTheme': function(theme){
+            this.getComponent().setTheme(theme);
+        },
+        //Inherited from iComponent interface
+        'setDisabled': function(value){
+            this.getComponent().setDisabled(value);
+        },
+
         'buttonsAreShown': true,
+        /**
+         * Sets visibility state of increase / decrease buttons.
+         * @param {boolean} value - Visibility state.
+         * @return {Object} Instance reference.
+         */
         'showButtons': function(value){
             if(this.get('buttonsAreShown') == value) return this.ref;
 
@@ -2367,6 +3167,11 @@ define('burner/ui/Spinner',[
             return this.ref;
         },
 
+        /**
+         * Sets maximum value of spinner.
+         * @param {number} value - Maximum value.
+         * @return {Object} Instance reference.
+         */
         'setMax': function(value){
             if(value === null) this.set('loop', false);
             this.set('max', value);
@@ -2374,6 +3179,11 @@ define('burner/ui/Spinner',[
             return this.ref;
         },
         'min': 0,
+        /**
+         * Sets minimum value of spinner.
+         * @param {number} value - Minimum value.
+         * @return {Object} Instance reference.
+         */
         'setMin': function(value){
             if(value === null) this.set('loop', false);
             this.set('min', value);
@@ -2381,9 +3191,19 @@ define('burner/ui/Spinner',[
             return this.ref;
         },
         'loop': false,
+        /**
+         * Sets loop state of spinner. If true, when it reach minimum or maximum limit, it returns other limit.
+         * @param {bootlean} value - Loop state.
+         * @return {Object} Instance reference.
+         */
         'setLoop': function(value){
             return this.set('loop', Utils.isSet(this.get('max'), this.get('min')) ? value : false);
         },
+        /**
+         * Sets pad length to put zero.
+         * @param {number} value - Pad length.
+         * @return {Object} Instance reference.
+         */
         'setPad': function(value){
             if(value === false)
                 this.unset('pad');
@@ -2391,44 +3211,14 @@ define('burner/ui/Spinner',[
                 this.set('pad', value);
             repaint.call(this);
             return this.ref;
-        },
-
-        'getValue': function(){
-            return this.get('value');
-        },
-        'setValue': function(value){
-            this.get('input').setValue(value);
-            validate.call(this);
-            return this.ref;
-        },
-
-        //TODO have to check
-        'defaultValue': 0,
-        'setDefaultValue': function(value){
-            this.setValue(value);
-            this.set('defaultValue', this.getValue());
-            return this.ref;
-        },
-        'resetValue': function(){
-            return this.setValue(this.get('defaultValue'));
-        },
-        'focus': function(){
-            return this.get('input').focus();
-        },
-
-        'setTheme': function(theme){
-            this.getComponent().setTheme(theme);
-        },
-        'setDisabled': function(value){
-            this.getComponent().setDisabled(value);
         }
     }).implement(iComponent, iInput)
 })
 ;
-/**
- * js/./Label.js
+/*
+ * src/ui/Label.js
  * Author: H.Alper Tuna <halpertuna@gmail.com>
- * Date: 22.04.2016
+ * Date: 08.08.2016
  */
 
 
@@ -2449,7 +3239,14 @@ define('burner/ui/Label',[
         return 'label_' + (uid++);
     }
 
-    return ComponentContainer.extend({
+    return ComponentContainer.extend(/** @lends ui/Label# */{
+        /**
+         * Label component class.
+         * @constructs
+         * @param {string} caption - Caption text of label.
+         * @augments ui/ComponentContainer
+         * @implements iComponent
+         */
         'init': function(caption){
             var component = Element.new('label')
                 .addClass('jb-label');
@@ -2465,16 +3262,51 @@ define('burner/ui/Label',[
             this.setCaption(caption);
         },
 
+        //Inherited from iComponent interface
+        'setDisabled': function(value){
+            var component = this.get('component');
+
+            if(value){
+                component.addClass('jb-label-disabled');
+                return this.ref;
+            }
+
+            component.removeClass('jb-label-disabled');
+            return this.ref;
+        },
+        //Inherited from iComponent interface
+        'setTheme': setTheme,
+        //Inherited from iComponent interface
+        'focus': function(){
+            if(this.isBound())
+                this.getBoundComponent().focus();
+            return this.ref;
+        },
+
+        /**
+         * Sets bold text state.
+         * @param {boolean} value - Bold state.
+         * @return {Object} Instance reference.
+         */
         'setBold': function(value){
             this.get('component').setClass('jb-label-bold', value);
             return this.ref
         },
-
+        /**
+         * Sets boxed state. If true, puts label in a box.
+         * @param {boolean} value - Boxed state.
+         * @return {Object} Instance reference.
+         */
         'setBoxed': function(value){
             this.get('component').setClass('jb-label-boxed', value);
             return this.ref
         },
 
+        /**
+         * Sets caption of label.
+         * @param {string} caption - Caption text of label.
+         * @return {Object} Instance reference.
+         */
         'setCaption': function(caption){
             var captionElement = this.get('captionElement').clear();
             if(caption === '') captionElement.hide();
@@ -2483,6 +3315,11 @@ define('burner/ui/Label',[
             return this.ref;
         },
 
+        /**
+         * Puts icon at the beginning of label.
+         * @param {string} name - Icon name.
+         * @return {Object} Instance reference.
+         */
         'setIcon': function(name){
             var iconElement = this.get('iconElement');
 
@@ -2495,21 +3332,12 @@ define('burner/ui/Label',[
             return this.ref;
         },
 
-        'setDisabled': function(value){
-            var component = this.get('component');
-
-            if(value){
-                component.addClass('jb-label-disabled');
-                return this.ref;
-            }
-
-            component.removeClass('jb-label-disabled');
-            return this.ref;
-        },
-
-        'setTheme': setTheme,
-
         'boundComponent': false,
+        /**
+         * Binds label to a focusable component. It corresponds defining "for" attribute in html.
+         * @param {iComponent} component - Component to bind.
+         * @return {Object} Instance reference.
+         */
         'bind': function(component){
             if(component.isInstanceOf(Spinner)){
                 component = component.get('input');
@@ -2529,25 +3357,29 @@ define('burner/ui/Label',[
             this.set('boundComponent', component);
             return this.ref;
         },
+        /**
+         * Returns bound component which bound with ".bind()" method.
+         * @return {iComponent} Bound component.
+         * @see #bind
+         */
         'getBoundComponent': function(){
             return this.get('boundComponent');
         },
+        /**
+         * Returns label is bound or not to a component.
+         * @return {boolean} If it is bound or not.
+         * @see #bind
+         */
         'isBound': function(){
             return this.get('boundComponent') !== false;
-        },
-
-        'focus': function(){
-            if(this.isBound())
-                this.getBoundComponent().focus();
-            return this.ref;
         }
     }).implement(iComponent)
 })
 ;
-/**
+/*
  * src/ui/Message.js
  * Author: H.Alper Tuna <halpertuna@gmail.com>
- * Date: 30.06.2016
+ * Date: 08.08.2016
  */
 
 
@@ -2559,7 +3391,14 @@ define('burner/ui/Message',[
     Element, Icon,
     setTheme
 ){
-    return Element.extend({
+    return Element.extend(/** @lends ui/Message# */{
+        /**
+         * Message component class.
+         * @constructs
+         * @param {string} message - Content message text.
+         * @param {string} theme - Color theme name.
+         * @augments ui/Element
+         */
         'init': function(message, theme){
             this.super();
 
@@ -2597,15 +3436,15 @@ define('burner/ui/Message',[
     })
 })
 ;
-/**
- * js/ui/Notifier.js
+/*
+ * src/ui/Notifier.js
  * Author: H.Alper Tuna <halpertuna@gmail.com>
- * Date: 17.06.2016
+ * Date: 08.08.2016
  */
 
 
 
-define('burner/ui/Notifier',['./Document', './Element', './Icon'], function(Document, Element, Icon){
+define('burner/ui/Notifier',['../core/createClass', './Document', './Element', './Icon'], function(createClass, Document, Element, Icon){
     var notificationKon;
 
     function hideNotification(){
@@ -2618,10 +3457,15 @@ define('burner/ui/Notifier',['./Document', './Element', './Icon'], function(Docu
         this.addClass('jb-notification-fadein');
     }
 
-    return Element.extend({
+    return createClass(/** @lends ui/Notifier# */{
+        /**
+         * Notifier component class.
+         * @constructs
+         * @augments core/createClass
+         * @param {string} message - Content message text.
+         * @param {string} theme - Color theme name.
+         */
         'init': function(message, theme){
-            this.super();
-
             if(!notificationKon){
                 Document.new().add(
                     notificationKon = Element.new()
@@ -2669,10 +3513,10 @@ define('burner/ui/Notifier',['./Document', './Element', './Icon'], function(Docu
     })
 })
 ;
-/**
- * js/./RadioGroup.js
+/*
+ * src/ui/RadioGroup.js
  * Author: H.Alper Tuna <halpertuna@gmail.com>
- * Date: 28.04.2016
+ * Date: 08.08.2016
  */
 
 define('burner/ui/RadioGroup',[
@@ -2682,13 +3526,27 @@ define('burner/ui/RadioGroup',[
     Utils, EventHandler,
     iComponent, iInput
 ){
-    return EventHandler.extend({
+    return EventHandler.extend(/** @lends ui/RadioGroup# */{
         'type': 'RADIO',
 
+        /**
+         * RadioGroup component class.
+         * @constructs
+         * @augments ui/EventHandler
+         * @implements iComponent
+         * @implements iInput
+         */
         'init': function(){
+            /**
+             * Change event.
+             * @event ui/RadioGroup.ui/RadioGroup:change
+             * @param {string|number} value - New value of component.
+             */
             this.set('options', []);
             this.handle('change');
         },
+
+        //Inherited from iInput interface
         'setValue': function(value){
             this.set('value', value);
             Utils.each(this.get('options'), function(option){
@@ -2696,14 +3554,17 @@ define('burner/ui/RadioGroup',[
             });
             return this.ref;
         },
+        //Inherited from iInput interface
         'getValue': function(){
             return this.get('value');
         },
+        //Inherited from iInput interface
         'setDefaultValue': function(value){
             this.set('defaultValue', value);
             this.setValue(value);
             return this.ref;
         },
+        //Inherited from iInput interface
         'resetValue': function(){
             var defaultValue = this.get('defaultValue');
             if(!Utils.isSet(defaultValue))
@@ -2711,29 +3572,32 @@ define('burner/ui/RadioGroup',[
             this.setValue(defaultValue);
             return this.ref;
         },
+
+        //Inherited from iComponent interface
         'setDisabled': function(value){
             Utils.each(this.get('options'), function(option){
                 option.setDisabled(value);
             });
             return this.ref;
         },
+        //Inherited from iComponent interface
         'setTheme': function(theme){
             Utils.each(this.get('options'), function(option){
                 option.setTheme(theme);
             });
             return this.ref;
         },
-
+        //Inherited from iComponent interface
         'focus': function(){
             this.get('options')[0].focus();
         }
     }).implement(iComponent, iInput);
 })
 ;
-/**
- * js/./Switch.js
+/*
+ * src/ui/Switch.js
  * Author: H.Alper Tuna <halpertuna@gmail.com>
- * Date: 29.04.2016
+ * Date: 08.08.2016
  */
 
 define('burner/ui/Switch',[
@@ -2765,27 +3629,45 @@ define('burner/ui/Switch',[
         var newValue = this.get('value');
 
         if(oldValue != newValue){
-            this.trigger('change',{
+            this.emit('change',{
                 'value': newValue
             });
 
             if(group){
                 if(isRadioGroup) Utils.each(group.get('options'), function(option){
                     if(option.get('groupValue') == oldGroupValue){
-                        option.trigger('change', {'value': false});
+                        option.emit('change', {'value': false});
                         return false;
                     }
                 });
-                group.trigger('change', {
+                group.emit('change', {
                     'value': group.getValue()
                 });
             }
         }
     }
 
-    return ComponentContainer.extend({
+    return ComponentContainer.extend(/** @lends ui/Switch# */{
         'value': false,
+
+        /**
+         * Switch component class.
+         * @constructs
+         * @param {string|number} groupValue - Group value to use for CheckGroup or RadioGroup
+         * @augments ui/ComponentContainer
+         * @implements iInput
+         * @implements iComponent
+         */
         'init': function(groupValue){
+            /**
+             * Click event.
+             * @event ui/Switch.ui/Switch:change
+             */
+            /**
+             * Change event.
+             * @event ui/Switch.ui/Switch:click
+             * @param {boolean} value - Check state.
+             */
             var component = Element.new('button');
             component.addClass('jb-check');
             this.super(component);
@@ -2795,7 +3677,7 @@ define('burner/ui/Switch',[
             this.on('click', toggle.bind(this));
             this.set('groupValue', groupValue);
             component.addClass('jb-switch');
-            component.getDom().addEventListener('click', this.trigger.bind(this, 'click'));
+            component.getDom().addEventListener('click', this.emit.bind(this, 'click'));
 
             var left = Element.new()
             .addClass('jb-switch-left')
@@ -2822,31 +3704,7 @@ define('burner/ui/Switch',[
             this.set('container', container);
         },
 
-        'bind': function(group){
-            this.set('group', group);
-            var options = group.get('options');
-            options.push(this);
-            if(group.get('type') == 'RADIO'){
-                //this.addClass('jb-radio');
-                //this.setIcon('circle');
-                if(options.length == 1) this.check();
-            }
-            return this.ref;
-        },
-
-        'setDisabled': function(value){
-            var component = this.getComponent();
-            if(value)
-                component.setAttr('disabled', 'disabled');
-            else
-                component.removeAttr('disabled');
-
-            return this.ref;
-        },
-
-        'setGroupValue': function(value){
-            return this.set('groupValue', value);
-        },
+        //Inherited from iInput interface
         'setValue': function(value, force){
             if(!force){
                 var group = this.get('group');
@@ -2869,49 +3727,108 @@ define('burner/ui/Switch',[
             repaint.call(this);
             return this.ref;
         },
+        //Inherited from iInput interface
         'getValue': function(){
             return this.get('value');
         },
-        'toggle': function(){
-            return this.setValue(!this.get('value'));
-        },
-        'check': function(){
-            return this.setValue(true);
-        },
-        'uncheck': function(){
-            return this.setValue(false);
-        },
 
         'defaultValue': false,
+        //Inherited from iInput interface
         'setDefaultValue': function(value){
             this.set('defaultValue', value);
             this.setValue(value);
             return this.ref;
         },
+        //Inherited from iInput interface
         'resetValue': function(){
             this.setValue(this.get('defaultValue'));
             return this.ref;
         },
 
+        //Inherited from iComponent interface
+        'setDisabled': function(value){
+            var component = this.getComponent();
+            if(value)
+                component.setAttr('disabled', 'disabled');
+            else
+                component.removeAttr('disabled');
 
+            return this.ref;
+        },
+        //Inherited from iComponent interface
         'setTheme': setTheme,
+        //Inherited from iComponent interface
         'focus': function(){
             this.getComponent().getDom().focus();
             return this.ref;
+        },
+
+        /**
+         * Toggles value.
+         * @return {Object} Instance reference.
+         */
+        'toggle': function(){
+            return this.setValue(!this.get('value'));
+        },
+        /**
+         * Sets value to true.
+         * @return {Object} Instance reference.
+         */
+        'check': function(){
+            return this.setValue(true);
+        },
+        /**
+         * Sets value to false.
+         * @return {Object} Instance reference.
+         */
+        'uncheck': function(){
+            return this.setValue(false);
+        },
+
+        /**
+         * Binds a CheckGroup or RadioGroup to work with other Checks and Switches.
+         * @param {CheckGroup|RadioGroup} gruop - Group instance to bind.
+         * @return {Object} Instance reference.
+         */
+        'bind': function(group){
+            this.set('group', group);
+            var options = group.get('options');
+            options.push(this);
+            if(group.get('type') == 'RADIO'){
+                //this.addClass('jb-radio');
+                //this.setIcon('circle');
+                if(options.length == 1) this.check();
+            }
+            return this.ref;
+        },
+
+        /**
+         * Sets value to represent in a group.
+         * @param {string|number} value - Value to represent in a group.
+         * @return {Object} Instance reference.
+         */
+        'setGroupValue': function(value){
+            return this.set('groupValue', value);
         }
     }).implement(iComponent, iInput)
 })
 ;
-/**
- * js/./Tip.js
+/*
+ * src/ui/Tip.js
  * Author: H.Alper Tuna <halpertuna@gmail.com>
- * Date: 23.04.2016
+ * Date: 08.08.2016
  */
 
 
 
 define('burner/ui/Tip',['../core/Utils', './Popup', './Element'], function(Utils, Popup, Element){
-    return Popup.extend({
+    return Popup.extend(/** @lends ui/Tip# */{
+        /**
+         * Tip component class.
+         * @constructs
+         * @param {string} message - Content message text.
+         * @augments ui/Element
+         */
         'init': function(text){
             this.super();
             var content = Element.new()
