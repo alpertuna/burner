@@ -1,0 +1,312 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Mirrored from burner-docs.local/api/core_Utils.js.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 09 Aug 2016 23:19:13 GMT -->
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: core/Utils.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: core/Utils.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*
+ * src/core/Utils.js
+ * Author: H.Alper Tuna &lt;halpertuna@gmail.com>
+ * Date: 08.08.2016
+ */
+
+'use strict';
+
+define(function(){
+    /**
+     * Utilities - helper tool set static class.
+     * @class core/Utils
+     */
+    return /** @lends core/Utils */ {
+        //Checkers
+        /**
+         * Returns if given value is string.
+         * @param {*} value - Value to check.
+         * @return {boolean} Result.
+         */
+        'isString': function(value){
+            return typeof value == 'string';
+        },
+        /**
+         * Returns if given value is boolean.
+         * @param {*} value - Value to check.
+         * @return {boolean} Result.
+         */
+        'isBoolean': function(value){
+            return typeof value == 'boolean';
+        },
+        /**
+         * Returns if given value is number.
+         * @param {*} value - Value to check.
+         * @return {boolean} Result.
+         */
+        'isNumber': function(value){
+            return typeof value == 'number';
+        },
+        /**
+         * Returns if given value is an Object.
+         * @param {*} value - Value to check.
+         * @return {boolean} Result.
+         */
+        'isObject': function(value){
+            return typeof value == 'object';
+        },
+        /**
+         * Returns if given value is an Array.
+         * @param {*} value - Value to check.
+         * @return {boolean} Result.
+         */
+        'isArray': function(value){
+            return value instanceof Array;
+        },
+
+        /**
+         * Returns if given value is a function.
+         * @param {*} value - Value to check.
+         * @return {boolean} Result.
+         */
+        'isFunction': function(value){
+            return typeof value == 'function';
+        },
+
+        /**
+         * Returns if given value is undefined.
+         * @param {*} value - Value to check.
+         * @return {boolean} Result.
+         */
+        'isUndefined': function(value){
+            return typeof value == 'undefined';
+        },
+        /**
+         * Returns if given value is null.
+         * @param {*} value - Value to check.
+         * @return {boolean} Result.
+         */
+        'isNull': function(value){
+            return value === null;
+        },
+
+        /**
+         * Returns if given value is set - not null and undefined.
+         * @param {*} value - Value to check.
+         * @return {boolean} Result.
+         */
+        'isSet': function(value){
+            if(arguments.length > 1){
+                for(var i in arguments)
+                    if(!this.isSet(arguments[i])) return false;
+                return true;
+            }
+
+            return !this.isUndefined(value) &amp;&amp; !this.isNull(value);
+        },
+        /**
+         * Returns if given value is unset - null or undefined.
+         * @param {*} value - Value to check.
+         * @return {boolean} Result.
+         */
+        'isUnset': function(value){
+            if(arguments.length > 1){
+                for(var i in arguments)
+                    if(!this.isUnset(arguments[i])) return false;
+                return true;
+            }
+
+            return this.isUndefined(value) || this.isNull(value);
+        },
+        /**
+         * Returns if given value is empty. Empty values are; empty string, zero number, false, undefined, zero length arrays/objects.
+         * @param {*} value - Value to check.
+         * @return {boolean} Result.
+         */
+        'isEmpty': function(value){
+            if(arguments.length > 1){
+                for(var i in arguments)
+                    if(!this.isEmpty(arguments[i])) return false;
+                return true;
+            }
+
+            switch(typeof value){
+                case 'string': return value == '' | value == '0';
+                case 'boolean': return value == false;
+                case 'number': return value == 0;
+                case 'undefined': return true;
+                case 'object':
+                    if(value === null) return true;
+                    if(this.isArray(value)) return value.length == 0;
+                    return Object.keys(value).length == 0;
+                default: return value ? false : true;
+            }
+        },
+
+        //Converters
+        /**
+         * Converts given any value to string.
+         * @param {*} value - Value to convert.
+         * @return {string} Result.
+         */
+        'toString': function(value){
+            return value.toString();
+        },
+        /**
+         * Converts given any value to number.
+         * @param {*} value - Value to convert.
+         * @return {number} Result.
+         */
+        'toFloat': function(value){
+            value = Number.parseFloat(value);
+            if(isNaN(value)) return 0;
+            return value;
+        },
+        /**
+         * Converts given argument list to array.
+         * @param {Arguments} value - Value to convert.
+         * @return {Array} Result.
+         */
+        'argToArr': function(args){
+            return [].slice.call(args);
+        },
+
+        //String Operations
+        /**
+         * Adds pads to given string.
+         * @param {string} n - String to pad.
+         * @param {number} width - Pad width.
+         * @param {string} z - Padding character.
+         * @return {string} Padded string.
+         */
+        'pad': function(n, width, z) {
+            z = z || '0';
+            n = n + '';
+            return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
+        },
+
+        //Array Operations
+        /**
+         * Calls callback for each item of given array.
+         * @param {Array} arr - Item list.
+         * @param {function} callback - Callback function.
+         * @param {Object} reference - Reference to pass into callback.
+         */
+        'each': function(arr, callback, reference){
+            if(!reference) reference = this;
+            for(var i in arr)
+                if(callback.call(reference, arr[i], i) === false)
+                    break;
+        },
+        /**
+         * Creates new array using given array with calls callback for each item.
+         * @param {Array} arr - Item list.
+         * @param {function} callback - Callback function.
+         * @param {Object} reference - Reference to pass into callback.
+         * @return {Array} Result array.
+         */
+        'map': function(arr, callback, reference){
+            if(!reference) reference = this;
+            var result = [];
+            this.each(arr, function(item){
+                result.push(callback.call(reference, item));
+            });
+            return result;
+        },
+        /**
+         * Returns if array has search item.
+         * @param {Array} arr - Item list.
+         * @param {*} item - Search item.
+         * @return {boolean} If array has search item.
+         */
+        'inArray': function(arr, item){
+            return arr.indexOf(item) != -1;
+        },
+        /**
+         * Clones an array and returns new reference.
+         * @param {Array} arr - Array to clone.
+         * @return {Array} New cloned array.
+         */
+        'cloneArray': function(arr){
+            return arr.slice();
+        },
+
+        //Object Operations
+        /**
+         * Extends object given at first parameter with objects at other parameters.
+         * @param {...Object} objects - Object list.
+         * @return {Object} Extended first object at arguments.
+         */
+        'extend': function(){
+            return Object.assign.apply(null, arguments);
+        },
+        /**
+         * Creates new object and extends with all objects given as arguments.
+         * @param {...Object} objects - Object list.
+         * @return {Object} Extended new object.
+         */
+        'clone': function(){
+            var args = this.argToArr(arguments);
+            args.unshift({});
+            return this.extend.apply(null, args);
+        },
+
+        //Function Operations
+        /*'multiply': function(func){
+            return function(param){
+                if(arguments.length > 1){
+                    var result;
+                    for(var i in arguments)
+                        result = func.call(this, arguments[i]);
+                    return result;
+                }
+                return func.call(this, param);
+            }
+        },*/
+    }
+});
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index-2.html">Home</a></h2><h3>Classes</h3><ul><li><a href="core_Ajax.html">core/Ajax</a></li><li><a href="core_AjaxGroup.html">core/AjaxGroup</a></li><li><a href="core_createClass.html">core/createClass</a></li><li><a href="core_EventHandler.html">core/EventHandler</a></li><li><a href="core_Utils.html">core/Utils</a></li><li><a href="ui_Breadcrumb.html">ui/Breadcrumb</a></li><li><a href="ui_Button.html">ui/Button</a></li><li><a href="ui_Check.html">ui/Check</a></li><li><a href="ui_CheckGroup.html">ui/CheckGroup</a></li><li><a href="ui_ComponentContainer.html">ui/ComponentContainer</a></li><li><a href="ui_Document.html">ui/Document</a></li><li><a href="ui_Dropdown.html">ui/Dropdown</a></li><li><a href="ui_Element.html">ui/Element</a></li><li><a href="ui_Group.html">ui/Group</a></li><li><a href="ui_Icon.html">ui/Icon</a></li><li><a href="ui_Input.html">ui/Input</a></li><li><a href="ui_Label.html">ui/Label</a></li><li><a href="ui_List.html">ui/List</a></li><li><a href="ui_Message.html">ui/Message</a></li><li><a href="ui_Notifier.html">ui/Notifier</a></li><li><a href="ui_Popup.html">ui/Popup</a></li><li><a href="ui_RadioGroup.html">ui/RadioGroup</a></li><li><a href="ui_Spinner.html">ui/Spinner</a></li><li><a href="ui_Switch.html">ui/Switch</a></li><li><a href="ui_TextElement.html">ui/TextElement</a></li><li><a href="ui_Tip.html">ui/Tip</a></li></ul><h3>Events</h3><ul><li><a href="core_Ajax.html#.event:core/Ajax:always">core/Ajax:always</a></li><li><a href="core_Ajax.html#.event:core/Ajax:fail">core/Ajax:fail</a></li><li><a href="core_Ajax.html#.event:core/Ajax:maxConnection">core/Ajax:maxConnection</a></li><li><a href="core_Ajax.html#.event:core/Ajax:send">core/Ajax:send</a></li><li><a href="core_Ajax.html#.event:core/Ajax:success">core/Ajax:success</a></li><li><a href="core_AjaxGroup.html#.event:core/AjaxGroup:change">core/AjaxGroup:change</a></li><li><a href="core_AjaxGroup.html#.event:core/AjaxGroup:closedConnection">core/AjaxGroup:closedConnection</a></li><li><a href="core_AjaxGroup.html#.event:core/AjaxGroup:closedLastConnection">core/AjaxGroup:closedLastConnection</a></li><li><a href="core_AjaxGroup.html#.event:core/AjaxGroup:maxConnection">core/AjaxGroup:maxConnection</a></li><li><a href="core_AjaxGroup.html#.event:core/AjaxGroup:openedConnection">core/AjaxGroup:openedConnection</a></li><li><a href="core_AjaxGroup.html#.event:core/AjaxGroup:openedFirstConnection">core/AjaxGroup:openedFirstConnection</a></li><li><a href="ui_Button.html#.event:ui/Button:click">ui/Button:click</a></li><li><a href="ui_Check.html#.event:ui/Check:change">ui/Check:change</a></li><li><a href="ui_Check.html#.event:ui/Check:click">ui/Check:click</a></li><li><a href="ui_CheckGroup.html#.event:ui/CheckGroup:change">ui/CheckGroup:change</a></li><li><a href="ui_Dropdown.html#.event:ui/Dropdown:change">ui/Dropdown:change</a></li><li><a href="ui_Element.html#.event:ui/Element:hide">ui/Element:hide</a></li><li><a href="ui_Element.html#.event:ui/Element:show">ui/Element:show</a></li><li><a href="ui_Input.html#.event:ui/Input:change">ui/Input:change</a></li><li><a href="ui_List.html#.event:ui/List:change">ui/List:change</a></li><li><a href="ui_List.html#.event:ui/List:selectedInternally">ui/List:selectedInternally</a></li><li><a href="ui_RadioGroup.html#.event:ui/RadioGroup:change">ui/RadioGroup:change</a></li><li><a href="ui_Spinner.html#.event:ui/Spinner:change">ui/Spinner:change</a></li><li><a href="ui_Switch.html#.event:ui/Switch:change">ui/Switch:change</a></li><li><a href="ui_Switch.html#.event:ui/Switch:click">ui/Switch:click</a></li></ul><h3>Interfaces</h3><ul><li><a href="iComponent.html">iComponent</a></li><li><a href="iInput.html">iInput</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Wed Aug 10 2016 01:17:51 GMT+0300 (EEST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+
+<!-- Mirrored from burner-docs.local/api/core_Utils.js.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 09 Aug 2016 23:19:13 GMT -->
+</html>

@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     
-<!-- Mirrored from burner-docs.local/class-structure by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 23 Jun 2016 11:46:32 GMT -->
+<!-- Mirrored from burner-docs.local/class-structure.php by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 09 Aug 2016 23:19:08 GMT -->
 <!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
 <head>
         <meta charset="UTF-8">
@@ -15,6 +15,7 @@
         <title></title>
     </head>
     <body>
+        <a href="https://github.com/alpertuna/burner"><img style="position: fixed; top: 0; right: 0; border: 0; z-index: 3;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
         <div class="banner">
     <div class="banner-logo">
         JS Burner <span>A Framework for Javascript</span>
@@ -31,9 +32,9 @@
                 Usage            </a>
         </li><li>
             <a
-                href="library-documentation/Element.html"
+                href="api"
                             >
-                Library Documentation            </a>
+                Api            </a>
         </li>    </ul>
 </div>
 <div class="body">
@@ -68,7 +69,8 @@
 
 <h1 id="class-structure">Class Structure</h1>
 
-<p>In JS Burner Framework, writing application is more like Java. Framework does not use Javascript’s native class system because it doesn’t provide enough support. An important reason of using framework’s own class system is framework focuses on extended classes and super functions inside an instance. Another reason to say is that writing strategy of native javascript classes is like hacking functions and objects. And it makes code unreadable. Actually, with Ecma Script 2015 (Harmony), writing classes is like Java too. However still not enough for this framework. Also this framework focus on browser, not server-side, and for Ecma Script 2015, you have to use a compiler to use it in browser, and it makes development complicated. Also it causes some performance losses because of many dependencies of compilers and loaders.</p>
+<p>In JS Burner Framework, writing application is more like Java. Framework does not use Javascript’s native class system. An important reason of using framework’s own class system is framework focuses on extended classes and super functions inside an instance. <br>
+JS Burner Framework uses AMD to write class modules.</p>
 
 
 
@@ -249,12 +251,15 @@ golden.sleep();
 
 <ul>
 <li><code>.isInstanceOf(Class)</code> Check the instance is an instance of given Class or one of extended classes of given class.</li>
+<li><code>.isImplementedBy(Interface)</code> Check the instance is an instance of a Class implemented by given Interface.</li>
 <li><code>.set(propertyName, value)</code> Sets a property of instance and returns instance itself.</li>
 <li><code>.get(propertyName)</code> Returns a property of instance.</li>
 <li><code>.unset(propertyName)</code> Deletes a property of instance.</li>
 <li><code>.inc(propertyName[, increment])</code> It is a variant of <code>.set()</code> method. It increases the value of property, so property should be a number. Default value of increment is <code>1</code>.</li>
 <li><code>.ref</code> This is special property of instances. This gives the most evaluated (extended) model of instance (if class has been extended). So with this reference, base class also can reach extended class’ methods.</li>
 </ul>
+
+
 
 <h3 id="method-references-in-instances">Method References in Instances</h3>
 
@@ -361,16 +366,12 @@ Correct class <code>A.doIt</code> method definition;</p>
 <pre class="prettyprint"><code class="language-javascript hljs "><span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
     <span class="hljs-keyword">this</span>.funA();
     <span class="hljs-keyword">return</span> <span class="hljs-keyword">this</span>.funB();
-}</code></pre></div>
-<script type="text/javascript" src="js/require.js"></script>
-<script type="text/javascript" src="js/burner.min.js"></script>
-<script type="text/javascript" src="js/main.js"></script>
-<div class="footer">
-    JS Burner is written by <a href="http://github.com/alpertuna">H. Alper Tuna</a> -
-    Documentation website design <a href="http://github.com/alpertuna">H. Alper Tuna</a> -
-    Some pages are written with <a href="http://stackedit.io/">StackEdit</a>
-</div>
+}</code></pre>
+
+<blockquote>
+  <p>Written with <a href="https://stackedit.io/">StackEdit</a>.</p>
+</blockquote></div>
     </body>
 
-<!-- Mirrored from burner-docs.local/class-structure by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 23 Jun 2016 11:46:32 GMT -->
+<!-- Mirrored from burner-docs.local/class-structure.php by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 09 Aug 2016 23:19:08 GMT -->
 </html>

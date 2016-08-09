@@ -1,7 +1,7 @@
 <!DOCTYPE html>
 <html>
     
-<!-- Mirrored from burner-docs.local/usage by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 23 Jun 2016 11:45:51 GMT -->
+<!-- Mirrored from burner-docs.local/usage.php by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 09 Aug 2016 23:19:08 GMT -->
 <!-- Added by HTTrack --><meta http-equiv="content-type" content="text/html;charset=UTF-8" /><!-- /Added by HTTrack -->
 <head>
         <meta charset="UTF-8">
@@ -15,6 +15,7 @@
         <title></title>
     </head>
     <body>
+        <a href="https://github.com/alpertuna/burner"><img style="position: fixed; top: 0; right: 0; border: 0; z-index: 3;" src="https://camo.githubusercontent.com/38ef81f8aca64bb9a64448d0d70f1308ef5341ab/68747470733a2f2f73332e616d617a6f6e6177732e636f6d2f6769746875622f726962626f6e732f666f726b6d655f72696768745f6461726b626c75655f3132313632312e706e67" alt="Fork me on GitHub" data-canonical-src="https://s3.amazonaws.com/github/ribbons/forkme_right_darkblue_121621.png"></a>
         <div class="banner">
     <div class="banner-logo">
         JS Burner <span>A Framework for Javascript</span>
@@ -31,9 +32,9 @@
                 Usage            </a>
         </li><li>
             <a
-                href="library-documentation/Element.html"
+                href="api"
                             >
-                Library Documentation            </a>
+                Api            </a>
         </li>    </ul>
 </div>
 <div class="body">
@@ -66,13 +67,17 @@
 <li><a href="#input">Input</a></li>
 <li><a href="#label">Label</a></li>
 <li><a href="#group">Group</a></li>
+<li><a href="#breadcrumb">Breadcrumb</a></li>
 <li><a href="#spinner">Spinner</a></li>
-<li><a href="#select">Select</a></li>
+<li><a href="#list">List</a></li>
+<li><a href="#dropdown">Dropdown</a></li>
 <li><a href="#check">Check</a></li>
 <li><a href="#checkgroup">CheckGroup</a></li>
 <li><a href="#radiogroup">RadioGroup</a></li>
 <li><a href="#switch">Switch</a></li>
-<li><a href="#datepicker">DatePicker</a></li>
+<li><a href="#message">Message</a></li>
+<li><a href="#notifier">Notifier</a></li>
+<li><a href="#tip">Tip</a></li>
 </ul>
 </li>
 </ul>
@@ -137,7 +142,7 @@ element.getDom();
 <span class="hljs-comment">//&lt;input type="button" value="Click Me" class="btn" style="width:100%;"&gt;</span></code></pre>
 
 <blockquote>
-  <p>For full documentation you can visit <a href="library-documentation/Element.html">Element Library Documentation</a>.</p>
+  <p>For full documentation you can visit <a href="api/ui_Element.html">Element Library Documentation</a>.</p>
 </blockquote>
 
 
@@ -181,7 +186,7 @@ Document.new().add(
 
 <h1 id="eventhandler">EventHandler</h1>
 
-<p>Event handling system is quite simple. There is an listener collection divided into action names, and when you call / trigger an action, listeners under that action name will be executed. This structure is comes from <a href="library-documentation/EventHandler.html">EventHandler</a> class, and you can extend this class to have this event handling system in your class.</p>
+<p>Event handling system is quite simple. There is an listener collection divided into action names, and when you call / trigger an action, listeners under that action name will be executed. This structure is comes from <a href="api/core_EventHandler.html">EventHandler</a> class, and you can extend this class to have this event handling system in your class.</p>
 
 
 
@@ -215,30 +220,35 @@ Passed argument is "Hello!"
 
 <h3 id="element-events">Element Events</h3>
 
-<p>Element class is also extends EventHandler but handling is a little different, because html dom has a handler as well. When you use <code>.handle()</code> method in <code>Element</code> class, there is no difference between handled events. However, if you add listener using <code>.on()</code> method without handling that action with <code>.handle()</code>, Element will assign your listener to native dom event handler. That’s why there is a <code>.handle()</code> method. Therefore, when you trigger a non-handled event, it will call dom’s dispatch method with same action name.</p>
+<p>Element class is also extends EventHandler but handling is a little different, because html dom has a handler as well. To add event listener to an element using <code>.on()</code> method, that action must be handled by that component. If you want to add event listener which doesn’t handled by an component but handled by native javascript, you must use <code>.onDom()</code> method. Similarly, there are <code>.offDom()</code> and <code>.triggerDom()</code> methods to control events.</p>
 
 
 
 <pre class="prettyprint"><code class="language-javascript hljs "><span class="hljs-keyword">var</span> button = Element.new(<span class="hljs-string">'button'</span>)
-.on(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(e)</span>{</span>
+.on(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
     console.log(<span class="hljs-string">'Button has been clicked.'</span>);
 })
-.trigger(<span class="hljs-string">'click'</span>);</code></pre>
+.onDom(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(e)</span>{</span>
+    console.log(<span class="hljs-string">'Button has been clicked.'</span>);
+})</code></pre>
 
-<p>When you click that button, it will print “Button has been clicked.” to console. Also native mouse event will be passed <code>e</code> argument of listener. Because it is not handled with <code>EventHandler</code> class. It is native dom handler. And <code>.trigger()</code> method called html dom’s <code>.click()</code> method because of this. <br>
-Furthermore, you can overwrite native events using <code>.handle()</code> method. For example after you <code>.handle('click')</code> and <code>.trigger('click')</code>, it won’t call native “click” method of dom, but listeners. Also when you click the button, listeners won’t be called. Since it’s handled by EventHandler class now.</p>
+<p>When you click that button, it will print “Button has been clicked.” twice to console. One of them printed by  listener triggered by EventHandler class with <code>.on()</code> method. Other one triggered by native dom dispatcher.</p>
+
+<p>Many common used actions are handled by components. For example, Button component has <code>click</code> action and other many component has <code>change</code> action and some special actions. However, many other action like <code>mouseover</code>, <code>keydown</code> doesn’t handled by components, so you must use <code>.onDom()</code> method for these actions.</p>
+
+<p>Also, have to say that, with <code>this</code> keyword in a listener handled by a component, you can reach the component directly, but it won’t work if you use a native handler with <code>.onDom()</code>.</p>
 
 
 
 <h1 id="input-components">Input Components</h1>
 
-<p>In this section, there is no need to explain usage and methods, examples are obvious. And not all methods, commonly used methods will be shown, so for full documentation, you should look <a href="library-documentation">Library Documentation</a>.</p>
+<p>In this section, there is no need to explain usage and methods, examples are obvious. And not all methods, commonly used methods will be shown, so for full documentation, you should look <a href="api">Library Documentation</a>.</p>
 
 
 
 <h3 id="change-event"><code>change</code> Event</h3>
 
-<p>For input components <code>change</code> event is fired only when user interacts and changes the state of component, not when you call <code>.setValue()</code> or derivations of it, like <code>.check()</code> for <a href="#check">Check</a> component. Also, have to say that, with <code>this</code> keyword in a <code>change</code> listener function, you can reach component directly, not DOM like <code>click</code> listener. Since <code>change</code> event is handled with <code>EventHandler</code>.</p>
+<p>For input components <code>change</code> event is fired only when user interacts and changes the state of component, not when you call <code>.setValue()</code> or derivations of it, like <code>.check()</code> for <a href="#check">Check</a> component</p>
 
 
 
@@ -262,6 +272,8 @@ Furthermore, you can overwrite native events using <code>.handle()</code> method
 
 <p>Themes and disabled states of <code>Button</code>;</p>
 
+
+
 <pre class="prettyprint"><code class="language-js hljs "><span class="hljs-built_in">require</span>([<span class="hljs-string">'burner/ui/Document'</span>, <span class="hljs-string">'burner/ui/Button'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(Document, Button)</span>{</span>
     Document.new().add(
         Button.new(<span class="hljs-string">'Normal'</span>), <span class="hljs-string">' '</span>,
@@ -271,7 +283,9 @@ Furthermore, you can overwrite native events using <code>.handle()</code> method
         Button.new(<span class="hljs-string">'Danger'</span>).setTheme(<span class="hljs-string">'DANGER'</span>), <span class="hljs-string">' '</span>,
         Button.new(<span class="hljs-string">'Info'</span>).setTheme(<span class="hljs-string">'INFO'</span>), <span class="hljs-string">' '</span>,
         Button.new(<span class="hljs-string">'Dark'</span>).setTheme(<span class="hljs-string">'DARK'</span>),
-        <span class="hljs-string">'&lt;br /&gt;&lt;br /&gt;'</span>,
+
+        Element.new(<span class="hljs-string">'br'</span>), Element.new(<span class="hljs-string">'br'</span>),
+
         Button.new(<span class="hljs-string">'Normal'</span>).setDisabled(<span class="hljs-literal">true</span>), <span class="hljs-string">' '</span>,
         Button.new(<span class="hljs-string">'Primary'</span>).setDisabled(<span class="hljs-literal">true</span>).setTheme(<span class="hljs-string">'PRIMARY'</span>), <span class="hljs-string">' '</span>,
         Button.new(<span class="hljs-string">'Success'</span>).setDisabled(<span class="hljs-literal">true</span>).setTheme(<span class="hljs-string">'SUCCESS'</span>), <span class="hljs-string">' '</span>,
@@ -282,6 +296,8 @@ Furthermore, you can overwrite native events using <code>.handle()</code> method
     );
 });</code></pre>
 
+
+
 <h2 id="input">Input</h2>
 
 
@@ -291,9 +307,7 @@ Furthermore, you can overwrite native events using <code>.handle()</code> method
         Input.new()
         .setPlaceholder(<span class="hljs-string">'It is an placeholder'</span>)
         .on(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(e)</span>{</span>
-            alert(<span class="hljs-string">'Value has changed: '</span> + <span class="hljs-keyword">this</span>.getValue());
-            <span class="hljs-comment">//Also works;</span>
-            <span class="hljs-comment">//alert('Value has changed: ' + e.target.value);</span>
+            alert(<span class="hljs-string">'Value has changed: '</span> + e.value);
         }),
         <span class="hljs-string">' '</span>,
         Input.new().setValue(<span class="hljs-string">'Disabled Input'</span>).setDisabled(<span class="hljs-literal">true</span>)
@@ -301,6 +315,8 @@ Furthermore, you can overwrite native events using <code>.handle()</code> method
 });</code></pre>
 
 <p><code>change</code> event is handled by <code>EventHandler</code>. Dispite of this, <code>e</code> parameter points native <code>change</code> event, as <code>Input</code> component passes native change event to handled <code>change</code> event. For more information <a href="#eventhandler">EventHandler</a>.</p>
+
+
 
 <h2 id="label">Label</h2>
 
@@ -313,11 +329,16 @@ Furthermore, you can overwrite native events using <code>.handle()</code> method
         ),
         Element.new().add(
             Label.new(<span class="hljs-string">'A Label with Icon'</span>).setIcon(<span class="hljs-string">'camera'</span>)
+        ),
+        Element.new().add(
+            Label.new(<span class="hljs-string">'Boxed Label'</span>).setBoxed(<span class="hljs-literal">true</span>)
         )
     );
 });</code></pre>
 
-<p>Have to say that <code>Label</code>’s appearance changes in <code>Group</code> component.</p>
+<p>Have to say that <code>Label</code> is boxed automatically when you put it in a <code>Group</code> component.</p>
+
+
 
 <h2 id="group">Group</h2>
 
@@ -327,7 +348,8 @@ Furthermore, you can overwrite native events using <code>.handle()</code> method
     <span class="hljs-keyword">var</span> input = Input.new().setPlaceholder(<span class="hljs-string">'Type a subject to search'</span>);
 
     Document.new().add(
-
+        Label.new(<span class="hljs-string">'Default Group'</span>),
+        Element.new(<span class="hljs-string">'br'</span>),
         Group.new().add(
             Label.new(<span class="hljs-string">'Subject'</span>),
             input,
@@ -336,18 +358,70 @@ Furthermore, you can overwrite native events using <code>.handle()</code> method
             })
         ),
 
-        <span class="hljs-string">'&lt;br /&gt;&lt;br /&gt;'</span>,
+        Element.new(<span class="hljs-string">'br'</span>), Element.new(<span class="hljs-string">'br'</span>),
 
+        Label.new(<span class="hljs-string">'Disabled Group'</span>),
+        Element.new(<span class="hljs-string">'br'</span>),
         Group.new().add(
             Label.new(<span class="hljs-string">'Subject'</span>),
             Input.new().setPlaceholder(<span class="hljs-string">'Type a subject to search'</span>),
-            Button.new().setIcon(<span class="hljs-string">'search'</span>).on(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
-                alert(<span class="hljs-string">'Search subject is: '</span> + input.getValue())
-            })
-        ).setDisabled(<span class="hljs-literal">true</span>)
+            Button.new().setIcon(<span class="hljs-string">'search'</span>)
+        ).setDisabled(<span class="hljs-literal">true</span>),
 
+        Element.new(<span class="hljs-string">'br'</span>), Element.new(<span class="hljs-string">'br'</span>),
+
+        Label.new(<span class="hljs-string">'Spaced Group'</span>),
+        Element.new(<span class="hljs-string">'br'</span>),
+        Group.new(<span class="hljs-string">'SPACED'</span>).add(
+            Label.new(<span class="hljs-string">'Subject'</span>),
+            Input.new().setPlaceholder(<span class="hljs-string">'Type a subject to search'</span>),
+            Button.new().setIcon(<span class="hljs-string">'search'</span>)
+        ),
+
+        Element.new(<span class="hljs-string">'br'</span>), Element.new(<span class="hljs-string">'br'</span>),
+
+        Label.new(<span class="hljs-string">'Block Group *'</span>),
+        Group.new(<span class="hljs-string">'BLOCK'</span>).add(
+            Label.new(<span class="hljs-string">'Subject'</span>),
+            Input.new().setPlaceholder(<span class="hljs-string">'Type a subject to search'</span>),
+            Button.new().setIcon(<span class="hljs-string">'search'</span>)
+        )
     );
 });</code></pre>
+
+<p>An important point is if  you want to use block group, there must be only one <code>Input</code> component. Not more than one or any.</p>
+
+
+
+<h2 id="breadcrumb">Breadcrumb</h2>
+
+
+
+<pre class="prettyprint"><code class="language-js hljs "><span class="hljs-built_in">require</span>([<span class="hljs-string">'burner/ui/Document'</span>, <span class="hljs-string">'burner/ui/Breadcrumb'</span>, <span class="hljs-string">'burner/ui/Button'</span>, <span class="hljs-string">'burner/ui/Label'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(Document, Breadcrumb, Button, Label)</span>{</span>
+    Document.new().add(
+        Label.new(<span class="hljs-string">'Default Breadcrumb'</span>),
+        Element.new(<span class="hljs-string">'br'</span>),
+        Breadcrumb.new().add(
+            Button.new(<span class="hljs-string">'Home'</span>),
+            Label.new(<span class="hljs-string">'Path'</span>),
+            Label.new(<span class="hljs-string">'To'</span>),
+            Label.new(<span class="hljs-string">'Page'</span>)
+        ),
+
+        Element.new(<span class="hljs-string">'br'</span>), Element.new(<span class="hljs-string">'br'</span>),
+
+        Label.new(<span class="hljs-string">'Spaced Breadcrumb'</span>),
+        Element.new(<span class="hljs-string">'br'</span>),
+        Breadcrumb.new(<span class="hljs-string">'SPACED'</span>).add(
+            Button.new(<span class="hljs-string">'Home'</span>),
+            Label.new(<span class="hljs-string">'Path'</span>),
+            Label.new(<span class="hljs-string">'To'</span>),
+            Label.new(<span class="hljs-string">'Page'</span>)
+        )
+    );
+});</code></pre>
+
+
 
 <h2 id="spinner">Spinner</h2>
 
@@ -357,26 +431,69 @@ Furthermore, you can overwrite native events using <code>.handle()</code> method
     Document.new().add(
         Label.new(<span class="hljs-string">'Default'</span>), <span class="hljs-string">' '</span>,
         Spinner.new(),
-        <span class="hljs-string">'&lt;br /&gt;&lt;br /&gt;'</span>,
+        Element.new(<span class="hljs-string">'br'</span>), Element.new(<span class="hljs-string">'br'</span>),
 
         Label.new(<span class="hljs-string">'Mininum is 2, and maximum is 10'</span>), <span class="hljs-string">' '</span>,
         Spinner.new().setMin(<span class="hljs-number">2</span>).setMax(<span class="hljs-number">10</span>),
-        <span class="hljs-string">'&lt;br /&gt;&lt;br /&gt;'</span>,
+        Element.new(<span class="hljs-string">'br'</span>), Element.new(<span class="hljs-string">'br'</span>),
 
         Label.new(<span class="hljs-string">'Padding is 3'</span>), <span class="hljs-string">' '</span>,
         Spinner.new().setPad(<span class="hljs-number">3</span>),
-        <span class="hljs-string">'&lt;br /&gt;&lt;br /&gt;'</span>,
+        Element.new(<span class="hljs-string">'br'</span>), Element.new(<span class="hljs-string">'br'</span>),
 
         Label.new(<span class="hljs-string">'Minimum is -5, maximum is 5, and has loop'</span>), <span class="hljs-string">' '</span>,
         Spinner.new().setMin(-<span class="hljs-number">5</span>).setMax(<span class="hljs-number">5</span>).setLoop(<span class="hljs-literal">true</span>),
-        <span class="hljs-string">'&lt;br /&gt;&lt;br /&gt;'</span>,
+        Element.new(<span class="hljs-string">'br'</span>), Element.new(<span class="hljs-string">'br'</span>),
 
         Label.new(<span class="hljs-string">'Buttons are hidden'</span>), <span class="hljs-string">' '</span>,
         Spinner.new().showButtons(<span class="hljs-literal">false</span>),
-        <span class="hljs-string">'&lt;br /&gt;&lt;br /&gt;'</span>,
+        Element.new(<span class="hljs-string">'br'</span>), Element.new(<span class="hljs-string">'br'</span>),
 
         Label.new(<span class="hljs-string">'Disabled'</span>), <span class="hljs-string">' '</span>,
         Spinner.new().setDisabled(<span class="hljs-literal">true</span>)
+    );
+});</code></pre>
+
+
+
+<h2 id="list">List</h2>
+
+
+
+<pre class="prettyprint"><code class="language-js hljs "><span class="hljs-built_in">require</span>([<span class="hljs-string">'burner/ui/Document'</span>, <span class="hljs-string">'burner/ui/List'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(Document, List)</span>{</span>
+    Document.new().add(
+        List.new([
+            {
+                <span class="hljs-string">'title'</span>: <span class="hljs-string">'An Option'</span>,
+                <span class="hljs-string">'value'</span>: <span class="hljs-number">0</span>
+            },
+            {
+                <span class="hljs-string">'title'</span>: <span class="hljs-string">'Another Option'</span>,
+                <span class="hljs-string">'value'</span>: <span class="hljs-number">1</span>
+            },
+            {
+                <span class="hljs-string">'type'</span>: <span class="hljs-string">'SEPARATOR'</span>,
+            },
+            {
+                <span class="hljs-string">'title'</span>: <span class="hljs-string">'A Separated Option'</span>,
+                <span class="hljs-string">'value'</span>: <span class="hljs-number">2</span>
+            },
+            {
+                <span class="hljs-string">'title'</span>: <span class="hljs-string">'Title of Separator'</span>,
+                <span class="hljs-string">'type'</span>: <span class="hljs-string">'SEPARATOR'</span>
+            },
+            {
+                <span class="hljs-string">'title'</span>: <span class="hljs-string">'Last Option'</span>,
+                <span class="hljs-string">'value'</span>: <span class="hljs-number">3</span>
+            }
+        ]).on(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+            alert(
+                <span class="hljs-string">'Selected item:'</span> +
+                <span class="hljs-keyword">this</span>.getTitle() +
+                <span class="hljs-string">', and value: '</span> +
+                <span class="hljs-keyword">this</span>.getValue()
+            );
+        })
     );
 });</code></pre>
 
@@ -395,8 +512,7 @@ Furthermore, you can overwrite native events using <code>.handle()</code> method
             },
             {
                 <span class="hljs-string">'title'</span>: <span class="hljs-string">'Another Option'</span>,
-                <span class="hljs-string">'value'</span>: <span class="hljs-number">1</span>,
-                <span class="hljs-string">'default'</span>: <span class="hljs-literal">true</span>
+                <span class="hljs-string">'value'</span>: <span class="hljs-number">1</span>
             },
             {
                 <span class="hljs-string">'type'</span>: <span class="hljs-string">'SEPARATOR'</span>,
@@ -498,7 +614,8 @@ Furthermore, you can overwrite native events using <code>.handle()</code> method
         Switch.new().check().on(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
             alert(<span class="hljs-keyword">this</span>.getValue() ? <span class="hljs-string">'Checked.'</span> : <span class="hljs-string">'Unchecked.'</span>);
         }),
-        <span class="hljs-string">'&lt;br /&gt;&lt;br /&gt;'</span>,
+        Element.new(<span class="hljs-string">'br'</span>), Element.new(<span class="hljs-string">'br'</span>),
+
         Switch.new(<span class="hljs-number">0</span>).bind(radioGroup), <span class="hljs-string">' '</span>,
         Switch.new(<span class="hljs-number">1</span>).bind(radioGroup).check(), <span class="hljs-string">' '</span>,
         Switch.new(<span class="hljs-number">2</span>).bind(radioGroup)
@@ -507,30 +624,86 @@ Furthermore, you can overwrite native events using <code>.handle()</code> method
 
 
 
-<h2 id="datepicker">DatePicker</h2>
+<h2 id="message">Message</h2>
 
 
 
-<pre class="prettyprint"><code class="language-js hljs "><span class="hljs-built_in">require</span>([<span class="hljs-string">'burner/ui/Document'</span>, <span class="hljs-string">'burner/ui/DatePicker'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(Document, DatePicker)</span>{</span>
-    <span class="hljs-keyword">var</span> date = <span class="hljs-keyword">new</span> <span class="hljs-built_in">Date</span>();
-    date.setYear(<span class="hljs-number">2017</span>);
-
+<pre class="prettyprint"><code class="language-js hljs "><span class="hljs-built_in">require</span>([<span class="hljs-string">'burner/ui/Document'</span>, <span class="hljs-string">'burner/ui/Message'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(Document, Message)</span>{</span>
     Document.new().add(
-        DatePicker.new(), <span class="hljs-string">' '</span>,
-        DatePicker.new(date).on(<span class="hljs-string">'change'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
-            alert(<span class="hljs-string">'DatePicker has changed: '</span> + <span class="hljs-keyword">this</span>.getValue());
-        })
+        Message.new(<span class="hljs-string">'Default Message'</span>),
+        Element.new(<span class="hljs-string">'br'</span>),
+        Message.new(<span class="hljs-string">'Primary Message'</span>, <span class="hljs-string">'PRIMARY'</span>),
+        Element.new(<span class="hljs-string">'br'</span>),
+        Message.new(<span class="hljs-string">'Success Message'</span>, <span class="hljs-string">'SUCCESS'</span>),
+        Element.new(<span class="hljs-string">'br'</span>),
+        Message.new(<span class="hljs-string">'Danger Message'</span>, <span class="hljs-string">'DANGER'</span>),
+        Element.new(<span class="hljs-string">'br'</span>),
+        Message.new(<span class="hljs-string">'Warning Message'</span>, <span class="hljs-string">'WARNING'</span>),
+        Element.new(<span class="hljs-string">'br'</span>),
+        Message.new(<span class="hljs-string">'Info Message'</span>, <span class="hljs-string">'INFO'</span>)
     );
-});</code></pre></div>
+});</code></pre>
+
+
+
+<h2 id="notifier">Notifier</h2>
+
+
+
+<pre class="prettyprint"><code class="language-js hljs "><span class="hljs-built_in">require</span>([<span class="hljs-string">'burner/ui/Document'</span>, <span class="hljs-string">'burner/ui/Notifier'</span>, <span class="hljs-string">'burner/ui/Button'</span>, <span class="hljs-string">'burner/ui/Group'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(Document, Notifier, Button, Group)</span>{</span>
+    Document.new().add(
+        Group.new(<span class="hljs-string">'SPACED'</span>).add(
+            Button.new(<span class="hljs-string">'Notify'</span>).on(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+                Notifier.new(<span class="hljs-string">'Default Message'</span>)
+            }),
+            Button.new(<span class="hljs-string">'Primary'</span>).on(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+                Notifier.new(<span class="hljs-string">'Primary Message'</span>, <span class="hljs-string">'PRIMARY'</span>)
+            }),
+            Button.new(<span class="hljs-string">'Success'</span>).on(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+                Notifier.new(<span class="hljs-string">'Success Message'</span>, <span class="hljs-string">'SUCCESS'</span>)
+            }),
+            Button.new(<span class="hljs-string">'Danger'</span>).on(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+                Notifier.new(<span class="hljs-string">'Danger Message'</span>, <span class="hljs-string">'DANGER'</span>)
+            }),
+            Button.new(<span class="hljs-string">'Warning'</span>).on(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+                Notifier.new(<span class="hljs-string">'Warning Message'</span>, <span class="hljs-string">'WARNING'</span>)
+            }),
+            Button.new(<span class="hljs-string">'Info'</span>).on(<span class="hljs-string">'click'</span>, <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">()</span>{</span>
+                Notifier.new(<span class="hljs-string">'Info Message'</span>, <span class="hljs-string">'INFO'</span>)
+            })
+        )
+    );
+});</code></pre>
+
+
+
+<h2 id="tip">Tip</h2>
+
+
+
+<pre class="prettyprint"><code class="language-js hljs "><span class="hljs-built_in">require</span>([<span class="hljs-string">'burner/ui/Document'</span>, <span class="hljs-string">'burner/ui/Tip'</span>, <span class="hljs-string">'burner/ui/Button'</span>, <span class="hljs-string">'burner/ui/Group'</span>], <span class="hljs-function"><span class="hljs-keyword">function</span><span class="hljs-params">(Document, Tip, Button, Group)</span>{</span>
+    <span class="hljs-keyword">var</span> b1 = Button.new(<span class="hljs-string">'Right'</span>);
+    <span class="hljs-keyword">var</span> b2 = Button.new(<span class="hljs-string">'Bottom'</span>);
+    <span class="hljs-keyword">var</span> b3 = Button.new(<span class="hljs-string">'Top'</span>);
+    <span class="hljs-keyword">var</span> b4 = Button.new(<span class="hljs-string">'Left'</span>);
+    Tip.new(<span class="hljs-string">'A tip message.'</span>).bind(b1, <span class="hljs-string">'HOVER'</span>).setDirection(<span class="hljs-string">'RIGHT'</span>);
+    Tip.new(<span class="hljs-string">'A tip message.'</span>).bind(b2, <span class="hljs-string">'HOVER'</span>).setDirection(<span class="hljs-string">'BOTTOM'</span>);
+    Tip.new(<span class="hljs-string">'A tip message.'</span>).bind(b3, <span class="hljs-string">'HOVER'</span>).setDirection(<span class="hljs-string">'TOP'</span>);
+    Tip.new(<span class="hljs-string">'A tip message.'</span>).bind(b4, <span class="hljs-string">'HOVER'</span>).setDirection(<span class="hljs-string">'LEFT'</span>);
+    Document.new().add(
+        Group.new(<span class="hljs-string">'SPACED'</span>).add(
+            b1, b2, b3, b4
+        )
+    );
+});</code></pre>
+
+<blockquote>
+  <p>Written with <a href="https://stackedit.io/">StackEdit</a>.</p>
+</blockquote></div>
 <script type="text/javascript" src="js/require.js"></script>
 <script type="text/javascript" src="js/burner.min.js"></script>
 <script type="text/javascript" src="js/main.js"></script>
-<div class="footer">
-    JS Burner is written by <a href="http://github.com/alpertuna">H. Alper Tuna</a> -
-    Documentation website design <a href="http://github.com/alpertuna">H. Alper Tuna</a> -
-    Some pages are written with <a href="http://stackedit.io/">StackEdit</a>
-</div>
     </body>
 
-<!-- Mirrored from burner-docs.local/usage by HTTrack Website Copier/3.x [XR&CO'2014], Thu, 23 Jun 2016 11:45:51 GMT -->
+<!-- Mirrored from burner-docs.local/usage.php by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 09 Aug 2016 23:19:08 GMT -->
 </html>

@@ -10,7 +10,8 @@ BODY{
     box-shadow: 0 0 5px #333;
     height: 50px;
     line-height: 50px;
-    position: relative;
+    position: fixed;
+    width: 100%;
     z-index: 2;
 }
 .banner-logo{
@@ -58,7 +59,7 @@ BODY{
 
 .side-menu{
     background: #DDD;
-    bottom: 31px;
+    bottom: 0;
     box-shadow: 0 0 5px #333;
     left: 0;
     overflow: auto;
@@ -95,14 +96,9 @@ BODY{
 }
 
 .body{
-    bottom: 31px;
     color: #444;
-    left: 0;
     overflow: auto;
-    padding: 0 50px 20px 450px;
-    position: absolute;
-    right: 0;
-    top: 50px;
+    padding: 50px 50px 20px 450px;
 }
 .body.has-side-menu{
     left: 260px;
@@ -196,13 +192,11 @@ BODY{
     border-radius: 0 0 3px 3px;
     position: relative;
 }
-.body A,
-.footer A{
+.body A{
     color: #06C;
     text-decoration: none;
 }
-.body A:hover,
-.footer A:hover{
+.body A:hover{
     text-decoration: underline;
 }
 .body BLOCKQUOTE{
@@ -232,7 +226,7 @@ BODY{
 }
 
 .toc{
-    bottom: 31px;
+    bottom: 0;
     left: 0;
     overflow: auto;
     padding: 20px;
@@ -270,20 +264,6 @@ BODY{
     text-decoration: none;
 }
 .toc A:active{
-}
-
-.footer{
-    background: #DDD;
-    border-top: 1px solid #CCC;
-    bottom: 0;
-    color: #777;
-    font-size: 12px;
-    left: 0;
-    line-height: 30px;
-    padding: 0 50px;
-    position: absolute;
-    right: 0;
-    z-index: 3;
 }
 
 

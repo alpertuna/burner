@@ -1,0 +1,215 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<!-- Mirrored from burner-docs.local/api/ui_Label.js.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 09 Aug 2016 23:19:14 GMT -->
+<head>
+    <meta charset="utf-8">
+    <title>JSDoc: Source: ui/Label.js</title>
+
+    <script src="scripts/prettify/prettify.js"> </script>
+    <script src="scripts/prettify/lang-css.js"> </script>
+    <!--[if lt IE 9]>
+      <script src="//html5shiv.googlecode.com/svn/trunk/html5.js"></script>
+    <![endif]-->
+    <link type="text/css" rel="stylesheet" href="styles/prettify-tomorrow.css">
+    <link type="text/css" rel="stylesheet" href="styles/jsdoc-default.css">
+</head>
+
+<body>
+
+<div id="main">
+
+    <h1 class="page-title">Source: ui/Label.js</h1>
+
+    
+
+
+
+    
+    <section>
+        <article>
+            <pre class="prettyprint source linenums"><code>/*
+ * src/ui/Label.js
+ * Author: H.Alper Tuna &lt;halpertuna@gmail.com>
+ * Date: 08.08.2016
+ */
+
+'use strict';
+
+define([
+    '../core/Utils',
+    './ComponentContainer', './Element', './Icon', './Spinner',
+    './utils/setTheme',
+    './interfaces/iComponent'
+], function(
+    Utils,
+    ComponentContainer, Element, Icon, Spinner,
+    setTheme,
+    iComponent
+){
+    var uid=0;
+    function genUid(){
+        return 'label_' + (uid++);
+    }
+
+    return ComponentContainer.extend(/** @lends ui/Label# */{
+        /**
+         * Label component class.
+         * @constructs
+         * @param {string} caption - Caption text of label.
+         * @augments ui/ComponentContainer
+         * @implements iComponent
+         */
+        'init': function(caption){
+            var component = Element.new('label')
+                .addClass('jb-label');
+            this.super(component);
+
+
+            var captionElement = Element.new()
+                .addClass('jb-label-caption');
+            component.add(captionElement);
+            this.set('captionElement', captionElement);
+
+            if(!Utils.isSet(caption)) caption = '';
+            this.setCaption(caption);
+        },
+
+        //Inherited from iComponent interface
+        'setDisabled': function(value){
+            var component = this.get('component');
+
+            if(value){
+                component.addClass('jb-label-disabled');
+                return this.ref;
+            }
+
+            component.removeClass('jb-label-disabled');
+            return this.ref;
+        },
+        //Inherited from iComponent interface
+        'setTheme': setTheme,
+        //Inherited from iComponent interface
+        'focus': function(){
+            if(this.isBound())
+                this.getBoundComponent().focus();
+            return this.ref;
+        },
+
+        /**
+         * Sets bold text state.
+         * @param {boolean} value - Bold state.
+         * @return {Object} Instance reference.
+         */
+        'setBold': function(value){
+            this.get('component').setClass('jb-label-bold', value);
+            return this.ref
+        },
+        /**
+         * Sets boxed state. If true, puts label in a box.
+         * @param {boolean} value - Boxed state.
+         * @return {Object} Instance reference.
+         */
+        'setBoxed': function(value){
+            this.get('component').setClass('jb-label-boxed', value);
+            return this.ref
+        },
+
+        /**
+         * Sets caption of label.
+         * @param {string} caption - Caption text of label.
+         * @return {Object} Instance reference.
+         */
+        'setCaption': function(caption){
+            var captionElement = this.get('captionElement').clear();
+            if(caption === '') captionElement.hide();
+            else captionElement.add(caption).show();
+
+            return this.ref;
+        },
+
+        /**
+         * Puts icon at the beginning of label.
+         * @param {string} name - Icon name.
+         * @return {Object} Instance reference.
+         */
+        'setIcon': function(name){
+            var iconElement = this.get('iconElement');
+
+            if(iconElement) iconElement.remove();
+
+            iconElement = Icon.new(name).addClass('jb-label-icon');
+            this.get('component').prepend(iconElement);
+            this.set('iconElement', iconElement);
+
+            return this.ref;
+        },
+
+        'boundComponent': false,
+        /**
+         * Binds label to a focusable component. It corresponds defining "for" attribute in html.
+         * @param {iComponent} component - Component to bind.
+         * @return {Object} Instance reference.
+         */
+        'bind': function(component){
+            if(component.isInstanceOf(Spinner)){
+                component = component.get('input');
+            }else if(!component.isImplementedBy(iComponent))
+                //TODO Error
+                throw 'Label cannot bind a non-component element.';
+                //return this.ref;
+
+            component = component.getComponent();
+
+            var componentId = component.getAttr('id');
+            if(Utils.isUnset(componentId)){
+                componentId = genUid();
+                component.setAttr('id', componentId);
+            }
+            this.getComponent().setAttr('for', componentId);
+            this.set('boundComponent', component);
+            return this.ref;
+        },
+        /**
+         * Returns bound component which bound with ".bind()" method.
+         * @return {iComponent} Bound component.
+         * @see #bind
+         */
+        'getBoundComponent': function(){
+            return this.get('boundComponent');
+        },
+        /**
+         * Returns label is bound or not to a component.
+         * @return {boolean} If it is bound or not.
+         * @see #bind
+         */
+        'isBound': function(){
+            return this.get('boundComponent') !== false;
+        }
+    }).implement(iComponent)
+})
+</code></pre>
+        </article>
+    </section>
+
+
+
+
+</div>
+
+<nav>
+    <h2><a href="index-2.html">Home</a></h2><h3>Classes</h3><ul><li><a href="core_Ajax.html">core/Ajax</a></li><li><a href="core_AjaxGroup.html">core/AjaxGroup</a></li><li><a href="core_createClass.html">core/createClass</a></li><li><a href="core_EventHandler.html">core/EventHandler</a></li><li><a href="core_Utils.html">core/Utils</a></li><li><a href="ui_Breadcrumb.html">ui/Breadcrumb</a></li><li><a href="ui_Button.html">ui/Button</a></li><li><a href="ui_Check.html">ui/Check</a></li><li><a href="ui_CheckGroup.html">ui/CheckGroup</a></li><li><a href="ui_ComponentContainer.html">ui/ComponentContainer</a></li><li><a href="ui_Document.html">ui/Document</a></li><li><a href="ui_Dropdown.html">ui/Dropdown</a></li><li><a href="ui_Element.html">ui/Element</a></li><li><a href="ui_Group.html">ui/Group</a></li><li><a href="ui_Icon.html">ui/Icon</a></li><li><a href="ui_Input.html">ui/Input</a></li><li><a href="ui_Label.html">ui/Label</a></li><li><a href="ui_List.html">ui/List</a></li><li><a href="ui_Message.html">ui/Message</a></li><li><a href="ui_Notifier.html">ui/Notifier</a></li><li><a href="ui_Popup.html">ui/Popup</a></li><li><a href="ui_RadioGroup.html">ui/RadioGroup</a></li><li><a href="ui_Spinner.html">ui/Spinner</a></li><li><a href="ui_Switch.html">ui/Switch</a></li><li><a href="ui_TextElement.html">ui/TextElement</a></li><li><a href="ui_Tip.html">ui/Tip</a></li></ul><h3>Events</h3><ul><li><a href="core_Ajax.html#.event:core/Ajax:always">core/Ajax:always</a></li><li><a href="core_Ajax.html#.event:core/Ajax:fail">core/Ajax:fail</a></li><li><a href="core_Ajax.html#.event:core/Ajax:maxConnection">core/Ajax:maxConnection</a></li><li><a href="core_Ajax.html#.event:core/Ajax:send">core/Ajax:send</a></li><li><a href="core_Ajax.html#.event:core/Ajax:success">core/Ajax:success</a></li><li><a href="core_AjaxGroup.html#.event:core/AjaxGroup:change">core/AjaxGroup:change</a></li><li><a href="core_AjaxGroup.html#.event:core/AjaxGroup:closedConnection">core/AjaxGroup:closedConnection</a></li><li><a href="core_AjaxGroup.html#.event:core/AjaxGroup:closedLastConnection">core/AjaxGroup:closedLastConnection</a></li><li><a href="core_AjaxGroup.html#.event:core/AjaxGroup:maxConnection">core/AjaxGroup:maxConnection</a></li><li><a href="core_AjaxGroup.html#.event:core/AjaxGroup:openedConnection">core/AjaxGroup:openedConnection</a></li><li><a href="core_AjaxGroup.html#.event:core/AjaxGroup:openedFirstConnection">core/AjaxGroup:openedFirstConnection</a></li><li><a href="ui_Button.html#.event:ui/Button:click">ui/Button:click</a></li><li><a href="ui_Check.html#.event:ui/Check:change">ui/Check:change</a></li><li><a href="ui_Check.html#.event:ui/Check:click">ui/Check:click</a></li><li><a href="ui_CheckGroup.html#.event:ui/CheckGroup:change">ui/CheckGroup:change</a></li><li><a href="ui_Dropdown.html#.event:ui/Dropdown:change">ui/Dropdown:change</a></li><li><a href="ui_Element.html#.event:ui/Element:hide">ui/Element:hide</a></li><li><a href="ui_Element.html#.event:ui/Element:show">ui/Element:show</a></li><li><a href="ui_Input.html#.event:ui/Input:change">ui/Input:change</a></li><li><a href="ui_List.html#.event:ui/List:change">ui/List:change</a></li><li><a href="ui_List.html#.event:ui/List:selectedInternally">ui/List:selectedInternally</a></li><li><a href="ui_RadioGroup.html#.event:ui/RadioGroup:change">ui/RadioGroup:change</a></li><li><a href="ui_Spinner.html#.event:ui/Spinner:change">ui/Spinner:change</a></li><li><a href="ui_Switch.html#.event:ui/Switch:change">ui/Switch:change</a></li><li><a href="ui_Switch.html#.event:ui/Switch:click">ui/Switch:click</a></li></ul><h3>Interfaces</h3><ul><li><a href="iComponent.html">iComponent</a></li><li><a href="iInput.html">iInput</a></li></ul>
+</nav>
+
+<br class="clear">
+
+<footer>
+    Documentation generated by <a href="https://github.com/jsdoc3/jsdoc">JSDoc 3.4.0</a> on Wed Aug 10 2016 01:17:51 GMT+0300 (EEST)
+</footer>
+
+<script> prettyPrint(); </script>
+<script src="scripts/linenumber.js"> </script>
+</body>
+
+<!-- Mirrored from burner-docs.local/api/ui_Label.js.html by HTTrack Website Copier/3.x [XR&CO'2014], Tue, 09 Aug 2016 23:19:14 GMT -->
+</html>

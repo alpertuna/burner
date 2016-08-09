@@ -20,7 +20,6 @@ require.config({
 
 require([
     'burner/ui/Element',
-    'burner/third/date.format'
     /*'burner/core/Utils',
     'burner/ui/Document',
     'burner/ui/Element',
