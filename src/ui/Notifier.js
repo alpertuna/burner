@@ -28,8 +28,6 @@ define(['../core/createClass', './Document', './Element', './Icon'], function(cr
          * @param {string} theme - Color theme name.
          */
         'init': function(message, theme){
-            this.super();
-
             if(!notificationKon){
                 Document.new().add(
                     notificationKon = Element.new()
