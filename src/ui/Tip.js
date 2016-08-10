@@ -4,26 +4,27 @@
  * Date: 08.08.2016
  */
 
-'use strict';
+'use strict'
 
-define(['../core/Utils', './Popup', './Element'], function(Utils, Popup, Element){
-    return Popup.extend(/** @lends ui/Tip# */{
-        /**
-         * Tip component class.
-         * @constructs
-         * @param {string} message - Content message text.
-         * @augments ui/Element
-         */
-        'init': function(text){
-            this.super();
-            var content = Element.new()
-            .addClass('jb-tip-content')
-            .add(text);
+define(['../core/Utils', './Popup', './Element'], function (Utils, Popup, Element) {
+  return Popup.extend(/** @lends ui/Tip# */{
+    /**
+     * Tip component class.
+     * @constructs
+     * @param {string} message - Content message text.
+     * @augments ui/Element
+     */
+    'init': function (text) {
+      this.super()
+      var content = Element.new()
+      .addClass('jb-tip-content')
+      .add(text)
 
-            this.addClass('jb-tip');
-            this.add(content);
+      this.addClass('jb-tip')
+      this.add(content)
 
-            //this.add(Element.new().addClass('jb-tip-pointer'));
-        }
-    });
-});
+      // this.add(Element.new().addClass('jb-tip-pointer'))
+    }
+  })
+})
+

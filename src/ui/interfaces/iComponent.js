@@ -4,36 +4,36 @@
  * Date: 08.08.2016
  */
 
-'use strict';
+'use strict'
 
-define(function(){
+define(function () {
+  /**
+   * Implements visiual component methods.
+   * @interface iComponent
+   */
+  return [
     /**
-     * Implements visiual component methods.
-     * @interface iComponent
+     * Focuses on button.
+     * @function
+     * @name iComponent#focus
+     * @return {Object} Instance reference.
      */
-    return [
-        /**
-         * Focuses on button.
-         * @function
-         * @name iComponent#focus
-         * @return {Object} Instance reference.
-         */
-        'focus',
-        /**
-         * Sets disabled status.
-         * @function
-         * @name iComponent#setDisabled
-         * @param {boolean} value - Disabled status.
-         * @return {Object} Instance reference.
-         */
-        'setDisabled',
-        /**
-         * Sets color theme.
-         * @function
-         * @name iComponent#setTheme
-         * @param {string} theme - Theme name.
-         * @return {Object} Instance reference.
-         */
-        'setTheme'
-    ]
+    'focus',
+    /**
+     * Sets disabled status.
+     * @function
+     * @name iComponent#setDisabled
+     * @param {boolean} value - Disabled status.
+     * @return {Object} Instance reference.
+     */
+    'setDisabled',
+    /**
+     * Sets color theme.
+     * @function
+     * @name iComponent#setTheme
+     * @param {string} theme - Theme name.
+     * @return {Object} Instance reference.
+     */
+    'setTheme'
+  ]
 })
