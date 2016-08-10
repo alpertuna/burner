@@ -1,21 +1,27 @@
 {
-  "name": "jsburner-dev",
+  "name": "burner",
   "version": "1.0.0",
   "description": "JS Burner - A Framework for JavaScript",
-  "main": "dist/jsburner.min.js",
+  "main": "dist/burner.min.js",
   "scripts": {
     "build-js-min": "r.js -o build.js out=dist/burner.min.js",
     "build-js": "r.js -o build.js out=dist/burner.js optimize=none",
     "build-css-min": "lessc --clean-css less/style.less dist/burner.min.css",
     "build-css": "lessc less/style.less dist/burner.css",
     "build-dist": "npm run build-js && npm run build-js-min && npm run build-css && npm run build-css-min",
+
     "build-doc": "jsdoc -c jsdocconf.json",
-    "less-watcher": "gulp less",
-    "test": "eslint src"
+
+    "eslint-src": "eslint src",
+    "eslint-test": "eslint test",
+    "vows": "vows test/core/*",
+    "test": "npm run eslint-src && npm run vows",
+
+    "less-watcher": "gulp less"
   },
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/alpertuna/jsburner.git"
+    "url": "git+https://github.com/alpertuna/burner.git"
   },
   "keywords": [
     "js",
@@ -29,9 +35,9 @@
   "author": "H.Alper Tuna",
   "license": "MIT",
   "bugs": {
-    "url": "https://github.com/alpertuna/jsburner/issues"
+    "url": "https://github.com/alpertuna/burner/issues"
   },
-  "homepage": "https://github.com/alpertuna/jsburner#readme",
+  "homepage": "https://github.com/alpertuna/burner#readme",
   "devDependencies": {
     "eslint": "^3.2.2",
     "eslint-config-standard": "^5.3.5",
@@ -44,6 +50,7 @@
     "jsdoc": "^3.4.0",
     "less": "^2.7.1",
     "less-plugin-clean-css": "^1.5.1",
-    "requirejs": "^2.2.0"
+    "requirejs": "^2.2.0",
+    "vows": "^0.8.1"
   }
 }
