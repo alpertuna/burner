@@ -124,7 +124,7 @@ define(function () {
       }
 
       switch (typeof value) {
-        case 'string': return value === '' | value === '0'
+        case 'string': return value === '' || value === '0'
         case 'boolean': return value === false
         case 'number': return value === 0
         case 'undefined': return true
@@ -132,7 +132,7 @@ define(function () {
           if (value === null) return true
           if (this.isArray(value)) return value.length === 0
           return Object.keys(value).length === 0
-        default: return value // as boolean
+        default: return !value // as boolean
       }
     },
 
