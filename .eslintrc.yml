@@ -1,0 +1,7 @@
+extends: standard
+plugins:
+  - standard
+  - promise
+env:
+  browser: true
+  amd: true
