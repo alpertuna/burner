@@ -256,7 +256,7 @@ define([
 
       var thisDom = this.getDom()
       var elementDom = element.getDom()
-      if (Utils.isUnset(index) || index === children.length) {
+      if (Utils.isUnset(index) || index === Utils.toString(children.length)) {
         thisDom.appendChild(elementDom)
         children.push(element)
       } else {
